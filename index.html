@@ -2800,7 +2800,7 @@
 
     .filters {
       padding: 14px 18px 12px;
-      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 20px;
     }
 
     .filter-grid {
@@ -3357,39 +3357,49 @@
       padding-bottom: 14px;
     }
 
-    .traffic-pool-placeholder {
-      min-height: 86px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px dashed #d7e0ea;
-      border-radius: 6px;
-      background: #fbfdff;
-      color: #8a93a3;
-      font-size: 13px;
+    .traffic-pool-filter-grid {
+      grid-template-columns: repeat(2, minmax(0, calc((100% - 36px) / 4))) auto;
+      width: 100%;
+      justify-content: start;
     }
 
-    .traffic-pool-placeholder.compact {
-      min-height: 58px;
-      justify-content: flex-start;
-      padding: 0 16px;
+    .traffic-pool-filter-grid .filter-actions {
+      grid-column: auto;
     }
 
-    .traffic-pool-empty {
-      min-height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px dashed #d7e0ea;
-      border-radius: 6px;
-      background: #fbfdff;
-      color: #8a93a3;
-      font-size: 13px;
+    table.traffic-pool-table {
+      width: 100%;
+      min-width: 1180px;
     }
 
-    .traffic-pool-toolbar-placeholder {
-      color: #8a93a3;
-      font-size: 13px;
+    .traffic-pool-table tbody td {
+      height: 54px;
+    }
+
+    .traffic-pool-table .row-actions button {
+      width: auto;
+      min-width: 0;
+      height: 24px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .traffic-pool-table .row-actions button:hover {
+      color: var(--blue-700);
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .traffic-pool-table .row-actions button.danger {
+      color: var(--danger);
+    }
+
+    .traffic-pool-table .row-actions button.danger:hover {
+      color: #b42318;
     }
 
     .warning-strategy-page .table-toolbar {
@@ -4496,8 +4506,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-bottom: 20px;
       padding: 0 18px;
-      border-bottom: 1px solid var(--border-soft);
     }
 
     .toolbar-left,
@@ -5409,6 +5419,15 @@
         enabledStatus: "",
         remark: ""
       };
+      var trafficPoolManagementState = {
+        filters: {
+          poolName: "",
+          merchantName: ""
+        },
+        page: 1,
+        pageSize: 20,
+        selectedIds: []
+      };
       var trafficPoolAccounts = [
         { id: "acct-01", account: "ops_admin", name: "周明", phone: "13800138101" },
         { id: "acct-02", account: "pool_ops", name: "李青", phone: "13800138102" },
@@ -6276,17 +6295,120 @@
         return `
           <section class="content-card traffic-pool-page">
             <div class="filters">
-              <div class="traffic-pool-placeholder">查询区占位符</div>
+              <div class="filter-grid traffic-pool-filter-grid">
+                <div class="field">
+                  <label for="trafficPoolNameFilter">流量池名称</label>
+                  <div class="clearable-wrap ${trafficPoolManagementState.filters.poolName ? "has-value" : ""}">
+                    <input id="trafficPoolNameFilter" class="control js-traffic-pool-filter-name" type="text" value="${escapeHtml(trafficPoolManagementState.filters.poolName || "")}" placeholder="请输入流量池名称">
+                    <button class="clear-control" type="button" aria-label="清除流量池名称">×</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="trafficPoolMerchantFilter">商户名称</label>
+                  <div class="clearable-wrap ${trafficPoolManagementState.filters.merchantName ? "has-value" : ""}">
+                    <input id="trafficPoolMerchantFilter" class="control js-traffic-pool-filter-merchant" type="text" value="${escapeHtml(trafficPoolManagementState.filters.merchantName || "")}" placeholder="请输入商户名称">
+                    <button class="clear-control" type="button" aria-label="清除商户名称">×</button>
+                  </div>
+                </div>
+                <div class="filter-actions">
+                  <button class="btn primary js-traffic-pool-search" type="button">
+                    <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                    搜索
+                  </button>
+                  <button class="btn js-traffic-pool-reset" type="button">重置</button>
+                </div>
+              </div>
             </div>
             <div class="table-toolbar">
               <div class="toolbar-left">
-                <span class="traffic-pool-toolbar-placeholder">操作区占位符</span>
+                <button class="btn primary js-traffic-pool-create" type="button">流量池新增</button>
               </div>
             </div>
             <div class="table-area">
-              <div class="traffic-pool-empty">列表区占位符</div>
+              <div class="table-scroll" role="region" aria-label="流量池管理列表" tabindex="0">
+                <table class="traffic-pool-table">
+                  <thead>
+                    <tr>
+                      <th class="check-cell"><input class="js-traffic-pool-checkall" type="checkbox" aria-label="全选当前页流量池"></th>
+                      <th style="width: 140px;">流量池名称</th>
+                      <th style="width: 250px;">群组名称</th>
+                      <th style="width: 160px;">群组ID</th>
+                      <th style="width: 120px;">商户名称</th>
+                      <th style="width: 90px;">卡数量</th>
+                      <th style="width: 190px;">流量概览</th>
+                      <th style="width: 90px;">创建人</th>
+                      <th style="width: 170px;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>${getTrafficPoolManagementRowsHtml()}</tbody>
+                </table>
+              </div>
+              ${getTrafficPoolManagementPaginationHtml()}
             </div>
           </section>
+        `;
+      }
+
+      function getFilteredTrafficPoolRows() {
+        var filters = trafficPoolManagementState.filters;
+        return trafficPoolCatalog.filter(function (pool) {
+          var poolNameMatched = !filters.poolName || pool.name.indexOf(filters.poolName) !== -1;
+          var merchantMatched = !filters.merchantName || pool.merchantName.indexOf(filters.merchantName) !== -1;
+          return poolNameMatched && merchantMatched;
+        });
+      }
+
+      function getTrafficPoolManagementRowsHtml() {
+        var rows = getFilteredTrafficPoolRows();
+        trafficPoolManagementState.page = clampPage(trafficPoolManagementState.page, rows.length, trafficPoolManagementState.pageSize);
+        var pageRows = getPagedItems(rows, trafficPoolManagementState.page, trafficPoolManagementState.pageSize);
+        var selectedIds = trafficPoolManagementState.selectedIds || [];
+
+        if (!rows.length) {
+          return getEmptyTableRowHtml(9);
+        }
+
+        return pageRows.map(function (pool) {
+          var checked = selectedIds.indexOf(pool.id) !== -1;
+          return `
+            <tr class="${checked ? "selected" : ""}" data-id="${escapeHtml(pool.id)}">
+              <td class="check-cell"><input class="js-traffic-pool-check" type="checkbox" data-id="${escapeHtml(pool.id)}" ${checked ? "checked" : ""} aria-label="选择流量池"></td>
+              <td><a class="link" href="#">${escapeHtml(pool.name)}</a></td>
+              <td>${escapeHtml(pool.groupName)}</td>
+              <td>${escapeHtml(pool.groupId)}</td>
+              <td>${escapeHtml(pool.merchantName)}</td>
+              <td>${escapeHtml(pool.cardCount)}</td>
+              <td>${getTrafficPoolUsageHtml(pool)}</td>
+              <td>${escapeHtml(pool.creator)}</td>
+              <td>
+                <div class="row-actions">
+                  <button type="button" class="js-traffic-pool-row-action" data-action="编辑" data-id="${escapeHtml(pool.id)}">编辑</button>
+                  <button type="button" class="danger js-traffic-pool-row-action" data-action="删除" data-id="${escapeHtml(pool.id)}">删除</button>
+                  <button type="button" class="js-traffic-pool-row-action" data-action="SIM卡管理" data-id="${escapeHtml(pool.id)}">SIM卡管理</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function getTrafficPoolManagementPaginationHtml() {
+        var rows = getFilteredTrafficPoolRows();
+        var page = clampPage(trafficPoolManagementState.page, rows.length, trafficPoolManagementState.pageSize);
+        trafficPoolManagementState.page = page;
+        return `
+          <div class="pagination traffic-pool-pagination">
+            <span>共 ${rows.length} 条</span>
+            <select class="page-size js-traffic-pool-page-size" aria-label="流量池每页条数">
+              ${getPageSizeOptions(trafficPoolManagementState.pageSize)}
+            </select>
+            <button class="page-btn js-traffic-pool-prev" type="button">上一页</button>
+            ${getCompactPaginationButtons(page, getPageCount(rows.length, trafficPoolManagementState.pageSize), "js-traffic-pool-page-btn")}
+            <button class="page-btn js-traffic-pool-next" type="button">下一页</button>
+            <span>跳至</span>
+            <input class="jump js-traffic-pool-jump" type="text" value="${page}" aria-label="流量池跳转页码">
+            <span>页</span>
+          </div>
         `;
       }
 
@@ -6572,7 +6694,7 @@
         return `
           <div class="pool-usage-cell">
             <div>总流量（GB）：<span class="total">${escapeHtml(pool.totalGb)}</span></div>
-            <div>已用量（GB）：<span class="used">${escapeHtml(pool.usedGb)}</span></div>
+            <div>已用流量（GB）：<span class="used">${escapeHtml(pool.usedGb)}</span></div>
             <div>剩余流量（GB）：<span class="remain">${escapeHtml(pool.remainGb)}</span></div>
             <div>用量比：<span class="rate">${escapeHtml(pool.usageRate)}</span></div>
           </div>
@@ -9360,12 +9482,150 @@
         }
 
         page.dataset.poolBound = "true";
-        var configButton = page.querySelector(".js-open-pool-warning-config");
-        if (configButton) {
-          configButton.addEventListener("click", function () {
-            openTrafficPoolWarningConfigPage();
+        bindClearableControls(page);
+        updateClearableState(page);
+
+        function renderTrafficPoolManagementPage() {
+          document.querySelector(".main").innerHTML = getTrafficPoolManagementMainHtml();
+          bindTrafficPoolManagementControls(document.querySelector(".main"));
+        }
+
+        function getCurrentPageTrafficPoolIds() {
+          var rows = getFilteredTrafficPoolRows();
+          var pageRows = getPagedItems(rows, trafficPoolManagementState.page, trafficPoolManagementState.pageSize);
+          return pageRows.map(function (pool) {
+            return pool.id;
           });
         }
+
+        function syncTrafficPoolHeaderCheckbox() {
+          var headerCheckbox = page.querySelector(".js-traffic-pool-checkall");
+          if (!headerCheckbox) {
+            return;
+          }
+
+          var pageIds = getCurrentPageTrafficPoolIds();
+          var checkedCount = pageIds.filter(function (id) {
+            return trafficPoolManagementState.selectedIds.indexOf(id) !== -1;
+          }).length;
+
+          headerCheckbox.checked = pageIds.length > 0 && checkedCount === pageIds.length;
+          headerCheckbox.indeterminate = checkedCount > 0 && checkedCount < pageIds.length;
+        }
+
+        page.addEventListener("click", function (event) {
+          var searchButton = event.target.closest(".js-traffic-pool-search");
+          var resetButton = event.target.closest(".js-traffic-pool-reset");
+          var createButton = event.target.closest(".js-traffic-pool-create");
+          var prevButton = event.target.closest(".js-traffic-pool-prev");
+          var nextButton = event.target.closest(".js-traffic-pool-next");
+          var pageButton = event.target.closest(".js-traffic-pool-page-btn");
+          var rowAction = event.target.closest(".js-traffic-pool-row-action");
+
+          if (createButton) {
+            showToast("流量池新增入口已打开", { force: true });
+            return;
+          }
+
+          if (searchButton) {
+            trafficPoolManagementState.filters.poolName = page.querySelector(".js-traffic-pool-filter-name").value.trim();
+            trafficPoolManagementState.filters.merchantName = page.querySelector(".js-traffic-pool-filter-merchant").value.trim();
+            trafficPoolManagementState.page = 1;
+            renderTrafficPoolManagementPage();
+            showToast("查询成功", { force: true });
+            return;
+          }
+
+          if (resetButton) {
+            trafficPoolManagementState.filters.poolName = "";
+            trafficPoolManagementState.filters.merchantName = "";
+            trafficPoolManagementState.page = 1;
+            trafficPoolManagementState.selectedIds = [];
+            renderTrafficPoolManagementPage();
+            showToast("重置成功", { force: true });
+            return;
+          }
+
+          if (prevButton || nextButton || pageButton) {
+            var total = getFilteredTrafficPoolRows().length;
+            if (prevButton) {
+              trafficPoolManagementState.page = clampPage(trafficPoolManagementState.page - 1, total, trafficPoolManagementState.pageSize);
+            }
+            if (nextButton) {
+              trafficPoolManagementState.page = clampPage(trafficPoolManagementState.page + 1, total, trafficPoolManagementState.pageSize);
+            }
+            if (pageButton) {
+              trafficPoolManagementState.page = clampPage(pageButton.dataset.page, total, trafficPoolManagementState.pageSize);
+            }
+            renderTrafficPoolManagementPage();
+            return;
+          }
+
+          if (rowAction) {
+            showToast(rowAction.dataset.action + "入口已打开", { force: true });
+          }
+        });
+
+        page.addEventListener("change", function (event) {
+          var rowCheckbox = event.target.closest(".js-traffic-pool-check");
+          var headerCheckbox = event.target.closest(".js-traffic-pool-checkall");
+          var pageSizeSelect = event.target.closest(".js-traffic-pool-page-size");
+
+          if (rowCheckbox) {
+            var poolId = rowCheckbox.dataset.id;
+            if (rowCheckbox.checked && trafficPoolManagementState.selectedIds.indexOf(poolId) === -1) {
+              trafficPoolManagementState.selectedIds.push(poolId);
+            }
+            if (!rowCheckbox.checked) {
+              trafficPoolManagementState.selectedIds = trafficPoolManagementState.selectedIds.filter(function (id) {
+                return id !== poolId;
+              });
+            }
+            rowCheckbox.closest("tr").classList.toggle("selected", rowCheckbox.checked);
+            syncTrafficPoolHeaderCheckbox();
+            return;
+          }
+
+          if (headerCheckbox) {
+            var pageIds = getCurrentPageTrafficPoolIds();
+            if (headerCheckbox.checked) {
+              pageIds.forEach(function (id) {
+                if (trafficPoolManagementState.selectedIds.indexOf(id) === -1) {
+                  trafficPoolManagementState.selectedIds.push(id);
+                }
+              });
+            } else {
+              trafficPoolManagementState.selectedIds = trafficPoolManagementState.selectedIds.filter(function (id) {
+                return pageIds.indexOf(id) === -1;
+              });
+            }
+            renderTrafficPoolManagementPage();
+            return;
+          }
+
+          if (pageSizeSelect) {
+            trafficPoolManagementState.pageSize = Number(pageSizeSelect.value) || 20;
+            trafficPoolManagementState.page = 1;
+            renderTrafficPoolManagementPage();
+          }
+        });
+
+        page.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" && event.target.closest(".js-traffic-pool-jump")) {
+            trafficPoolManagementState.page = clampPage(event.target.value, getFilteredTrafficPoolRows().length, trafficPoolManagementState.pageSize);
+            renderTrafficPoolManagementPage();
+          }
+
+          if (event.key === "Enter" && (event.target.closest(".js-traffic-pool-filter-name") || event.target.closest(".js-traffic-pool-filter-merchant"))) {
+            trafficPoolManagementState.filters.poolName = page.querySelector(".js-traffic-pool-filter-name").value.trim();
+            trafficPoolManagementState.filters.merchantName = page.querySelector(".js-traffic-pool-filter-merchant").value.trim();
+            trafficPoolManagementState.page = 1;
+            renderTrafficPoolManagementPage();
+            showToast("查询成功", { force: true });
+          }
+        });
+
+        syncTrafficPoolHeaderCheckbox();
       }
 
       function bindWarningStrategyControls(root) {
