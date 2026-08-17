@@ -3750,6 +3750,18 @@
       line-height: 1.35;
     }
 
+    .tariff-order-groupBase th:nth-child(2),
+    .tariff-order-groupAddon th:nth-child(3),
+    .tariff-order-poolAddon th:nth-child(2) {
+      width: 250px !important;
+    }
+
+    .tariff-order-groupBase th:nth-child(4),
+    .tariff-order-groupAddon th:nth-child(5),
+    .tariff-order-poolAddon th:nth-child(5) {
+      width: 260px !important;
+    }
+
     .tariff-order-table .text-action {
       width: auto;
       height: 28px;
@@ -8678,9 +8690,9 @@
 
       function getTariffOrderConfig(tabId) {
         var headers;
-        if (tabId === "groupAddon") headers = ["操作ID", "批次号", "套餐ID", "群组ID", "群组名称", "商户名称", "套餐名称", "套餐计费规则", "订购周期", "订购时间", "备注", "订购状态", "操作"];
-        else if (tabId === "poolAddon") headers = ["操作ID", "套餐ID", "群组ID", "群组名称", "商户名称", "流量池名称", "套餐名称", "订购时间", "备注", "订购状态", "操作"];
-        else headers = ["操作ID", "套餐ID", "群组ID", "群组名称", "商户名称", "套餐名称", "套餐计费规则", "套餐时效", "订购时间", "备注", "订购状态", "操作"];
+        if (tabId === "groupAddon") headers = ["操作ID", "批次号", "群组信息", "商户名称", "套餐信息", "套餐计费规则", "订购周期", "订购时间", "备注", "订购状态", "操作"];
+        else if (tabId === "poolAddon") headers = ["操作ID", "群组信息", "商户名称", "流量池名称", "套餐信息", "订购时间", "备注", "订购状态", "操作"];
+        else headers = ["操作ID", "群组信息", "商户名称", "套餐信息", "套餐计费规则", "套餐时效", "订购时间", "备注", "订购状态", "操作"];
         return { state: tariffOrderState[tabId], catalog: tariffOrderCatalogs[tabId], headers: headers };
       }
 
@@ -8703,6 +8715,10 @@
         return '<div class="cell-stack tariff-order-rule-stack">' + (rules || []).map(function (rule) { return '<div class="cell-line">' + escapeHtml(rule) + '</div>'; }).join('') + '</div>';
       }
 
+      function getTariffOrderInfoHtml(labelValues) {
+        return getTariffOrderRulesHtml(labelValues.map(function (item) { return item[0] + '：' + (item[1] || '--'); }));
+      }
+
       function getTariffOrderRowsHtmlSafe(tabId) {
         var config = getTariffOrderConfig(tabId);
         var rows = getFilteredTariffOrders(tabId);
@@ -8716,13 +8732,15 @@
           var operationCell = tabId === 'groupBase' || tabId === 'groupAddon'
             ? '<td><a class="link js-tariff-order-detail" href="#operation-' + escapeHtml(operationId) + '" data-operation-id="' + escapeHtml(operationId) + '">' + escapeHtml(operationId) + '</a></td>'
             : textCell(operationId);
+          var groupInfo = '<td>' + getTariffOrderInfoHtml([['群组ID', item.groupId], ['群组名称', item.groupName]]) + '</td>';
+          var packageInfo = '<td>' + getTariffOrderInfoHtml([['套餐ID', item.packageId], ['套餐名称', item.packageName]]) + '</td>';
           var cells = [operationCell];
           if (tabId === "groupAddon") {
-            cells.push(textCell(item.batchNo), textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.packageName), '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.cycle), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+            cells.push(textCell(item.batchNo), groupInfo, textCell(item.merchantName), packageInfo, '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.cycle), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
           } else if (tabId === "poolAddon") {
-            cells.push(textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.poolName), textCell(item.packageName), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+            cells.push(groupInfo, textCell(item.merchantName), textCell(item.poolName), packageInfo, textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
           } else {
-            cells.push(textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.packageName), '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.validity), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+            cells.push(groupInfo, textCell(item.merchantName), packageInfo, '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.validity), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
           }
           return '<tr>' + cells.join('') + '</tr>';
         }).join('');
