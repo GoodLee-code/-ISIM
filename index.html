@@ -21,7 +21,18 @@
       --danger-bg: #fff1f0;
       --success: #1f8a4c;
       --success-bg: #e9f7ef;
+      --data-link: #1890ff;
+      --data-link-hover: #0b4fc7;
       --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --ui-control-height: 34px;
+      --ui-compact-height: 28px;
+      --ui-tab-height: 48px;
+      --ui-table-head-height: 38px;
+      --ui-table-row-height: 54px;
+      --ui-table-row-multiline-height: 68px;
+      --ui-radius: 4px;
+      --ui-section-gap: 20px;
+      --ui-content-padding: 18px;
     }
 
     * {
@@ -837,16 +848,18 @@
     .task-total-link {
       border: 0;
       background: transparent;
-      color: var(--blue);
+      color: var(--data-link);
       font-size: 12px;
       cursor: pointer;
       text-decoration: none;
+      transition: color 0.16s ease;
     }
 
     .task-total-link:hover,
     .task-total-link:focus,
+    .task-total-link:active,
     .task-total-link.selected {
-      color: #0b4fc7;
+      color: var(--data-link-hover);
       text-decoration: underline;
       outline: none;
     }
@@ -2463,6 +2476,140 @@
       width: 720px;
     }
 
+    .tariff-renew-modal {
+      width: 640px;
+      max-width: calc(100vw - 48px);
+    }
+
+    .tariff-renew-form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tariff-renew-row {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 10px 16px;
+      align-items: start;
+    }
+
+    .tariff-renew-row[hidden] {
+      display: none !important;
+    }
+
+    .tariff-renew-label {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      color: #374151;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .tariff-renew-body {
+      min-width: 0;
+    }
+
+    .tariff-renew-mode {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: #374151;
+      font-size: 12px;
+    }
+
+    .tariff-renew-mode label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+    }
+
+    .tariff-renew-mode input {
+      accent-color: var(--blue);
+    }
+
+    .tariff-renew-body input[type="text"] {
+      width: 100%;
+      height: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: #374151;
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .tariff-renew-body input[type="text"]:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .tariff-renew-time-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tariff-renew-time-control input {
+      flex: 0 1 220px;
+    }
+
+    .tariff-renew-time-control select {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 34px;
+      padding: 0 7px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: #374151;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .tariff-renew-time-control select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .tariff-renew-time-unit {
+      flex: 0 0 auto;
+      color: #4b5563;
+      font-size: 12px;
+      line-height: 34px;
+    }
+
+    .tariff-renew-file-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+    }
+
+    .tariff-renew-file-name {
+      min-width: 0;
+      color: #6b7280;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tariff-renew-hint {
+      margin-top: 8px;
+      color: #9aa2ad;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .tariff-renew-hidden-input {
+      display: none;
+    }
+
     .inventory-recycle-form {
       display: grid;
       gap: 18px;
@@ -3000,6 +3147,13 @@
 
     .control::placeholder {
       color: var(--placeholder);
+      opacity: 1;
+    }
+
+    .filters input::placeholder,
+    .filters textarea::placeholder {
+      color: var(--placeholder);
+      opacity: 1;
     }
 
     .clear-control {
@@ -3352,6 +3506,617 @@
       visibility: visible;
       transform: translateY(0);
     }
+
+    .tariff-management-page {
+      overflow: hidden;
+    }
+
+    .tariff-order-page {
+      overflow: hidden;
+    }
+
+    .tariff-renewal-page {
+      overflow: hidden;
+    }
+
+    .tariff-renewal-page .tariff-tabs {
+      flex: 0 0 auto;
+    }
+
+    .tariff-renewal-filter-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .tariff-renewal-detail-filter-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .tariff-renewal-detail-filter-grid .filter-actions {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+    }
+
+    .tariff-renewal-filter-grid .filter-actions {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+    }
+
+    .tariff-renewal-page .table-area {
+      min-height: 0;
+    }
+
+    table.tariff-renewal-table,
+    table.tariff-renewal-detail-table {
+      width: 100%;
+      min-width: 1580px;
+    }
+
+    table.tariff-renewal-detail-table {
+      min-width: 1820px;
+    }
+
+    .tariff-renewal-table tbody td,
+    .tariff-renewal-detail-table tbody td {
+      height: 58px;
+      vertical-align: middle;
+    }
+
+    .tariff-renewal-table .text-action {
+      width: auto;
+      min-width: 0;
+      height: 28px;
+      padding: 0 4px;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .tariff-renewal-table .text-action.danger {
+      color: var(--danger);
+    }
+
+    .tariff-renewal-table .text-action.danger:hover {
+      color: #b42318;
+      background: var(--danger-bg);
+      text-decoration: underline;
+    }
+
+    .renewal-status {
+      font-weight: 500;
+    }
+
+    .renewal-status.is-renewed {
+      color: #20a05a;
+    }
+
+    .renewal-status.is-cancelled {
+      color: #e45555;
+    }
+
+    .tariff-renewal-batch-link {
+      font-weight: 400;
+    }
+
+    .tariff-renewal-table .sticky-action {
+      position: sticky;
+      right: 0;
+      z-index: 3;
+      background: #fff;
+    }
+
+    .tariff-renewal-table thead .sticky-action {
+      z-index: 5;
+      background: #f3f4f6;
+    }
+
+    .tariff-renewal-table tbody tr:nth-child(even) .sticky-action {
+      background: #fcfdff;
+    }
+
+    .tariff-renewal-table tbody tr:hover .sticky-action {
+      background: #f4f9ff;
+    }
+
+    .tariff-renewal-detail {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-height: 0;
+    }
+
+    .tariff-renewal-record-page {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tariff-renewal-detail .detail-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .tariff-renewal-detail .detail-summary div {
+      display: grid;
+      gap: 6px;
+    }
+
+    .tariff-renewal-detail .detail-summary span {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .tariff-renewal-detail .detail-summary strong {
+      color: #344054;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .tariff-renewal-detail-empty {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+    }
+
+    @media (max-width: 1200px) {
+      .tariff-renewal-filter-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .tariff-renewal-detail-filter-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .card-package-detail-filter-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      width: 100%;
+      justify-content: start;
+    }
+
+    .card-package-detail-filter-grid .filter-actions {
+      grid-column: 1 / -1;
+    }
+
+    .card-package-detail-page .table-area {
+      min-height: 0;
+    }
+
+    table.card-package-detail-table {
+      width: 100%;
+      min-width: 2720px;
+    }
+
+    .card-package-detail-table tbody td {
+      height: var(--ui-table-row-height);
+      vertical-align: middle;
+    }
+
+    .card-package-detail-table .card-link {
+      font-weight: 400;
+    }
+
+    .tariff-order-page .tariff-tabs {
+      flex: 0 0 auto;
+    }
+
+    .tariff-order-page .filters {
+      padding-bottom: 14px;
+    }
+
+    .tariff-order-filter-grid {
+      grid-template-columns: repeat(3, minmax(0, calc((100% - 36px) / 4))) auto;
+      width: 100%;
+      justify-content: start;
+    }
+
+    .tariff-order-filter-grid .filter-actions {
+      grid-column: auto;
+    }
+
+    .tariff-order-page .table-area {
+      min-height: 0;
+    }
+
+    table.tariff-order-table {
+      width: 100%;
+      min-width: 1760px;
+    }
+
+    .tariff-order-groupAddon {
+      min-width: 1980px;
+    }
+
+    .tariff-order-poolAddon {
+      min-width: 1560px;
+    }
+
+    .tariff-order-table tbody td {
+      height: 68px;
+      vertical-align: middle;
+      white-space: normal;
+    }
+
+    .tariff-order-rule-stack {
+      gap: 3px;
+      line-height: 1.35;
+    }
+
+    .tariff-order-table .text-action {
+      width: auto;
+      height: 28px;
+      padding: 0 4px;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .tariff-order-table .text-action:hover {
+      border: 0;
+      background: var(--blue-050);
+      color: var(--blue-700);
+      text-decoration: underline;
+    }
+
+    .tariff-order-table .tag {
+      white-space: nowrap;
+    }
+
+    .tariff-create-modal-overlay {
+      z-index: 10060;
+    }
+
+    .tariff-create-modal {
+      width: min(720px, calc(100vw - 48px));
+      max-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.24);
+      overflow: hidden;
+    }
+
+    .tariff-create-modal .modal-body {
+      overflow-y: auto;
+    }
+
+    .tariff-create-modal .modal-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .tariff-create-modal .modal-field {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 0 16px;
+      align-items: center;
+    }
+
+    .tariff-create-modal .modal-field.full {
+      grid-column: auto;
+    }
+
+    .tariff-create-modal .modal-field label {
+      margin: 0;
+      color: #374151;
+      line-height: 34px;
+      text-align: left;
+    }
+
+    .tariff-create-modal .modal-field:has(textarea) {
+      align-items: start;
+    }
+
+    .tariff-create-modal .modal-field:has(textarea) label {
+      padding-top: 8px;
+    }
+
+    .tariff-create-modal input,
+    .tariff-create-modal textarea {
+      color: #344054;
+    }
+
+    .tariff-create-modal input::placeholder,
+    .tariff-create-modal textarea::placeholder {
+      color: #b8c0cc;
+      opacity: 1;
+    }
+
+    .tariff-create-modal select {
+      color: #b8c0cc;
+    }
+
+    .tariff-create-modal select.has-value {
+      color: #344054;
+    }
+
+    .tariff-create-modal .input-with-unit {
+      display: flex;
+      align-items: stretch;
+    }
+
+    .tariff-create-modal .input-with-unit input {
+      min-width: 0;
+      flex: 1 1 auto;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .tariff-create-modal .input-with-unit .custom-select-host {
+      flex: 0 0 62px;
+      width: 62px;
+      height: 34px;
+    }
+
+    .tariff-create-modal .input-with-unit .custom-select-trigger {
+      width: 62px;
+      height: 34px;
+      padding: 0 20px 0 9px;
+      border-left: 0;
+      border-radius: 0 4px 4px 0;
+      background: #f8fafc;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    .tariff-create-modal .input-with-unit .custom-select-list {
+      min-width: 62px;
+    }
+
+    .tariff-create-modal .input-with-unit select,
+    .tariff-create-modal .input-unit {
+      flex: 0 0 62px;
+      width: 62px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-left: 0;
+      border-radius: 0 4px 4px 0;
+      background: #f8fafc;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    .tariff-create-modal .input-unit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .tariff-create-modal .modal-foot {
+      flex: 0 0 auto;
+    }
+
+    .tariff-addon-page {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tariff-addon-page .filters {
+      padding-bottom: 14px;
+    }
+
+    .tariff-addon-filter-grid {
+      grid-template-columns: minmax(0, calc((100% - 36px) / 4)) auto;
+      width: 100%;
+      justify-content: start;
+    }
+
+    .tariff-addon-filter-grid .filter-actions {
+      grid-column: auto;
+    }
+
+    .tariff-addon-page .table-area {
+      min-height: 0;
+    }
+
+    table.tariff-addon-table {
+      width: 100%;
+      min-width: 960px;
+    }
+
+    .tariff-addon-table tbody td {
+      height: 64px;
+      vertical-align: middle;
+      white-space: normal;
+    }
+
+    .tariff-addon-table .tariff-name-link {
+      font-weight: 400;
+    }
+
+    .tariff-addon-table .row-actions .text-action {
+      width: auto;
+      height: 28px;
+      padding: 0 4px;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .tariff-addon-table .row-actions .text-action:hover {
+      border: 0;
+      background: var(--blue-050);
+      color: var(--blue-700);
+      text-decoration: underline;
+    }
+
+    .tariff-base-page {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tariff-base-page .filters {
+      padding-bottom: 14px;
+    }
+
+    .tariff-base-filter-grid {
+      grid-template-columns: minmax(0, calc((100% - 36px) / 4)) auto;
+      width: 100%;
+      justify-content: start;
+    }
+
+    .tariff-base-filter-grid .filter-actions {
+      grid-column: auto;
+    }
+
+    .tariff-base-page .table-area {
+      min-height: 0;
+    }
+
+    table.tariff-base-table {
+      width: 100%;
+      min-width: 1280px;
+    }
+
+    .tariff-base-table tbody td {
+      height: 72px;
+      vertical-align: middle;
+      white-space: normal;
+    }
+
+    .tariff-cell-stack {
+      gap: 3px;
+      line-height: 1.35;
+    }
+
+    .tariff-base-table .tariff-name-link {
+      font-weight: 400;
+    }
+
+    .tariff-base-table .row-actions .text-action {
+      width: auto;
+      height: 28px;
+      padding: 0 4px;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .tariff-base-table .row-actions .text-action:hover {
+      border: 0;
+      background: var(--blue-050);
+      color: var(--blue-700);
+      text-decoration: underline;
+    }
+
+    .tariff-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 48px;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--border-soft);
+      background: #fff;
+    }
+
+    .tariff-tab {
+      position: relative;
+      height: 48px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #697386;
+      font-size: 12px;
+      cursor: pointer;
+      transition: color .16s ease, background .16s ease;
+    }
+
+    .tariff-tab:hover {
+      color: var(--blue);
+      background: #f8fbff;
+    }
+
+    .tariff-tab.current {
+      background: transparent;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .tariff-tab.current::after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      bottom: 0;
+      left: 12px;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+      background: var(--blue);
+    }
+
+    .tariff-list-placeholder {
+      flex: 1 1 auto;
+      min-height: calc(100vh - 228px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #8b95a5;
+      background: #fff;
+    }
+
+    .tariff-placeholder-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      border: 1px solid #dbe3ed;
+      border-radius: 8px;
+      background: #f7f9fc;
+      color: #b3bfce;
+      font-size: 24px;
+    }
+
+    .tariff-placeholder-title {
+      color: #4b5563;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .tariff-placeholder-desc {
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    .group-management-page .filters {
+      padding-bottom: 14px;
+    }
+    .group-filter-grid {
+      grid-template-columns: repeat(2, minmax(0, calc((100% - 36px) / 4))) auto;
+      width: 100%;
+      justify-content: start;
+    }
+    .group-filter-grid .filter-actions { grid-column: auto; }
+    table.group-management-table { width: 100%; min-width: 1640px; }
+    .group-management-table tbody td { height: 72px; vertical-align: middle; }
+    .group-rule-stack { min-width: 330px; gap: 3px; line-height: 1.35; }
+    .group-management-table .row-actions button {
+      width: auto; min-width: 0; height: 24px; padding: 0; border: 0; background: transparent;
+      color: var(--blue); font-size: 12px; white-space: nowrap;
+    }
+    .group-management-table .row-actions button:hover { color: var(--blue-700); text-decoration: underline; background: transparent; }
+    .group-management-table .row-actions button.danger { color: var(--danger); }
+    .group-management-table .row-actions button.danger:hover { color: #b42318; }
+    .js-group-delete-modal { z-index: 10000 !important; }
+    .group-delete-confirm .approval-confirm-message { color: #b42318; font-weight: 700; }
 
     .traffic-pool-page .filters {
       padding-bottom: 14px;
@@ -3783,7 +4548,7 @@
       font-weight: 700;
     }
 
-    .pool-config-field input,
+    .pool-config-field input:not([type="radio"]):not([type="checkbox"]),
     .pool-config-field textarea,
     .pool-config-field select,
     .pool-input-unit {
@@ -3808,6 +4573,15 @@
       padding: 8px 9px;
       line-height: 1.5;
       resize: vertical;
+    }
+
+    .pool-config-field input[type="radio"],
+    .pool-config-field input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      min-height: 0;
+      max-height: none;
+      padding: 0;
     }
 
     .pool-config-field input:focus,
@@ -4447,6 +5221,18 @@
       color: #fff;
     }
 
+    .btn.danger {
+      border-color: var(--danger);
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn.danger:hover {
+      border-color: #b42318;
+      background: #b42318;
+      color: #fff;
+    }
+
     .btn.primary:hover {
       border-color: var(--blue-700);
       background: var(--blue-700);
@@ -4510,11 +5296,53 @@
       padding: 0 18px;
     }
 
+    .warning-strategy-page .table-toolbar {
+      height: var(--ui-control-height);
+      min-height: var(--ui-control-height);
+      margin-bottom: var(--ui-section-gap);
+      padding: 0 var(--ui-content-padding);
+    }
+
+    .tariff-order-page .filters,
+    .tariff-addon-page .filters,
+    .tariff-base-page .filters,
+    .traffic-pool-page .filters {
+      padding: 14px var(--ui-content-padding) 12px;
+    }
+
     .toolbar-left,
     .toolbar-right {
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .card-package-detail-toolbar {
+      height: var(--ui-control-height);
+      min-height: var(--ui-control-height);
+      margin-bottom: var(--ui-section-gap);
+      padding: 0 var(--ui-content-padding);
+    }
+
+    .card-package-detail-config {
+      width: 30px;
+      height: 30px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: #6b7280;
+      cursor: pointer;
+    }
+
+    .card-package-detail-config:hover,
+    .card-package-detail-config:focus {
+      border-color: #b8dfff;
+      background: var(--blue-050);
+      color: var(--blue);
+      outline: none;
     }
 
     .total {
@@ -4652,9 +5480,20 @@
     }
 
     .link {
-      color: var(--blue);
+      color: var(--data-link);
       font-weight: 600;
       text-decoration: none;
+      cursor: pointer;
+      transition: color 0.16s ease;
+    }
+
+    .link:hover,
+    .link:focus,
+    .link:active,
+    .link.selected {
+      color: var(--data-link-hover);
+      text-decoration: underline;
+      outline: none;
     }
 
     .card-link {
@@ -4666,7 +5505,7 @@
     .card-link:focus,
     .card-link:active,
     .card-link.selected {
-      color: #0b4fc7;
+      color: var(--data-link-hover);
       text-decoration: underline;
       outline: none;
     }
@@ -4677,16 +5516,18 @@
     }
 
     .inventory-iccid-link {
-      color: var(--blue);
+      color: var(--data-link);
       font-weight: 400;
       text-decoration: none;
+      cursor: pointer;
+      transition: color 0.16s ease;
     }
 
     .inventory-iccid-link:hover,
     .inventory-iccid-link:focus,
     .inventory-iccid-link:active,
     .inventory-iccid-link.selected {
-      color: #0b4fc7;
+      color: var(--data-link-hover);
       text-decoration: underline;
       outline: none;
     }
@@ -4859,6 +5700,7 @@
 
     .pagination {
       display: flex;
+      flex: 0 0 auto;
       align-items: center;
       justify-content: flex-end;
       gap: 8px;
@@ -4912,6 +5754,185 @@
       color: #374151;
       text-align: center;
       font-size: 12px;
+    }
+
+    /* Unified sizing system for dense SaaS pages. */
+    .filters {
+      padding: 14px var(--ui-content-padding) 12px;
+      margin-bottom: var(--ui-section-gap);
+    }
+
+    .filter-grid {
+      gap: 12px;
+      align-items: center;
+    }
+
+    .control,
+    .select-wrap select,
+    .custom-select-trigger,
+    .date-range-control,
+    .modal-field input,
+    .modal-field select,
+    .tariff-renew-body input[type="text"],
+    .tariff-renew-time-control select,
+    .pool-config-field input:not([type="radio"]):not([type="checkbox"]),
+    .pool-config-field select,
+    .pool-input-unit,
+    .pool-selector-trigger,
+    .work-order-applicant-trigger {
+      height: var(--ui-control-height);
+      min-height: var(--ui-control-height);
+      border-radius: var(--ui-radius);
+      font-size: 12px;
+    }
+
+    .modal-field textarea,
+    .tariff-renew-body textarea,
+    .inventory-recycle-body textarea,
+    .pool-config-field textarea {
+      width: 100%;
+      min-height: 78px;
+      padding: 8px 9px;
+      border: 1px solid var(--border);
+      border-radius: var(--ui-radius);
+      background: #fff;
+      color: #374151;
+      font-size: 12px;
+      line-height: 1.5;
+      outline: none;
+      resize: vertical;
+    }
+
+    .modal-field textarea:focus,
+    .tariff-renew-body textarea:focus,
+    .inventory-recycle-body textarea:focus,
+    .pool-config-field textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.12);
+    }
+
+    .btn {
+      height: var(--ui-control-height);
+      padding: 0 13px;
+      border-radius: var(--ui-radius);
+      font-size: 12px;
+    }
+
+    .table-toolbar {
+      height: var(--ui-control-height);
+      min-height: var(--ui-control-height);
+      margin-bottom: var(--ui-section-gap);
+      padding: 0 var(--ui-content-padding);
+    }
+
+    .table-area {
+      padding: 0 var(--ui-content-padding) var(--ui-content-padding);
+    }
+
+    thead th {
+      height: var(--ui-table-head-height);
+      padding: 0 10px;
+      font-size: 12px;
+    }
+
+    tbody td,
+    .merchant-table tbody td,
+    .task-table tbody td,
+    .task-detail-table tbody td,
+    .traffic-pool-table tbody td,
+    .warning-strategy-table tbody td,
+    .tariff-addon-table tbody td,
+    .tariff-renewal-table tbody td {
+      height: var(--ui-table-row-height);
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .tariff-base-table tbody td,
+    .tariff-order-table tbody td,
+    .tariff-renewal-detail-table tbody td,
+    .group-management-table tbody td,
+    .approval-table tbody td {
+      height: var(--ui-table-row-multiline-height);
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .pool-selected-table thead th,
+    .pool-picker-modal thead th,
+    .pool-conflict-modal thead th {
+      height: 34px;
+      padding: 0 8px;
+    }
+
+    .pool-selected-table tbody td,
+    .pool-picker-modal tbody td,
+    .pool-conflict-modal tbody td,
+    .approval-people-table tbody td {
+      height: 48px;
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+
+    .tariff-tabs,
+    .tariff-tab {
+      height: var(--ui-tab-height);
+    }
+
+    .pagination {
+      gap: 8px;
+      padding-top: 14px;
+      font-size: 12px;
+    }
+
+    .page-size,
+    .page-btn,
+    .jump {
+      height: var(--ui-compact-height);
+      border-radius: var(--ui-radius);
+      font-size: 12px;
+    }
+
+    .page-btn {
+      min-width: var(--ui-compact-height);
+    }
+
+    .modal-head {
+      height: 52px;
+      padding: 0 20px;
+    }
+
+    .modal-body {
+      padding: 18px 20px;
+    }
+
+    .modal-foot {
+      height: 56px;
+      padding: 0 20px;
+    }
+
+    .pool-config-field input,
+    .pool-config-field select,
+    .pool-input-unit,
+    .pool-selector-trigger {
+      max-height: var(--ui-control-height);
+    }
+
+    .pool-input-unit input {
+      height: 32px;
+    }
+
+    .pool-selector-trigger {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    .pool-selector-trigger::after {
+      top: 12px;
+    }
+
+    .pool-config-foot .btn {
+      height: var(--ui-control-height);
     }
 
     .toast {
@@ -5063,11 +6084,10 @@
               </div>
               <div class="field">
                 <label>激活时间</label>
-                <div class="range-field">
-                  <input class="control" type="text" placeholder="激活开始日期">
-                  <span>至</span>
-                  <input class="control" type="text" placeholder="激活结束日期">
-                </div>
+                <button class="date-range-control js-date-range" type="button" data-start-label="激活开始日期" data-end-label="激活结束日期" data-shortcuts="quick" aria-label="激活时间范围">
+                  <span class="date-range-text"><span class="date-start">激活开始日期</span><span class="date-range-separator">至</span><span class="date-end">激活结束日期</span></span>
+                  <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 11h18"></path></svg>
+                </button>
               </div>
               <div class="field">
                 <label>归属区域</label>
@@ -5427,6 +6447,161 @@
         page: 1,
         pageSize: 20,
         selectedIds: []
+      };
+      var groupManagementState = {
+        filters: {
+          merchantName: "",
+          operatorType: ""
+        },
+        page: 1,
+        pageSize: 20
+      };
+      var groupCatalog = [
+        { id: "group-001", merchantName: "四川坤宝", groupId: "9001772505945042", groupName: "四川坤宝_通用大流量卡_2G/月*12月", rules: { trafficType: "共享流量", activation: "激活后生效", realName: "企业实名", payment: "商户付费", mode: "自然月", testPeriod: "5天", testLimit: "500MB", silence: "30天" }, packageName: "2G/月*12月", scene: "车载终端", delayDays: "0天", remark: "车载设备默认群组", operatorType: "中国移动" },
+        { id: "group-002", merchantName: "鑫立德", groupId: "9001772532341972", groupName: "鑫立德_通用大流量卡_40G/月*12月", rules: { trafficType: "共享流量", activation: "出库后生效", realName: "个人实名", payment: "商户付费", mode: "自然月", testPeriod: "7天", testLimit: "1GB", silence: "60天" }, packageName: "40G/月*12月", scene: "智能终端", delayDays: "1天", remark: "", operatorType: "中国联通" },
+        { id: "group-003", merchantName: "中云图", groupId: "9001771051632774", groupName: "中云图_50GB/月*12月-沉默期5", rules: { trafficType: "独享流量", activation: "激活后生效", realName: "企业实名", payment: "商户付费", mode: "自然月", testPeriod: "5天", testLimit: "300MB", silence: "5天" }, packageName: "50GB/月*12月", scene: "视频监控", delayDays: "0天", remark: "监控设备专用", operatorType: "中国移动" },
+        { id: "group-004", merchantName: "北辰科技", groupId: "9001772538871108", groupName: "北辰科技_设备流量池_20G/月*6月", rules: { trafficType: "共享流量", activation: "首次联网生效", realName: "企业实名", payment: "商户付费", mode: "自然月", testPeriod: "10天", testLimit: "800MB", silence: "90天" }, packageName: "20G/月*6月", scene: "设备联网", delayDays: "2天", remark: "北区设备批量使用", operatorType: "中国电信" },
+        { id: "group-005", merchantName: "华东物流", groupId: "9001772536652301", groupName: "华东物流_车载设备_5G/月*12月", rules: { trafficType: "共享流量", activation: "激活后生效", realName: "企业实名", payment: "商户付费", mode: "自然月", testPeriod: "3天", testLimit: "200MB", silence: "30天" }, packageName: "5G/月*12月", scene: "物流车载", delayDays: "0天", remark: "主卡群组", operatorType: "中国移动" },
+        { id: "group-006", merchantName: "汇联能源", groupId: "9001772537789024", groupName: "汇联能源_IoT通用1G/月*24月", rules: { trafficType: "独享流量", activation: "出库后生效", realName: "企业实名", payment: "商户付费", mode: "自然月", testPeriod: "7天", testLimit: "500MB", silence: "60天" }, packageName: "IoT通用1G/月*24月", scene: "能源表计", delayDays: "1天", remark: "", operatorType: "中国联通" }
+      ];
+      var tariffManagementState = {
+        activeTab: "groupBase",
+        groupBase: {
+          filters: { name: "" },
+          page: 1,
+          pageSize: 20
+        },
+        groupAddon: {
+          filters: { name: "" },
+          page: 1,
+          pageSize: 20
+        },
+        poolAddon: {
+          filters: { name: "" },
+          page: 1,
+          pageSize: 20
+        },
+        groupRenewal: {
+          filters: { name: "" },
+          page: 1,
+          pageSize: 20
+        }
+      };
+      var tariffCreateState = {
+        open: false,
+        packageType: "groupBase",
+        form: {
+          billingType: "",
+          billingCycle: "",
+          cardType: "",
+          trafficType: "",
+          validity: "",
+          traffic: "",
+          trafficUnit: "GB",
+          price: "",
+          remark: ""
+        }
+      };
+      var groupBaseTariffCatalog = [
+        { id: "base-001", name: "通用流量卡-1GB/月*1月", cardType: "实体卡", trafficType: "共享流量", billingType: "按月计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "1GB", validity: "1个月", price: "12.00", remark: "通用基础套餐" },
+        { id: "base-002", name: "通用流量卡-5GB/月*12月", cardType: "实体卡", trafficType: "共享流量", billingType: "按月计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "5GB", validity: "12个月", price: "48.00", remark: "年度基础套餐" },
+        { id: "base-003", name: "车载设备流量卡-20GB/月*6月", cardType: "实体卡", trafficType: "独享流量", billingType: "按周期计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "20GB", validity: "6个月", price: "168.00", remark: "车载设备专用" },
+        { id: "base-004", name: "IoT通用流量卡-1GB/月*24月", cardType: "贴片卡", trafficType: "共享流量", billingType: "按月计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "1GB", validity: "24个月", price: "198.00", remark: "能源设备套餐" },
+        { id: "base-005", name: "视频监控流量卡-50GB/月*12月", cardType: "实体卡", trafficType: "独享流量", billingType: "按月计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "50GB", validity: "12个月", price: "360.00", remark: "视频监控专用" }
+      ];
+      var groupRenewalTariffCatalog = groupBaseTariffCatalog.map(function (item, index) {
+        return Object.assign({}, item, { id: "renewal-" + String(index + 1).padStart(3, "0"), name: "群组续费-" + item.name, packageType: "续费套餐" });
+      });
+      var groupAddonTariffCatalog = [
+        { id: "group-addon-001", name: "群组叠加包-500MB", traffic: "500MB", validity: "当月有效", price: "5.00", remark: "适用于临时扩容" },
+        { id: "group-addon-002", name: "群组叠加包-2GB", traffic: "2GB", validity: "当月有效", price: "15.00", remark: "通用叠加流量" },
+        { id: "group-addon-003", name: "群组叠加包-5GB", traffic: "5GB", validity: "30天", price: "32.00", remark: "设备批量扩容" },
+        { id: "group-addon-004", name: "群组叠加包-10GB", traffic: "10GB", validity: "30天", price: "58.00", remark: "大流量应急包" }
+      ];
+      var poolAddonTariffCatalog = [
+        { id: "pool-addon-001", name: "流量池叠加包-10GB", traffic: "10GB", price: "45.00", remark: "流量池通用叠加包" },
+        { id: "pool-addon-002", name: "流量池叠加包-50GB", traffic: "50GB", price: "180.00", remark: "适用于大规模设备" },
+        { id: "pool-addon-003", name: "流量池叠加包-100GB", traffic: "100GB", price: "320.00", remark: "企业流量池专用" },
+        { id: "pool-addon-004", name: "流量池叠加包-500GB", traffic: "500GB", price: "1280.00", remark: "高用量场景专用" }
+      ];
+      var tariffOrderState = {
+        activeTab: "groupBase",
+        groupBase: { filters: { merchantName: "", groupName: "", packageName: "" }, page: 1, pageSize: 20 },
+        groupAddon: { filters: { merchantName: "", groupName: "", packageName: "" }, page: 1, pageSize: 20 },
+        poolAddon: { filters: { merchantName: "", groupName: "", packageName: "" }, page: 1, pageSize: 20 }
+      };
+      var tariffRenewState = {
+        open: false,
+        mode: "batch",
+        packageType: "base",
+        renewalPackageName: "",
+        iccid: "",
+        fileName: "",
+        remark: ""
+      };
+      var tariffRenewalPageState = {
+        activeTab: "records",
+        filters: {
+          batchNo: "",
+          packageType: "",
+          remark: "",
+          renewalTimeStart: "",
+          renewalTimeEnd: "",
+          renewalStatus: "",
+          creator: ""
+        },
+        page: 1,
+        pageSize: 20,
+        detailBatchNo: "",
+        detailFilters: {
+          batchNo: "",
+          iccid: "",
+          packageId: "",
+          groupId: "",
+          groupName: "",
+          merchantName: "",
+          packageType: "",
+          packageName: "",
+          renewalTime: "",
+          renewalStatus: "",
+          operator: ""
+        },
+        detailPage: 1,
+        detailPageSize: 20
+      };
+      var tariffRenewalRecords = [
+        { batchNo: "RF20260812001", mode: "批量续费", packageType: "当前群组基础套餐", remark: "月度套餐续接", renewalDuration: "12个月", renewalTime: "2026-08-12 10:30", creator: "运营管理员", operator: "运营管理员", packageId: "PKG-B-001", groupId: "9001772505945042", groupName: "四川坤宝_通用大流量卡", merchantName: "四川坤宝", packageName: "通用基础套餐-1GB/月", packageRule: ["套餐计费类型：周期计费", "套餐流量结算周期：月套餐", "套餐类型：基础套餐", "流量：1GB", "套餐金额：12.00元"], renewalStatus: "已续费", items: ["89860423192480374812", "89860423192480374829", "89860423192480374836"] },
+        { batchNo: "RF20260808002", mode: "单卡续费", packageType: "群组续费套餐", remark: "设备续费", renewalDuration: "12个月", renewalTime: "2026-08-08 15:42", creator: "周明", operator: "周明", packageId: "PKG-R-002", groupId: "9001772532341972", groupName: "鑫立德_设备群组", merchantName: "鑫立德", packageName: "群组续费-通用流量卡-5GB/月*12月", packageRule: ["套餐计费类型：按月计费", "套餐流量结算周期：月套餐", "套餐类型：续费套餐", "流量：5GB", "套餐金额：48.00元"], renewalStatus: "已续费", items: ["89860423192480374843"] },
+        { batchNo: "RF20260726003", mode: "批量续费", packageType: "群组续费套餐", remark: "车载设备批量续费", renewalDuration: "6个月", renewalTime: "2026-07-26 09:18", creator: "李青", operator: "李青", packageId: "PKG-R-003", groupId: "9001771051632774", groupName: "中云图_监控设备", merchantName: "中云图", packageName: "群组续费-车载设备流量卡-20GB/月*6月", packageRule: ["套餐计费类型：按周期计费", "套餐流量结算周期：月套餐", "套餐类型：续费套餐", "流量：20GB", "套餐金额：168.00元"], renewalStatus: "取消续费", packageStatus: "已失效", packageInvalidReason: "取消续费", items: ["89860423192480374850", "89860423192480374867"] }
+      ];
+      var cardPackageDetailState = {
+        filters: { operationId: "", iccid: "", groupInfo: "", packageInfo: "", packageType: "", packageStatus: "", effectiveDateStart: "", effectiveDateEnd: "", endDateStart: "", endDateEnd: "", invalidReason: "", createdAtStart: "", createdAtEnd: "", updatedAtStart: "", updatedAtEnd: "" },
+        page: 1,
+        pageSize: 20
+      };
+      var groupPackageIccids = {
+        "9001772505945042": ["8986042310281000123", "8986042310281000124"],
+        "9001772532341972": ["8986042310281000456", "8986042310281000457"],
+        "9001771051632774": ["8986061901128893150", "8986061901128893151"],
+        "9001772538871108": ["8986042310281000789", "8986042310281000790"]
+      };
+      var tariffOrderCatalogs = {
+        groupBase: [
+          { id: "order-base-001", batchNo: "", packageId: "PKG-B-001", groupId: "9001772505945042", groupName: "四川坤宝_通用大流量卡", merchantName: "四川坤宝", packageName: "通用基础套餐-1GB/月", rule: ["套餐计费类型：周期计费", "套餐流量结算周期：月套餐", "套餐类型：基础套餐", "流量：1GB", "套餐金额：12.00元"], validity: "12个月", orderTime: "2026-06-01 10:20", remark: "默认基础套餐", status: "已订购" },
+          { id: "order-base-002", batchNo: "", packageId: "PKG-B-002", groupId: "9001772532341972", groupName: "鑫立德_设备群组", merchantName: "鑫立德", packageName: "通用基础套餐-5GB/月", rule: ["套餐计费类型：自然月计费", "套餐流量结算周期：月套餐", "套餐类型：基础套餐", "流量：5GB", "套餐金额：48.00元"], validity: "12个月", orderTime: "2026-05-28 15:08", remark: "年度套餐", status: "已订购" },
+          { id: "order-base-003", batchNo: "", packageId: "PKG-B-003", groupId: "9001771051632774", groupName: "中云图_监控设备", merchantName: "中云图", packageName: "视频监控基础套餐-50GB/月", rule: ["套餐计费类型：周期计费", "套餐流量结算周期：月套餐", "套餐类型：基础套餐", "流量：50GB", "套餐金额：360.00元"], validity: "12个月", orderTime: "2026-05-20 09:42", remark: "", status: "已退订" },
+          { id: "order-base-004", batchNo: "", packageId: "PKG-B-004", groupId: "9001772538871108", groupName: "北辰科技_设备流量池", merchantName: "北辰科技", packageName: "车载设备基础套餐-20GB/月", rule: ["套餐计费类型：周期计费", "套餐流量结算周期：月套餐", "套餐类型：基础套餐", "流量：20GB", "套餐金额：168.00元"], validity: "6个月", orderTime: "2026-05-12 13:16", remark: "车载设备专用", status: "待生效" }
+        ],
+        groupAddon: [
+          { id: "order-group-addon-001", batchNo: "B20260601001", packageId: "PKG-GA-001", groupId: "9001772505945042", groupName: "四川坤宝_通用大流量卡", merchantName: "四川坤宝", packageName: "群组叠加包-2GB", rule: ["流量：2GB", "套餐金额：15.00元"], cycle: "当月有效", orderTime: "2026-06-01 11:04", remark: "临时扩容", status: "已订购" },
+          { id: "order-group-addon-002", batchNo: "B20260528002", packageId: "PKG-GA-002", groupId: "9001772532341972", groupName: "鑫立德_设备群组", merchantName: "鑫立德", packageName: "群组叠加包-5GB", rule: ["流量：5GB", "套餐金额：32.00元"], cycle: "30天", orderTime: "2026-05-28 16:35", remark: "设备批量扩容", status: "已订购" },
+          { id: "order-group-addon-003", batchNo: "B20260520003", packageId: "PKG-GA-003", groupId: "9001771051632774", groupName: "中云图_监控设备", merchantName: "中云图", packageName: "群组叠加包-10GB", rule: ["流量：10GB", "套餐金额：58.00元"], cycle: "30天", orderTime: "2026-05-20 10:10", remark: "", status: "已失效" }
+        ],
+        poolAddon: [
+          { id: "order-pool-addon-001", packageId: "PKG-PA-001", groupId: "9001772505945042", groupName: "四川坤宝_通用大流量卡", merchantName: "四川坤宝", poolName: "2G/月*12月", packageName: "流量池叠加包-10GB", orderTime: "2026-06-01 11:40", remark: "流量池扩容", status: "已订购" },
+          { id: "order-pool-addon-002", packageId: "PKG-PA-002", groupId: "9001772532341972", groupName: "鑫立德_设备群组", merchantName: "鑫立德", poolName: "40G/月*12月", packageName: "流量池叠加包-50GB", orderTime: "2026-05-28 17:20", remark: "大规模设备", status: "已订购" },
+          { id: "order-pool-addon-003", packageId: "PKG-PA-003", groupId: "9001771051632774", groupName: "中云图_监控设备", merchantName: "中云图", poolName: "中云图50GB/月*12月", packageName: "流量池叠加包-100GB", orderTime: "2026-05-20 10:48", remark: "", status: "已退订" }
+        ]
       };
       var trafficPoolAccounts = [
         { id: "acct-01", account: "ops_admin", name: "周明", phone: "13800138101" },
@@ -5828,6 +7003,18 @@
           <div class="nav-group">
             <button class="nav-item js-nav-toggle" type="button" aria-expanded="true">
               <span class="nav-label">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h10"></path><circle cx="18" cy="18" r="2"></circle></svg>
+                群组中心
+              </span>
+              <svg class="collapse-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg>
+            </button>
+            <div class="sub-menu">
+              <a class="sub-item ${activePage === "group" ? "current" : ""} js-group-page" href="#">群组管理</a>
+            </div>
+          </div>
+          <div class="nav-group">
+            <button class="nav-item js-nav-toggle" type="button" aria-expanded="true">
+              <span class="nav-label">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 9h8"></path><path d="M8 13h5"></path><path d="M17 17h.01"></path></svg>
                 通信管理
               </span>
@@ -5847,6 +7034,21 @@
             </button>
             <div class="sub-menu">
               <a class="sub-item ${activePage === "trafficPool" ? "current" : ""} js-traffic-pool-page" href="#">流量池管理</a>
+            </div>
+          </div>
+          <div class="nav-group">
+            <button class="nav-item js-nav-toggle" type="button" aria-expanded="true">
+              <span class="nav-label">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16"></path><path d="M6 5v14"></path><path d="M18 5v14"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg>
+                资费中心
+              </span>
+              <svg class="collapse-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg>
+            </button>
+            <div class="sub-menu">
+              <a class="sub-item ${activePage === "tariff" ? "current" : ""} js-tariff-page" href="#">套餐管理</a>
+              <a class="sub-item ${activePage === "tariffOrder" ? "current" : ""} js-tariff-order-page" href="#">套餐订购</a>
+              <a class="sub-item ${activePage === "tariffRenewal" ? "current" : ""} js-tariff-renewal-page" href="#">套餐续费</a>
+              <a class="sub-item ${activePage === "cardPackageDetail" ? "current" : ""} js-card-package-detail-page" href="#">流量卡套餐详情</a>
             </div>
           </div>
           <div class="nav-group">
@@ -6410,6 +7612,1294 @@
             <span>页</span>
           </div>
         `;
+      }
+
+      function getFilteredGroupRows() {
+        var filters = groupManagementState.filters;
+        return groupCatalog.filter(function (group) {
+          var merchantMatched = !filters.merchantName || group.merchantName.indexOf(filters.merchantName) !== -1;
+          var operatorMatched = !filters.operatorType || group.operatorType === filters.operatorType;
+          return merchantMatched && operatorMatched;
+        });
+      }
+
+      function getGroupRuleHtml(group) {
+        var rules = group.rules;
+        return `
+          <div class="cell-stack group-rule-stack">
+            <div><span class="cell-key">流量类型</span> ${escapeHtml(rules.trafficType)}</div>
+            <div><span class="cell-key">套餐生效方式</span> ${escapeHtml(rules.activation)}</div>
+            <div><span class="cell-key">实名方式</span> ${escapeHtml(rules.realName)}</div>
+            <div><span class="cell-key">付费方式</span> ${escapeHtml(rules.payment)}</div>
+            <div><span class="cell-key">流量模式</span> ${escapeHtml(rules.mode)}</div>
+            <div><span class="cell-key">测试期</span> ${escapeHtml(rules.testPeriod)}</div>
+            <div><span class="cell-key">测试期流量上限</span> ${escapeHtml(rules.testLimit)}</div>
+            <div><span class="cell-key">沉默期</span> ${escapeHtml(rules.silence)}</div>
+          </div>
+        `;
+      }
+
+      function getGroupManagementRowsHtml() {
+        var rows = getFilteredGroupRows();
+        var page = clampPage(groupManagementState.page, rows.length, groupManagementState.pageSize);
+        groupManagementState.page = page;
+        var pageRows = getPagedItems(rows, page, groupManagementState.pageSize);
+        if (!rows.length) return getEmptyTableRowHtml(10);
+        return pageRows.map(function (group, index) {
+          var serialNumber = (page - 1) * groupManagementState.pageSize + index + 1;
+          return `
+            <tr data-id="${escapeHtml(group.id)}">
+              <td>${serialNumber}</td>
+              <td>${escapeHtml(group.merchantName)}</td>
+              <td>${escapeHtml(group.groupId)}</td>
+              <td><span>${escapeHtml(group.groupName)}</span></td>
+              <td>${getGroupRuleHtml(group)}</td>
+              <td>${escapeHtml(group.packageName)}</td>
+              <td>${escapeHtml(group.scene)}</td>
+              <td>${escapeHtml(group.delayDays)}</td>
+              <td>${escapeHtml(group.remark || "--")}</td>
+              <td><div class="row-actions"><button type="button" class="js-group-row-action" data-action="详情" data-id="${escapeHtml(group.id)}">详情</button><button type="button" class="js-group-row-action" data-action="编辑" data-id="${escapeHtml(group.id)}">编辑</button><button type="button" class="js-group-row-action danger" data-action="删除" data-id="${escapeHtml(group.id)}">删除</button></div></td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function getGroupManagementPaginationHtml() {
+        var rows = getFilteredGroupRows();
+        var page = clampPage(groupManagementState.page, rows.length, groupManagementState.pageSize);
+        groupManagementState.page = page;
+        return `
+          <div class="pagination group-management-pagination">
+            <span>共 ${rows.length} 条</span>
+            <select class="page-size js-group-page-size" aria-label="群组管理每页条数">${getPageSizeOptions(groupManagementState.pageSize)}</select>
+            <button class="page-btn js-group-prev" type="button">上一页</button>
+            ${getCompactPaginationButtons(page, getPageCount(rows.length, groupManagementState.pageSize), "js-group-page-btn")}
+            <button class="page-btn js-group-next" type="button">下一页</button>
+            <span>跳至</span><input class="jump js-group-jump" type="text" value="${page}" aria-label="群组管理跳转页码"><span>页</span>
+          </div>
+        `;
+      }
+
+      function getGroupManagementMainHtml() {
+        return `
+          <section class="content-card group-management-page">
+            <div class="filters"><div class="filter-grid group-filter-grid">
+              <div class="field"><label for="groupMerchantFilter">商户名称</label><div class="clearable-wrap ${groupManagementState.filters.merchantName ? "has-value" : ""}"><input id="groupMerchantFilter" class="control js-group-filter-merchant" type="text" value="${escapeHtml(groupManagementState.filters.merchantName || "")}" placeholder="请输入商户名称"><button class="clear-control" type="button" aria-label="清除商户名称">×</button></div></div>
+              <div class="field"><label for="groupOperatorFilter">运营商类型</label><div class="select-wrap"><select id="groupOperatorFilter" class="js-group-filter-operator"><option value="" disabled hidden>运营商类型</option><option ${groupManagementState.filters.operatorType === "中国移动" ? "selected" : ""}>中国移动</option><option ${groupManagementState.filters.operatorType === "中国联通" ? "selected" : ""}>中国联通</option><option ${groupManagementState.filters.operatorType === "中国电信" ? "selected" : ""}>中国电信</option></select></div></div>
+              <div class="filter-actions"><button class="btn primary js-group-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-group-reset" type="button">重置</button></div>
+            </div></div>
+            <div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-group-create" type="button">群组新增</button></div></div>
+            <div class="table-area"><div class="table-scroll" role="region" aria-label="群组管理列表" tabindex="0"><table class="group-management-table"><thead><tr><th style="width: 68px;">序号</th><th style="width: 120px;">商户名称</th><th style="width: 150px;">群组ID</th><th style="width: 250px;">群组名称</th><th style="width: 390px;">群组规则</th><th style="width: 160px;">关联套餐</th><th style="width: 120px;">使用场景</th><th style="width: 110px;">延期生效天数</th><th style="width: 170px;">备注</th><th style="width: 120px;">操作</th></tr></thead><tbody>${getGroupManagementRowsHtml()}</tbody></table></div>${getGroupManagementPaginationHtml()}</div>
+            <div class="modal-overlay js-group-delete-modal" aria-hidden="true">
+              <section class="approval-confirm-modal group-delete-confirm" role="alertdialog" aria-modal="true" aria-labelledby="groupDeleteTitle">
+                <div class="modal-head">
+                  <div id="groupDeleteTitle" class="modal-title">删除群组确认</div>
+                  <button class="modal-close js-close-group-delete" type="button" aria-label="关闭">×</button>
+                </div>
+                <div class="modal-body">
+                  <div class="approval-confirm-message js-group-delete-message"></div>
+                </div>
+                <div class="modal-foot">
+                  <button class="btn js-cancel-group-delete" type="button">取消</button>
+                  <button class="btn danger js-confirm-group-delete" type="button">确认删除</button>
+                </div>
+              </section>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderGroupManagementPage() {
+        document.querySelector(".main").innerHTML = getGroupManagementMainHtml();
+        bindGroupManagementControls(document.querySelector(".main"));
+      }
+
+      function bindGroupManagementControls(root) {
+        var page = (root || document).querySelector(".group-management-page");
+        if (!page) return;
+        bindClearableControls(page);
+        var merchantInput = page.querySelector(".js-group-filter-merchant");
+        var operatorSelect = page.querySelector(".js-group-filter-operator");
+        page.querySelector(".js-group-search").addEventListener("click", function () {
+          groupManagementState.filters.merchantName = merchantInput.value.trim();
+          groupManagementState.filters.operatorType = operatorSelect.value || "";
+          groupManagementState.page = 1;
+          renderGroupManagementPage();
+          showToast("查询成功");
+        });
+        page.querySelector(".js-group-reset").addEventListener("click", function () {
+          groupManagementState.filters.merchantName = "";
+          groupManagementState.filters.operatorType = "";
+          groupManagementState.page = 1;
+          renderGroupManagementPage();
+          showToast("重置成功");
+        });
+        page.querySelector(".js-group-create").addEventListener("click", function () { showToast("群组新增入口已打开"); });
+        var deleteModal = page.querySelector(".js-group-delete-modal");
+        var deleteMessage = page.querySelector(".js-group-delete-message");
+        var deleteTargetId = "";
+        function closeGroupDeleteModal() {
+          deleteTargetId = "";
+          deleteModal.classList.remove("show");
+          deleteModal.setAttribute("aria-hidden", "true");
+        }
+        function openGroupDeleteModal(groupId) {
+          var group = groupCatalog.find(function (item) { return item.id === groupId; });
+          if (!group) return;
+          deleteTargetId = groupId;
+          deleteMessage.textContent = "删除“" + group.groupName + "”后无法恢复，群组关联配置也将被移除，请确认是否继续删除？";
+          deleteModal.classList.add("show");
+          deleteModal.setAttribute("aria-hidden", "false");
+        }
+        page.querySelectorAll(".js-group-row-action").forEach(function (button) {
+          button.addEventListener("click", function () {
+            if (button.dataset.action === "删除") {
+              openGroupDeleteModal(button.dataset.id);
+              return;
+            }
+            showToast(button.dataset.action + "入口已打开");
+          });
+        });
+        page.querySelector(".js-close-group-delete").addEventListener("click", closeGroupDeleteModal);
+        page.querySelector(".js-cancel-group-delete").addEventListener("click", closeGroupDeleteModal);
+        page.querySelector(".js-confirm-group-delete").addEventListener("click", function () {
+          if (!deleteTargetId) return;
+          groupCatalog = groupCatalog.filter(function (item) { return item.id !== deleteTargetId; });
+          closeGroupDeleteModal();
+          renderGroupManagementPage();
+          showToast("删除成功", { force: true });
+        });
+        deleteModal.addEventListener("click", function (event) {
+          if (event.target === deleteModal) closeGroupDeleteModal();
+        });
+        page.querySelectorAll(".js-group-page-btn").forEach(function (button) { button.addEventListener("click", function () { groupManagementState.page = Number(button.dataset.page) || 1; renderGroupManagementPage(); }); });
+        page.querySelector(".js-group-prev").addEventListener("click", function () { groupManagementState.page = Math.max(1, groupManagementState.page - 1); renderGroupManagementPage(); });
+        page.querySelector(".js-group-next").addEventListener("click", function () { groupManagementState.page = Math.min(getPageCount(getFilteredGroupRows().length, groupManagementState.pageSize), groupManagementState.page + 1); renderGroupManagementPage(); });
+        page.querySelector(".js-group-page-size").addEventListener("change", function (event) { groupManagementState.pageSize = Number(event.target.value) || 20; groupManagementState.page = 1; renderGroupManagementPage(); });
+        page.querySelector(".js-group-jump").addEventListener("keydown", function (event) { if (event.key === "Enter") { groupManagementState.page = clampPage(event.target.value, getFilteredGroupRows().length, groupManagementState.pageSize); renderGroupManagementPage(); } });
+      }
+
+      function resetTariffCreateForm(packageType) {
+        tariffCreateState.open = true;
+        tariffCreateState.packageType = packageType || "groupBase";
+        tariffCreateState.form = {
+          billingType: "",
+          billingCycle: "",
+          cardType: "",
+          trafficType: "",
+          validity: "",
+          traffic: "",
+          trafficUnit: "GB",
+          price: "",
+          remark: ""
+        };
+      }
+
+      function getTariffCreatePackageLabel(packageType) {
+        return packageType === "groupAddon" ? "群组叠加包套餐" : packageType === "poolAddon" ? "流量池叠加包套餐" : packageType === "groupRenewal" ? "群组续费套餐" : "群组基础套餐";
+      }
+
+      function getTariffCreateCycleUnit() {
+        return tariffCreateState.form.billingCycle === "日套餐" ? "天" : tariffCreateState.form.billingCycle === "年套餐" ? "年" : "月";
+      }
+
+      function getTariffInputWithUnitHtml(inputClass, value, placeholder, unitHtml) {
+        return '<div class="input-with-unit"><input class="' + inputClass + '" type="text" value="' + escapeHtml(value || "") + '" placeholder="' + placeholder + '">' + unitHtml + '</div>';
+      }
+
+      function getTariffCreateBaseFieldsHtml() {
+        var form = tariffCreateState.form;
+        return '<div class="modal-field"><label for="tariffBillingType"><span class="required-mark">*</span>套餐计费类型</label><select id="tariffBillingType" class="js-tariff-form-billing-type"><option value="" selected disabled hidden>请选择套餐计费类型</option><option ' + (form.billingType === "周期计费" ? "selected" : "") + '>周期计费</option><option ' + (form.billingType === "自然月计费" ? "selected" : "") + '>自然月计费</option></select></div>' +
+          '<div class="modal-field"><label for="tariffBillingCycle"><span class="required-mark">*</span>套餐流量结算周期</label><select id="tariffBillingCycle" class="js-tariff-form-billing-cycle"><option value="" selected disabled hidden>请选择结算周期</option><option ' + (form.billingCycle === "日套餐" ? "selected" : "") + '>日套餐</option><option ' + (form.billingCycle === "月套餐" ? "selected" : "") + '>月套餐</option><option ' + (form.billingCycle === "年套餐" ? "selected" : "") + '>年套餐</option></select></div>' +
+          '<div class="modal-field"><label for="tariffCardType"><span class="required-mark">*</span>卡板类型</label><select id="tariffCardType" class="js-tariff-form-card-type"><option value="" selected disabled hidden>请选择卡板类型</option><option ' + (form.cardType === "流量卡" ? "selected" : "") + '>流量卡</option><option ' + (form.cardType === "语音卡" ? "selected" : "") + '>语音卡</option></select></div>' +
+          '<div class="modal-field"><label for="tariffTrafficType"><span class="required-mark">*</span>流量类型</label><select id="tariffTrafficType" class="js-tariff-form-traffic-type"><option value="" selected disabled hidden>请选择流量类型</option><option ' + (form.trafficType === "定向流量" ? "selected" : "") + '>定向流量</option><option ' + (form.trafficType === "通用流量" ? "selected" : "") + '>通用流量</option></select></div>' +
+          '<div class="modal-field"><label for="tariffValidity"><span class="required-mark">*</span>套餐时效</label>' + getTariffInputWithUnitHtml('js-tariff-form-validity', form.validity, '请输入套餐时效', '<span class="input-unit">' + getTariffCreateCycleUnit() + '</span>') + '</div>' +
+          '<div class="modal-field"><label for="tariffTraffic"><span class="required-mark">*</span>流量</label>' + getTariffInputWithUnitHtml('js-tariff-form-traffic', form.traffic, '请输入流量', '<select class="js-tariff-form-traffic-unit" aria-label="流量单位"><option ' + (form.trafficUnit === "MB" ? "selected" : "") + '>MB</option><option ' + (form.trafficUnit === "GB" ? "selected" : "") + '>GB</option></select>') + '</div>' +
+          '<div class="modal-field"><label for="tariffPrice"><span class="required-mark">*</span>套餐金额</label>' + getTariffInputWithUnitHtml('js-tariff-form-price', form.price, '请输入套餐金额', '<span class="input-unit">元</span>') + '</div>' +
+          '<div class="modal-field full"><label for="tariffRemark">备注</label><textarea id="tariffRemark" class="js-tariff-form-remark" placeholder="请输入备注">' + escapeHtml(form.remark || "") + '</textarea></div>';
+      }
+
+      function getTariffCreateAddonFieldsHtml(packageType) {
+        var form = tariffCreateState.form;
+        var trafficType = packageType === "poolAddon" ? '<div class="modal-field"><label for="tariffAddonTrafficType">流量类型</label><select id="tariffAddonTrafficType" class="js-tariff-form-traffic-type"><option value="" selected disabled hidden>请选择流量类型</option><option ' + (form.trafficType === "定向流量" ? "selected" : "") + '>定向流量</option><option ' + (form.trafficType === "通用流量" ? "selected" : "") + '>通用流量</option></select></div>' : '';
+        return trafficType + '<div class="modal-field"><label for="tariffAddonTraffic">流量</label>' + getTariffInputWithUnitHtml('js-tariff-form-traffic', form.traffic, '请输入流量', '<select class="js-tariff-form-traffic-unit" aria-label="流量单位"><option ' + (form.trafficUnit === "MB" ? "selected" : "") + '>MB</option><option ' + (form.trafficUnit === "GB" ? "selected" : "") + '>GB</option></select>') + '</div><div class="modal-field"><label for="tariffAddonPrice">套餐金额</label>' + getTariffInputWithUnitHtml('js-tariff-form-price', form.price, '请输入套餐金额', '<span class="input-unit">元</span>') + '</div><div class="modal-field full"><label for="tariffAddonRemark">备注</label><textarea id="tariffAddonRemark" class="js-tariff-form-remark" placeholder="请输入备注">' + escapeHtml(form.remark || "") + '</textarea></div>';
+      }
+
+      function syncTariffCreateFormColors(modal) {
+        if (!modal) return;
+        modal.querySelectorAll('input, textarea, select').forEach(function (control) {
+          control.classList.toggle('has-value', Boolean((control.value || '').trim()));
+        });
+      }
+
+      function getTariffCreateModalHtml() {
+        var packageType = tariffCreateState.packageType;
+        var formFields = packageType === "groupBase" || packageType === "groupRenewal" ? getTariffCreateBaseFieldsHtml() : getTariffCreateAddonFieldsHtml(packageType);
+        return '<div class="modal-overlay tariff-create-modal-overlay ' + (tariffCreateState.open ? 'show' : '') + ' js-tariff-create-modal" aria-hidden="' + (tariffCreateState.open ? 'false' : 'true') + '"><section class="tariff-create-modal" role="dialog" aria-modal="true" aria-labelledby="tariffCreateTitle"><div class="modal-head"><div id="tariffCreateTitle" class="modal-title">套餐新增</div><button class="modal-close js-close-tariff-create" type="button" aria-label="关闭套餐新增">×</button></div><div class="modal-body"><div class="modal-grid"><div class="modal-field full"><label for="tariffPackageType"><span class="required-mark">*</span>套餐类型</label><select id="tariffPackageType" class="js-tariff-form-package-type"><option value="groupBase" ' + (packageType === "groupBase" ? "selected" : "") + '>群组基础套餐</option><option value="groupRenewal" ' + (packageType === "groupRenewal" ? "selected" : "") + '>群组续费套餐</option><option value="groupAddon" ' + (packageType === "groupAddon" ? "selected" : "") + '>群组叠加包套餐</option><option value="poolAddon" ' + (packageType === "poolAddon" ? "selected" : "") + '>流量池叠加包套餐</option></select></div>' + formFields + '</div></div><div class="modal-foot"><button class="btn js-cancel-tariff-create" type="button">取消</button><button class="btn primary js-confirm-tariff-create" type="button">确认</button></div></section></div>';
+      }
+
+      function collectTariffCreateForm(modal) {
+        var form = tariffCreateState.form;
+        var getValue = function (selector) { var input = modal.querySelector(selector); return input ? input.value.trim() : ""; };
+        form.billingType = getValue('.js-tariff-form-billing-type');
+        form.billingCycle = getValue('.js-tariff-form-billing-cycle');
+        form.cardType = getValue('.js-tariff-form-card-type');
+        form.trafficType = getValue('.js-tariff-form-traffic-type');
+        form.validity = getValue('.js-tariff-form-validity');
+        form.traffic = getValue('.js-tariff-form-traffic');
+        form.price = getValue('.js-tariff-form-price');
+        form.remark = getValue('.js-tariff-form-remark');
+        var unit = modal.querySelector('.js-tariff-form-traffic-unit');
+        if (unit) form.trafficUnit = unit.value;
+      }
+
+      function saveTariffCreateForm(modal) {
+        collectTariffCreateForm(modal);
+        var form = tariffCreateState.form;
+        var required = tariffCreateState.packageType === "groupBase" || tariffCreateState.packageType === "groupRenewal" ? [form.billingType, form.billingCycle, form.cardType, form.trafficType, form.validity, form.traffic, form.price] : [];
+        if (required.some(function (value) { return !value; })) {
+          showToast("请完善必填项", { force: true });
+          return;
+        }
+        var suffix = form.traffic + form.trafficUnit;
+        if (tariffCreateState.packageType === "groupBase" || tariffCreateState.packageType === "groupRenewal") {
+          var targetCatalog = tariffCreateState.packageType === "groupRenewal" ? groupRenewalTariffCatalog : groupBaseTariffCatalog;
+          var label = tariffCreateState.packageType === "groupRenewal" ? "群组续费套餐-" : "群组基础套餐-";
+          targetCatalog.push({ id: (tariffCreateState.packageType === "groupRenewal" ? "renewal-" : "base-") + Date.now(), name: label + suffix, cardType: form.cardType, trafficType: form.trafficType, billingType: form.billingType, billingCycle: form.billingCycle, packageType: tariffCreateState.packageType === "groupRenewal" ? "续费套餐" : "基础套餐", traffic: suffix, validity: form.validity + getTariffCreateCycleUnit(), price: form.price, remark: form.remark });
+        } else if (tariffCreateState.packageType === "groupAddon") {
+          groupAddonTariffCatalog.push({ id: "group-addon-" + Date.now(), name: "群组叠加包-" + suffix, traffic: suffix, validity: form.validity ? form.validity + "月" : "当月有效", price: form.price, remark: form.remark });
+        } else {
+          poolAddonTariffCatalog.push({ id: "pool-addon-" + Date.now(), name: "流量池叠加包-" + suffix, trafficType: form.trafficType, traffic: suffix, price: form.price, remark: form.remark });
+        }
+        tariffCreateState.open = false;
+        renderTariffManagementPage();
+        showToast("新增成功", { force: true });
+      }
+
+      function bindTariffCreateModal(page) {
+        var modal = page.querySelector('.js-tariff-create-modal');
+        if (!modal) return;
+        enhanceSelectControls(modal);
+        syncTariffCreateFormColors(modal);
+        page.querySelectorAll('.js-tariff-create, .js-addon-create').forEach(function (button) {
+          button.addEventListener('click', function () {
+            resetTariffCreateForm(tariffManagementState.activeTab);
+            renderTariffManagementPage();
+          });
+        });
+        modal.addEventListener('input', function () {
+          syncTariffCreateFormColors(modal);
+        });
+        modal.addEventListener('click', function (event) {
+          if (event.target === modal || event.target.closest('.js-close-tariff-create') || event.target.closest('.js-cancel-tariff-create')) {
+            tariffCreateState.open = false;
+            renderTariffManagementPage();
+            return;
+          }
+          if (event.target.closest('.js-confirm-tariff-create')) saveTariffCreateForm(modal);
+        });
+        modal.addEventListener('change', function (event) {
+          if (event.target.matches('.js-tariff-form-package-type')) {
+            collectTariffCreateForm(modal);
+            tariffCreateState.packageType = event.target.value;
+            renderTariffManagementPage();
+            return;
+          }
+          if (event.target.matches('.js-tariff-form-billing-cycle')) {
+            collectTariffCreateForm(modal);
+            renderTariffManagementPage();
+          }
+        });
+      }
+
+      function getGroupBaseTariffConfig(tabId) {
+        var id = tabId || "groupBase";
+        return { state: tariffManagementState[id], catalog: id === "groupRenewal" ? groupRenewalTariffCatalog : groupBaseTariffCatalog };
+      }
+
+      function getFilteredGroupBaseTariffs(tabId) {
+        var config = getGroupBaseTariffConfig(tabId);
+        var keyword = (config.state.filters.name || "").trim().toLowerCase();
+        if (!keyword) return config.catalog.slice();
+        return config.catalog.filter(function (item) {
+          return matchesTariffPackageLookup(keyword, item);
+        });
+      }
+
+      function getTariffPackageLookupOptions(catalog) {
+        return (catalog || []).map(function (item) {
+          return '<option value="(' + escapeHtml(item.id) + ')' + escapeHtml(item.name) + '"></option>';
+        }).join('');
+      }
+
+      function matchesTariffPackageLookup(keyword, item) {
+        if (!keyword) return true;
+        var normalized = String(keyword).toLowerCase();
+        var id = String(item.id || '').toLowerCase();
+        var name = String(item.name || '').toLowerCase();
+        return id.indexOf(normalized) !== -1 || name.indexOf(normalized) !== -1 || ('(' + id + ')' + name).indexOf(normalized) !== -1;
+      }
+
+      function getTariffStackHtml(items) {
+        return '<div class="cell-stack tariff-cell-stack">' + items.map(function (item) {
+          return '<div class="cell-line">' + escapeHtml(item) + '</div>';
+        }).join('') + '</div>';
+      }
+
+      function getTariffAddonConfig(tabId) {
+        return tabId === "groupAddon" ? {
+          state: tariffManagementState.groupAddon,
+          catalog: groupAddonTariffCatalog,
+          tableClass: "group-addon-table",
+          ariaLabel: "群组叠加包套餐列表",
+          emptyColspan: 7,
+          headers: ["套餐ID", "套餐名称", "流量", "套餐时效", "金额（元）", "备注", "操作"]
+        } : {
+          state: tariffManagementState.poolAddon,
+          catalog: poolAddonTariffCatalog,
+          tableClass: "pool-addon-table",
+          ariaLabel: "流量池叠加包套餐列表",
+          emptyColspan: 6,
+          headers: ["套餐ID", "套餐名称", "流量", "金额（元）", "备注", "操作"]
+        };
+      }
+
+      function getFilteredTariffAddons(tabId) {
+        var config = getTariffAddonConfig(tabId);
+        var keyword = (config.state.filters.name || "").trim().toLowerCase();
+        if (!keyword) return config.catalog.slice();
+        return config.catalog.filter(function (item) { return matchesTariffPackageLookup(keyword, item); });
+      }
+
+      function getTariffAddonRowsHtml(tabId) {
+        var config = getTariffAddonConfig(tabId);
+        var rows = getFilteredTariffAddons(tabId);
+        var start = (config.state.page - 1) * config.state.pageSize;
+        var pageRows = rows.slice(start, start + config.state.pageSize);
+        if (!pageRows.length) return '<tr><td class="empty-cell" colspan="' + config.emptyColspan + '"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
+        return pageRows.map(function (item) {
+          var cells = [
+            escapeHtml(item.id),
+            escapeHtml(item.name),
+            escapeHtml(item.traffic)
+          ];
+          if (tabId === "groupAddon") cells.push(escapeHtml(item.validity));
+          cells.push(escapeHtml(item.price), escapeHtml(item.remark || "--"), '<div class="row-actions"><button class="text-action js-tariff-edit" type="button" data-id="' + item.id + '">编辑</button></div>');
+          return '<tr>' + cells.map(function (cell) { return '<td>' + cell + '</td>'; }).join('') + '</tr>';
+        }).join('');
+      }
+
+      function getTariffAddonPaginationHtml(tabId) {
+        var config = getTariffAddonConfig(tabId);
+        var total = getFilteredTariffAddons(tabId).length;
+        var pageCount = getPageCount(total, config.state.pageSize);
+        var page = Math.min(config.state.page, pageCount);
+        var pages = [];
+        for (var i = 1; i <= pageCount; i += 1) pages.push(i);
+        return '<div class="pagination tariff-pagination"><span>共 ' + total + ' 条</span><select class="page-size js-addon-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (config.state.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-addon-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + pages.map(function (number) { return '<button class="page-btn js-addon-page-btn ' + (number === page ? 'current' : '') + '" type="button" data-page="' + number + '">' + number + '</button>'; }).join('') + '<button class="page-btn js-addon-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-addon-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span></div>';
+      }
+
+      function getTariffAddonContentHtml(tabId) {
+        var config = getTariffAddonConfig(tabId);
+        var widths = tabId === "groupAddon" ? [150, 260, 140, 140, 140, 220, 86] : [150, 280, 160, 140, 240, 86];
+        return '<div class="tariff-addon-page"><div class="filters"><div class="filter-grid tariff-addon-filter-grid"><div class="field"><label for="addonTariffNameFilter">套餐信息</label><input id="addonTariffNameFilter" class="control js-addon-name-filter" type="text" list="tariff-addon-package-options" autocomplete="off" value="' + escapeHtml(config.state.filters.name) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="tariff-addon-package-options">' + getTariffPackageLookupOptions(config.catalog) + '</datalist></div><div class="filter-actions"><button class="btn primary js-addon-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-addon-reset" type="button">重置</button></div></div></div><div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-addon-create" type="button">套餐新增</button></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="' + config.ariaLabel + '" tabindex="0"><table class="tariff-addon-table ' + config.tableClass + '"><thead><tr>' + config.headers.map(function (header, index) { return '<th style="width: ' + widths[index] + 'px;">' + header + '</th>'; }).join('') + '</tr></thead><tbody>' + getTariffAddonRowsHtml(tabId) + '</tbody></table></div>' + getTariffAddonPaginationHtml(tabId) + '</div></div>';
+      }
+
+      function bindTariffAddonControls(page, tabId) {
+        var config = getTariffAddonConfig(tabId);
+        var input = page.querySelector('.js-addon-name-filter');
+        var search = page.querySelector('.js-addon-search');
+        var reset = page.querySelector('.js-addon-reset');
+        var clear = page.querySelector('.clear-control');
+        if (input && search) {
+          search.addEventListener('click', function () { config.state.filters.name = input.value.trim(); config.state.page = 1; renderTariffManagementPage(); showToast('查询成功'); });
+          input.addEventListener('keydown', function (event) { if (event.key === 'Enter') search.click(); });
+        }
+        if (reset) reset.addEventListener('click', function () { config.state.filters.name = ''; config.state.page = 1; renderTariffManagementPage(); showToast('重置成功'); });
+        if (clear) clear.addEventListener('click', function () { config.state.filters.name = ''; config.state.page = 1; renderTariffManagementPage(); });
+        page.querySelectorAll('.js-tariff-edit').forEach(function (button) { button.addEventListener('click', function () { showToast('已打开套餐编辑'); }); });
+        page.querySelectorAll('.js-addon-page-btn').forEach(function (button) { button.addEventListener('click', function () { config.state.page = Number(button.dataset.page) || 1; renderTariffManagementPage(); }); });
+        var previous = page.querySelector('.js-addon-prev');
+        var next = page.querySelector('.js-addon-next');
+        if (previous) previous.addEventListener('click', function () { config.state.page = Math.max(1, config.state.page - 1); renderTariffManagementPage(); });
+        if (next) next.addEventListener('click', function () { config.state.page = Math.min(getPageCount(getFilteredTariffAddons(tabId).length, config.state.pageSize), config.state.page + 1); renderTariffManagementPage(); });
+        var pageSize = page.querySelector('.js-addon-page-size');
+        if (pageSize) pageSize.addEventListener('change', function (event) { config.state.pageSize = Number(event.target.value) || 20; config.state.page = 1; renderTariffManagementPage(); });
+        var jump = page.querySelector('.js-addon-jump');
+        if (jump) jump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { config.state.page = clampPage(event.target.value, getFilteredTariffAddons(tabId).length, config.state.pageSize); renderTariffManagementPage(); } });
+      }
+
+      function getFilteredTariffRenewalRecords() {
+        var filters = tariffRenewalPageState.filters;
+        return tariffRenewalRecords.filter(function (item, index) {
+          return (!filters.batchNo || getOperationId(item.renewalTime, index).indexOf(filters.batchNo) !== -1)
+            && (!filters.packageType || item.packageType === filters.packageType)
+            && (!filters.remark || item.remark.indexOf(filters.remark) !== -1)
+            && matchesDateRange(item.renewalTime, filters.renewalTimeStart, filters.renewalTimeEnd)
+            && (!filters.renewalStatus || item.renewalStatus === filters.renewalStatus)
+            && (!filters.creator || item.creator.indexOf(filters.creator) !== -1);
+        });
+      }
+
+      function getTariffRenewalPackageRuleItems(item) {
+        var catalog = item.packageType === '群组续费套餐' ? groupRenewalTariffCatalog : groupBaseTariffCatalog;
+        var source = catalog.find(function (packageItem) { return packageItem.name === item.packageName; });
+        if (!source) return item.packageRule || ['套餐计费类型：--', '套餐计费周期：--', '套餐类型：--', '流量：--', '套餐金额：--'];
+        return [
+          '套餐计费类型：' + (source.billingType || '--'),
+          '套餐计费周期：' + (source.billingCycle || '--'),
+          '套餐类型：' + (source.packageType || '--'),
+          '流量：' + (source.traffic || '--'),
+          '套餐金额：' + (source.price ? source.price + '元' : '--')
+        ];
+      }
+
+      function getTariffRenewalPackageRuleHtml(item) {
+        return getTariffStackHtml(getTariffRenewalPackageRuleItems(item));
+      }
+
+      function getTariffRenewalPackageInfoHtml(item) {
+        return getTariffStackHtml([
+          '套餐ID：' + (item.packageId || '--'),
+          '套餐名称：' + (item.packageName || '--')
+        ]);
+      }
+
+      function getTariffRenewalRecordsRowsHtml() {
+        var rows = getFilteredTariffRenewalRecords();
+        var start = (tariffRenewalPageState.page - 1) * tariffRenewalPageState.pageSize;
+        var pageRows = rows.slice(start, start + tariffRenewalPageState.pageSize);
+        if (!pageRows.length) return '<tr><td class="empty-cell" colspan="10"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐续费记录</div></div></td></tr>';
+        return pageRows.map(function (item) {
+          var operationId = getOperationId(item.renewalTime, tariffRenewalRecords.indexOf(item));
+          var statusClass = item.renewalStatus === '取消续费' ? 'is-cancelled' : 'is-renewed';
+          var action = item.renewalStatus === '已续费' ? '<button class="text-action danger js-tariff-renewal-cancel" type="button" data-operation-id="' + escapeHtml(operationId) + '">取消续费</button>' : '--';
+          return '<tr><td><a class="link js-tariff-renewal-operation-detail" href="#operation-' + escapeHtml(operationId) + '" data-operation-id="' + escapeHtml(operationId) + '">' + escapeHtml(operationId) + '</a></td><td><span class="renewal-status ' + statusClass + '">' + escapeHtml(item.renewalStatus || '已续费') + '</span></td><td>' + escapeHtml(item.mode) + '</td><td>' + escapeHtml(item.packageType) + '</td><td>' + getTariffRenewalPackageInfoHtml(item) + '</td><td>' + getTariffRenewalPackageRuleHtml(item) + '</td><td>' + escapeHtml(item.remark || "--") + '</td><td>' + escapeHtml(item.renewalTime || "--") + '</td><td>' + escapeHtml(item.creator) + '</td><td class="sticky-action">' + action + '</td></tr>';
+        }).join('');
+      }
+
+      function getTariffRenewalRecordsPaginationHtml() {
+        var total = getFilteredTariffRenewalRecords().length;
+        var pageCount = getPageCount(total, tariffRenewalPageState.pageSize);
+        var page = Math.min(tariffRenewalPageState.page, pageCount);
+        var pages = [];
+        for (var i = 1; i <= pageCount; i += 1) pages.push(i);
+        return '<div class="pagination tariff-renewal-pagination"><span>共 ' + total + ' 条</span><select class="page-size js-tariff-renewal-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (tariffRenewalPageState.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-tariff-renewal-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + pages.map(function (number) { return '<button class="page-btn js-tariff-renewal-page-btn ' + (number === page ? 'current' : '') + '" type="button" data-page="' + number + '">' + number + '</button>'; }).join('') + '<button class="page-btn js-tariff-renewal-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-tariff-renewal-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span></div>';
+      }
+
+      function getTariffRenewalDetailRows(record) {
+        if (!record) {
+          return tariffRenewalRecords.reduce(function (allRows, currentRecord) {
+            return allRows.concat(getTariffRenewalDetailRows(currentRecord));
+          }, []);
+        }
+        return (record.items || []).map(function (iccid) {
+          return {
+            batchNo: record.batchNo,
+            iccid: iccid,
+            packageId: record.packageId,
+            groupId: record.groupId,
+            groupName: record.groupName,
+            merchantName: record.merchantName,
+            packageType: record.packageType,
+            packageName: record.packageName,
+            packageRule: record.packageRule || [],
+            renewalDuration: record.renewalDuration,
+            renewalTime: record.renewalTime,
+            renewalStatus: record.renewalStatus || "续费成功",
+            operator: record.operator || record.creator
+          };
+        });
+      }
+
+      function getFilteredTariffRenewalDetailRows(record) {
+        var filters = tariffRenewalPageState.detailFilters;
+        return getTariffRenewalDetailRows(record).filter(function (item) {
+          return (!filters.batchNo || item.batchNo.indexOf(filters.batchNo) !== -1)
+            && (!filters.iccid || item.iccid.indexOf(filters.iccid) !== -1)
+            && (!filters.packageId || item.packageId.indexOf(filters.packageId) !== -1)
+            && (!filters.groupId || item.groupId.indexOf(filters.groupId) !== -1)
+            && (!filters.groupName || item.groupName.indexOf(filters.groupName) !== -1)
+            && (!filters.merchantName || item.merchantName.indexOf(filters.merchantName) !== -1)
+            && (!filters.packageType || item.packageType === filters.packageType)
+            && (!filters.packageName || item.packageName.indexOf(filters.packageName) !== -1)
+            && (!filters.renewalTime || item.renewalTime.indexOf(filters.renewalTime) !== -1)
+            && (!filters.renewalStatus || item.renewalStatus === filters.renewalStatus)
+            && (!filters.operator || item.operator.indexOf(filters.operator) !== -1);
+        });
+      }
+
+      function getTariffRenewalDetailRowsHtml(record) {
+        var rows = getFilteredTariffRenewalDetailRows(record);
+        var start = (tariffRenewalPageState.detailPage - 1) * tariffRenewalPageState.detailPageSize;
+        var pageRows = rows.slice(start, start + tariffRenewalPageState.detailPageSize);
+        if (!pageRows.length) return '<tr><td class="empty-cell" colspan="13"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐续费明细</div></div></td></tr>';
+        return pageRows.map(function (item, index) {
+          return '<tr><td>' + escapeHtml(item.batchNo) + '</td><td>' + escapeHtml(item.iccid) + '</td><td>' + escapeHtml(item.packageId) + '</td><td>' + escapeHtml(item.groupId) + '</td><td>' + escapeHtml(item.groupName) + '</td><td>' + escapeHtml(item.merchantName) + '</td><td>' + escapeHtml(item.packageType) + '</td><td>' + escapeHtml(item.packageName) + '</td><td>' + getTariffStackHtml(item.packageRule) + '</td><td>' + escapeHtml(item.renewalDuration) + '</td><td>' + escapeHtml(item.renewalTime) + '</td><td><span class="tag tag-success">' + escapeHtml(item.renewalStatus) + '</span></td><td>' + escapeHtml(item.operator) + '</td></tr>';
+        }).join('');
+      }
+
+      function getTariffRenewalDetailPaginationHtml(record) {
+        var total = getFilteredTariffRenewalDetailRows(record).length;
+        var pageCount = getPageCount(total, tariffRenewalPageState.detailPageSize);
+        var page = Math.min(tariffRenewalPageState.detailPage, pageCount);
+        var pages = [];
+        for (var i = 1; i <= pageCount; i += 1) pages.push(i);
+        return '<div class="pagination tariff-renewal-pagination"><span>共 ' + total + ' 条</span><select class="page-size js-tariff-renewal-detail-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (tariffRenewalPageState.detailPageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-tariff-renewal-detail-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + pages.map(function (number) { return '<button class="page-btn js-tariff-renewal-detail-page-btn ' + (number === page ? 'current' : '') + '" type="button" data-page="' + number + '">' + number + '</button>'; }).join('') + '<button class="page-btn js-tariff-renewal-detail-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-tariff-renewal-detail-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span></div>';
+      }
+
+      function getTariffRenewalDetailContentHtml() {
+        var record = tariffRenewalRecords.find(function (item) { return item.batchNo === tariffRenewalPageState.detailBatchNo; });
+        var filters = tariffRenewalPageState.detailFilters;
+        return '<div class="tariff-renewal-detail"><div class="filters"><div class="filter-grid tariff-renewal-detail-filter-grid"><div class="field"><label>批次号</label><input class="control js-tariff-renewal-detail-filter-batch" value="' + escapeHtml(filters.batchNo) + '" placeholder="请输入批次号"></div><div class="field"><label>ICCID</label><input class="control js-tariff-renewal-detail-filter-iccid" value="' + escapeHtml(filters.iccid) + '" placeholder="请输入ICCID"></div><div class="field"><label>套餐ID</label><input class="control js-tariff-renewal-detail-filter-package-id" value="' + escapeHtml(filters.packageId) + '" placeholder="请输入套餐ID"></div><div class="field"><label>群组ID</label><input class="control js-tariff-renewal-detail-filter-group-id" value="' + escapeHtml(filters.groupId) + '" placeholder="请输入群组ID"></div><div class="field"><label>群组名称</label><input class="control js-tariff-renewal-detail-filter-group-name" value="' + escapeHtml(filters.groupName) + '" placeholder="请输入群组名称"></div><div class="field"><label>商户名称</label><input class="control js-tariff-renewal-detail-filter-merchant" value="' + escapeHtml(filters.merchantName) + '" placeholder="请输入商户名称"></div><div class="field"><label>续费套餐类型</label><div class="select-wrap"><select class="js-tariff-renewal-detail-filter-type"><option value="" selected disabled hidden>续费套餐类型</option><option ' + (filters.packageType === "当前群组基础套餐" ? "selected" : "") + '>当前群组基础套餐</option><option ' + (filters.packageType === "群组续费套餐" ? "selected" : "") + '>群组续费套餐</option></select></div></div><div class="field"><label>套餐名称</label><input class="control js-tariff-renewal-detail-filter-package-name" value="' + escapeHtml(filters.packageName) + '" placeholder="请输入套餐名称"></div><div class="field"><label>续费时间</label><input class="control js-tariff-renewal-detail-filter-time" value="' + escapeHtml(filters.renewalTime) + '" placeholder="请输入续费时间"></div><div class="field"><label>续费状态</label><div class="select-wrap"><select class="js-tariff-renewal-detail-filter-status"><option value="" selected disabled hidden>续费状态</option><option ' + (filters.renewalStatus === "续费成功" ? "selected" : "") + '>续费成功</option><option ' + (filters.renewalStatus === "续费失败" ? "selected" : "") + '>续费失败</option></select></div></div><div class="field"><label>操作人</label><input class="control js-tariff-renewal-detail-filter-operator" value="' + escapeHtml(filters.operator) + '" placeholder="请输入操作人"></div><div class="filter-actions"><button class="btn primary js-tariff-renewal-detail-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-tariff-renewal-detail-reset" type="button">重置</button></div></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="套餐续费详情列表" tabindex="0"><table class="tariff-renewal-detail-table"><thead><tr><th>批次号</th><th>ICCID</th><th>套餐ID</th><th>群组ID</th><th>群组名称</th><th>商户名称</th><th>续费套餐类型</th><th>套餐名称</th><th>套餐计费规则</th><th>续费时长</th><th>续费时间</th><th>续费状态</th><th>操作人</th></tr></thead><tbody>' + getTariffRenewalDetailRowsHtml(record) + '</tbody></table></div>' + getTariffRenewalDetailPaginationHtml(record) + '</div></div>';
+      }
+
+      function getTariffRenewalRecordsContentHtml() {
+        var filters = tariffRenewalPageState.filters;
+        return '<div class="tariff-renewal-record-page"><div class="filters"><div class="filter-grid tariff-renewal-filter-grid"><div class="field"><label>操作ID</label><input class="control js-tariff-renewal-filter-batch" type="text" value="' + escapeHtml(filters.batchNo) + '" placeholder="请输入操作ID"></div><div class="field"><label>续费套餐类型</label><div class="select-wrap"><select class="js-tariff-renewal-filter-type"><option value="" selected disabled hidden>续费套餐类型</option><option value="当前群组基础套餐" ' + (filters.packageType === "当前群组基础套餐" ? "selected" : "") + '>当前群组基础套餐</option><option value="群组续费套餐" ' + (filters.packageType === "群组续费套餐" ? "selected" : "") + '>群组续费套餐</option></select></div></div><div class="field"><label>备注</label><input class="control js-tariff-renewal-filter-remark" type="text" value="' + escapeHtml(filters.remark) + '" placeholder="请输入备注"></div>' + getDateRangeFilterHtml('续费时间', 'js-tariff-renewal-filter-time', filters.renewalTimeStart, filters.renewalTimeEnd) + '<div class="field"><label>续费状态</label><div class="select-wrap"><select class="js-tariff-renewal-filter-status"><option value="" selected disabled hidden>续费状态</option><option value="已续费" ' + (filters.renewalStatus === "已续费" ? "selected" : "") + '>已续费</option><option value="取消续费" ' + (filters.renewalStatus === "取消续费" ? "selected" : "") + '>取消续费</option></select></div></div><div class="field"><label>创建人</label><input class="control js-tariff-renewal-filter-creator" type="text" value="' + escapeHtml(filters.creator) + '" placeholder="请输入创建人"></div><div class="filter-actions"><button class="btn primary js-tariff-renewal-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-tariff-renewal-reset" type="button">重置</button></div></div></div><div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-tariff-renewal-create" type="button">套餐续费</button></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="套餐续费记录列表" tabindex="0"><table class="tariff-renewal-table"><thead><tr><th style="width:180px">操作ID</th><th style="width:110px">续费状态</th><th style="width:120px">操作方式</th><th style="width:180px">续费套餐类型</th><th style="width:120px">续费时长</th><th>备注</th><th style="width:150px">续费时间</th><th style="width:120px">创建人</th><th class="sticky-action" style="width:100px">操作</th></tr></thead><tbody>' + getTariffRenewalRecordsRowsHtml() + '</tbody></table></div>' + getTariffRenewalRecordsPaginationHtml() + '</div></div>';
+      }
+
+      function getTariffRenewalMainHtml() {
+        return '<section class="content-card tariff-renewal-page">' + getTariffRenewalRecordsContentHtml() + '</section>' + getTariffRenewModalHtml();
+      }
+
+      function renderTariffRenewalPage() {
+        document.querySelector('.main').innerHTML = getTariffRenewalMainHtml();
+        bindTariffRenewalPageControls(document.querySelector('.main'));
+        bindTariffRenewControls(document.querySelector('.main'));
+      }
+
+      function bindTariffRenewalPageControls(root) {
+        var page = (root || document).querySelector('.tariff-renewal-page');
+        if (!page) return;
+        bindDateRangeControls(page);
+        var create = page.querySelector('.js-tariff-renewal-create');
+        if (create) create.addEventListener('click', function () { tariffRenewState.open = true; tariffRenewState.mode = 'batch'; tariffRenewState.packageType = 'base'; tariffRenewState.renewalPackageName = ''; tariffRenewState.renewalTime = ''; tariffRenewState.renewalUnit = '月'; tariffRenewState.iccid = ''; tariffRenewState.fileName = ''; tariffRenewState.remark = ''; renderTariffRenewalPage(); });
+        if (false) {
+          var detailRecord = tariffRenewalRecords.find(function (item) { return item.batchNo === tariffRenewalPageState.detailBatchNo; });
+          var detailSelectors = {
+            batchNo: '.js-tariff-renewal-detail-filter-batch',
+            iccid: '.js-tariff-renewal-detail-filter-iccid',
+            packageId: '.js-tariff-renewal-detail-filter-package-id',
+            groupId: '.js-tariff-renewal-detail-filter-group-id',
+            groupName: '.js-tariff-renewal-detail-filter-group-name',
+            merchantName: '.js-tariff-renewal-detail-filter-merchant',
+            packageType: '.js-tariff-renewal-detail-filter-type',
+            packageName: '.js-tariff-renewal-detail-filter-package-name',
+            renewalTime: '.js-tariff-renewal-detail-filter-time',
+            renewalStatus: '.js-tariff-renewal-detail-filter-status',
+            operator: '.js-tariff-renewal-detail-filter-operator'
+          };
+          var detailSearch = page.querySelector('.js-tariff-renewal-detail-search');
+          var detailReset = page.querySelector('.js-tariff-renewal-detail-reset');
+          function applyDetailFilters() {
+            var nextFilters = {};
+            Object.keys(detailSelectors).forEach(function (key) {
+              var control = page.querySelector(detailSelectors[key]);
+              nextFilters[key] = control ? control.value.trim() : '';
+            });
+            tariffRenewalPageState.detailFilters = nextFilters;
+            tariffRenewalPageState.detailPage = 1;
+            renderTariffRenewalPage();
+            showToast('查询成功');
+          }
+          if (detailSearch) detailSearch.addEventListener('click', applyDetailFilters);
+          if (detailReset) detailReset.addEventListener('click', function () {
+            tariffRenewalPageState.detailFilters = { batchNo: detailRecord ? detailRecord.batchNo : '', iccid: '', packageId: '', groupId: '', groupName: '', merchantName: '', packageType: '', packageName: '', renewalTime: '', renewalStatus: '', operator: '' };
+            tariffRenewalPageState.detailPage = 1;
+            renderTariffRenewalPage();
+            showToast('重置成功');
+          });
+          Object.keys(detailSelectors).forEach(function (key) {
+            var control = page.querySelector(detailSelectors[key]);
+            if (control && control.tagName !== 'SELECT') control.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyDetailFilters(); });
+            if (control && control.tagName === 'SELECT') control.addEventListener('change', applyDetailFilters);
+          });
+          page.querySelectorAll('.js-tariff-renewal-detail-page-btn').forEach(function (button) { button.addEventListener('click', function () { tariffRenewalPageState.detailPage = Number(button.dataset.page) || 1; renderTariffRenewalPage(); }); });
+          var detailPrevious = page.querySelector('.js-tariff-renewal-detail-prev');
+          var detailNext = page.querySelector('.js-tariff-renewal-detail-next');
+          if (detailPrevious) detailPrevious.addEventListener('click', function () { tariffRenewalPageState.detailPage = Math.max(1, tariffRenewalPageState.detailPage - 1); renderTariffRenewalPage(); });
+          if (detailNext) detailNext.addEventListener('click', function () { tariffRenewalPageState.detailPage = Math.min(getPageCount(getFilteredTariffRenewalDetailRows(detailRecord).length, tariffRenewalPageState.detailPageSize), tariffRenewalPageState.detailPage + 1); renderTariffRenewalPage(); });
+          var detailPageSize = page.querySelector('.js-tariff-renewal-detail-page-size');
+          if (detailPageSize) detailPageSize.addEventListener('change', function (event) { tariffRenewalPageState.detailPageSize = Number(event.target.value) || 20; tariffRenewalPageState.detailPage = 1; renderTariffRenewalPage(); });
+          var detailJump = page.querySelector('.js-tariff-renewal-detail-jump');
+          if (detailJump) detailJump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { tariffRenewalPageState.detailPage = clampPage(event.target.value, getFilteredTariffRenewalDetailRows(detailRecord).length, tariffRenewalPageState.detailPageSize); renderTariffRenewalPage(); } });
+          enhanceSelectControls(page);
+          return;
+        }
+        var batch = page.querySelector('.js-tariff-renewal-filter-batch');
+        if (batch) {
+          var batchField = batch.closest('.field');
+          var batchLabel = batchField && batchField.querySelector('label');
+          if (batchLabel) batchLabel.textContent = '操作ID';
+          batch.placeholder = '请输入操作ID';
+        }
+        var operationHeader = page.querySelector('.tariff-renewal-table th:first-child');
+        if (operationHeader) operationHeader.textContent = '操作ID';
+        var packageInfoHeader = page.querySelector('.tariff-renewal-table th:nth-child(5)');
+        if (packageInfoHeader) {
+          packageInfoHeader.textContent = '套餐信息';
+          packageInfoHeader.style.width = '240px';
+          var packageRuleHeader = document.createElement('th');
+          packageRuleHeader.textContent = '套餐计费规则';
+          packageRuleHeader.style.width = '300px';
+          packageInfoHeader.insertAdjacentElement('afterend', packageRuleHeader);
+        }
+        var type = page.querySelector('.js-tariff-renewal-filter-type');
+        var remark = page.querySelector('.js-tariff-renewal-filter-remark');
+        var time = page.querySelector('.js-tariff-renewal-filter-time');
+        var renewalStatus = page.querySelector('.js-tariff-renewal-filter-status');
+        var creator = page.querySelector('.js-tariff-renewal-filter-creator');
+        var search = page.querySelector('.js-tariff-renewal-search');
+        var reset = page.querySelector('.js-tariff-renewal-reset');
+        function applyFilters() { var dateRange = getDateRangeFilterValue(time); tariffRenewalPageState.filters = { batchNo: batch.value.trim(), packageType: type.value, remark: remark.value.trim(), renewalTimeStart: dateRange.start, renewalTimeEnd: dateRange.end, renewalStatus: renewalStatus.value, creator: creator.value.trim() }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); showToast('查询成功'); }
+        search.addEventListener('click', applyFilters);
+        [batch, remark, creator].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
+        type.addEventListener('change', applyFilters);
+        renewalStatus.addEventListener('change', applyFilters);
+        time.addEventListener('date-range-change', applyFilters);
+        reset.addEventListener('click', function () { tariffRenewalPageState.filters = { batchNo: '', packageType: '', remark: '', renewalTimeStart: '', renewalTimeEnd: '', renewalStatus: '', creator: '' }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); showToast('重置成功'); });
+        page.querySelectorAll('.js-tariff-renewal-operation-detail').forEach(function (link) { link.addEventListener('click', function (event) { event.preventDefault(); openCardPackageDetailPageFromOperation(link.dataset.operationId); }); });
+        page.querySelectorAll('.js-tariff-renewal-cancel').forEach(function (button) {
+          button.addEventListener('click', function () {
+            var record = tariffRenewalRecords.find(function (item, index) {
+              return getOperationId(item.renewalTime, index) === button.dataset.operationId;
+            });
+            if (!record) return;
+            record.renewalStatus = '取消续费';
+            record.packageStatus = '已失效';
+            record.packageInvalidReason = '取消续费';
+            renderTariffRenewalPage();
+            showToast('取消续费成功', { force: true });
+          });
+        });
+        page.querySelectorAll('.js-tariff-renewal-page-btn').forEach(function (button) { button.addEventListener('click', function () { tariffRenewalPageState.page = Number(button.dataset.page) || 1; renderTariffRenewalPage(); }); });
+        var previous = page.querySelector('.js-tariff-renewal-prev');
+        var next = page.querySelector('.js-tariff-renewal-next');
+        if (previous) previous.addEventListener('click', function () { tariffRenewalPageState.page = Math.max(1, tariffRenewalPageState.page - 1); renderTariffRenewalPage(); });
+        if (next) next.addEventListener('click', function () { tariffRenewalPageState.page = Math.min(getPageCount(getFilteredTariffRenewalRecords().length, tariffRenewalPageState.pageSize), tariffRenewalPageState.page + 1); renderTariffRenewalPage(); });
+        var pageSize = page.querySelector('.js-tariff-renewal-page-size');
+        if (pageSize) pageSize.addEventListener('change', function (event) { tariffRenewalPageState.pageSize = Number(event.target.value) || 20; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); });
+        var jump = page.querySelector('.js-tariff-renewal-jump');
+        if (jump) jump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { tariffRenewalPageState.page = clampPage(event.target.value, getFilteredTariffRenewalRecords().length, tariffRenewalPageState.pageSize); renderTariffRenewalPage(); } });
+        enhanceSelectControls(page);
+      }
+
+      function getPackageRuleValue(rules, labels) {
+        var match = (rules || []).find(function (rule) {
+          return labels.some(function (label) { return rule.indexOf(label + '：') === 0; });
+        });
+        return match ? match.slice(match.indexOf('：') + 1) : '--';
+      }
+
+      function getPackageDaysFromValidity(validity) {
+        var value = String(validity || '');
+        var match = value.match(/(\d+(?:\.\d+)?)\s*(天|日|个月|月|年)/);
+        if (!match) return value.indexOf('当月') !== -1 ? '30天' : '--';
+        var amount = Number(match[1]);
+        var unit = match[2];
+        var days = unit === '年' ? amount * 365 : (unit === '月' || unit === '个月') ? amount * 30 : amount;
+        return (Number.isInteger(days) ? days : days.toFixed(1)) + '天';
+      }
+
+      function getCardPackageRuleHtml(item) {
+        var rows = [];
+        var isBasePackage = item.packageType === '群组基础套餐' || item.packageType === '群组续费套餐';
+        var validityLabel = item.operationType === '套餐续费' && item.packageType === '群组续费套餐' ? '套餐续费时效' : '套餐时效';
+        if (isBasePackage) {
+          rows.push(['套餐计费类型', getPackageRuleValue(item.packageRule, ['套餐计费类型'])]);
+          rows.push(['套餐计费周期', getPackageRuleValue(item.packageRule, ['套餐计费周期', '套餐流量结算周期'])]);
+          rows.push(['流量', getPackageRuleValue(item.packageRule, ['流量'])]);
+          rows.push([validityLabel, item.packageValidity || '--']);
+        } else if (item.packageType === '群组叠加包套餐') {
+          rows.push(['套餐流量', getPackageRuleValue(item.packageRule, ['流量'])]);
+          rows.push(['套餐时效', item.packageValidity || '--']);
+          rows.push(['套餐金额', getPackageRuleValue(item.packageRule, ['套餐金额'])]);
+        } else {
+          rows.push(['流量', getPackageRuleValue(item.packageRule, ['流量'])]);
+        }
+        return '<div class="cell-stack">' + rows.map(function (row) { return '<div class="cell-line"><span class="cell-key">' + row[0] + '</span> ' + escapeHtml(row[1]) + '</div>'; }).join('') + '</div>';
+      }
+
+      function getOperationId(dateTime, seconds) {
+        var datePart = String(dateTime || '').replace(/\D/g, '').slice(0, 12);
+        return (datePart + String(seconds || 0).padStart(2, '0')).padEnd(14, '0').slice(0, 14);
+      }
+
+      function getCardPackageDetailRecords() {
+        var records = [];
+        var packageTypes = { groupBase: '群组基础套餐', groupAddon: '群组叠加包套餐', poolAddon: '流量池叠加包套餐' };
+        Object.keys(tariffOrderCatalogs).forEach(function (tabId) {
+          tariffOrderCatalogs[tabId].forEach(function (order, orderIndex) {
+            var packageStatus = order.status === '已订购' ? '生效中' : order.status === '待生效' ? '待生效' : '已失效';
+            var invalidReason = order.status === '已退订' ? '套餐退订' : order.status === '已失效' ? '套餐到期' : '--';
+            var iccids = groupPackageIccids[order.groupId] || [];
+            iccids.forEach(function (iccid, index) {
+              records.push({
+                id: 'order-' + order.id + '-' + index,
+                operationId: getOperationId(order.orderTime, orderIndex),
+                operationType: '套餐订购',
+                iccid: iccid,
+                groupName: order.groupName,
+                groupId: order.groupId,
+                packageName: order.packageName,
+                packageId: order.packageId,
+                packageType: packageTypes[tabId],
+                packageStatus: packageStatus,
+                packageRule: order.rule || [],
+                packageValidity: order.validity || order.cycle || '30天',
+                packageDays: getPackageDaysFromValidity(order.validity || order.cycle || '30天'),
+                effectiveDate: (order.orderTime || '').slice(0, 10),
+                endDate: packageStatus === '已失效' ? (order.orderTime || '').slice(0, 10) : '2027-05-31',
+                invalidReason: invalidReason,
+                silencePeriod: '30天',
+                createdAt: order.orderTime,
+                updatedAt: order.orderTime
+              });
+            });
+          });
+        });
+        tariffRenewalRecords.forEach(function (record, recordIndex) {
+          (record.items || []).forEach(function (iccid, index) {
+            var isCancelled = record.renewalStatus === '取消续费';
+            var packageStatus = isCancelled ? '已失效' : (record.packageStatus || '生效中');
+            records.push({
+              id: 'renewal-' + record.batchNo + '-' + index,
+              operationId: getOperationId(record.renewalTime, recordIndex),
+              operationType: '套餐续费',
+              iccid: iccid,
+              groupName: record.groupName,
+              groupId: record.groupId,
+              packageName: record.packageName,
+              packageId: record.packageId,
+              packageType: record.packageType === '群组续费套餐' ? '群组续费套餐' : '群组基础套餐',
+              packageStatus: packageStatus,
+              packageRule: record.packageRule || [],
+              packageValidity: record.renewalDuration,
+              packageDays: getPackageDaysFromValidity(record.renewalDuration),
+              effectiveDate: (record.renewalTime || '').slice(0, 10),
+              endDate: packageStatus === '已失效' ? (record.renewalTime || '').slice(0, 10) : '2027-08-11',
+              invalidReason: isCancelled ? '取消续费' : (record.packageInvalidReason || '--'),
+              silencePeriod: '--',
+              createdAt: record.renewalTime,
+              updatedAt: record.renewalTime
+            });
+          });
+        });
+        return records;
+      }
+
+      function getCardPackageDetailCopyButtonHtml(value, label) {
+        return '<button class="copy-btn js-card-package-copy" type="button" data-copy="' + escapeHtml(value) + '" aria-label="复制' + label + '"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>';
+      }
+
+      function getCardPackageDetailLookupOptions(key) {
+        var seen = {};
+        return getCardPackageDetailRecords().reduce(function (items, record) {
+          var id = key === 'group' ? record.groupId : record.packageId;
+          var name = key === 'group' ? record.groupName : record.packageName;
+          var value = '(' + id + ')' + name;
+          if (!seen[value]) {
+            seen[value] = true;
+            items.push('<option value="' + escapeHtml(value) + '"></option>');
+          }
+          return items;
+        }, []).join('');
+      }
+
+      function matchesCardPackageLookup(value, id, name) {
+        if (!value) return true;
+        var keyword = value.toLowerCase();
+        return String(id).toLowerCase().indexOf(keyword) !== -1 || String(name).toLowerCase().indexOf(keyword) !== -1 || ('(' + id + ')' + name).toLowerCase().indexOf(keyword) !== -1;
+      }
+
+      function getFilteredCardPackageDetails() {
+        var filters = cardPackageDetailState.filters;
+        return getCardPackageDetailRecords().filter(function (item) {
+          return (!filters.operationId || item.operationId.indexOf(filters.operationId) !== -1) &&
+            (!filters.iccid || item.iccid.indexOf(filters.iccid) !== -1) &&
+            matchesCardPackageLookup(filters.groupInfo, item.groupId, item.groupName) &&
+            matchesCardPackageLookup(filters.packageInfo, item.packageId, item.packageName) &&
+            (!filters.packageType || item.packageType === filters.packageType) &&
+            (!filters.packageStatus || item.packageStatus === filters.packageStatus) &&
+            matchesDateRange(item.effectiveDate, filters.effectiveDateStart, filters.effectiveDateEnd) &&
+            matchesDateRange(item.endDate, filters.endDateStart, filters.endDateEnd) &&
+            (!filters.invalidReason || item.invalidReason.indexOf(filters.invalidReason) !== -1) &&
+            matchesDateRange(item.createdAt, filters.createdAtStart, filters.createdAtEnd) &&
+            matchesDateRange(item.updatedAt, filters.updatedAtStart, filters.updatedAtEnd);
+        });
+      }
+
+      function getCardPackageDetailRowsHtml() {
+        var rows = getFilteredCardPackageDetails();
+        var start = (cardPackageDetailState.page - 1) * cardPackageDetailState.pageSize;
+        var pageRows = rows.slice(start, start + cardPackageDetailState.pageSize);
+        if (!pageRows.length) {
+          return '<tr><td class="empty-cell" colspan="15"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的流量卡套餐详情</div></div></td></tr>';
+        }
+        return pageRows.map(function (item, index) {
+          var statusClass = item.packageStatus === '生效中' ? 'success' : item.packageStatus === '已失效' ? 'danger' : 'muted';
+          return '<tr>' +
+            '<td>' + escapeHtml(item.operationId) + '</td>' +
+            '<td><div class="cell-line"><a class="link card-link js-card-package-iccid" href="#card-' + escapeHtml(item.iccid) + '">' + escapeHtml(item.iccid) + '</a>' + getCardPackageDetailCopyButtonHtml(item.iccid, 'ICCID') + '</div></td>' +
+            '<td><div class="cell-stack"><div class="cell-line"><span class="cell-key">群组ID</span> ' + escapeHtml(item.groupId) + getCardPackageDetailCopyButtonHtml(item.groupId, '群组ID') + '</div><div class="cell-line"><span class="cell-key">群组名称</span> ' + escapeHtml(item.groupName) + '</div></div></td>' +
+            '<td>' + escapeHtml(item.operationType) + '</td>' +
+            '<td><div class="cell-stack"><div class="cell-line"><span class="cell-key">套餐ID</span> ' + escapeHtml(item.packageId) + '</div><div class="cell-line"><span class="cell-key">套餐名称</span> ' + escapeHtml(item.packageName) + '</div></div></td>' +
+            '<td>' + escapeHtml(item.packageType) + '</td>' +
+            '<td>' + getCardPackageRuleHtml(item) + '</td>' +
+            '<td><span class="tag ' + statusClass + '">' + escapeHtml(item.packageStatus) + '</span></td>' +
+            '<td>' + escapeHtml(item.packageDays) + '</td>' +
+            '<td>' + escapeHtml(item.effectiveDate) + '</td>' +
+            '<td>' + escapeHtml(item.endDate) + '</td>' +
+            '<td>' + escapeHtml(item.invalidReason) + '</td>' +
+            '<td>' + escapeHtml(item.silencePeriod) + '</td>' +
+            '<td>' + escapeHtml(item.createdAt) + '</td>' +
+            '<td>' + escapeHtml(item.updatedAt) + '</td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function getCardPackageDetailPaginationHtml() {
+        var total = getFilteredCardPackageDetails().length;
+        var pageCount = getPageCount(total, cardPackageDetailState.pageSize);
+        var page = Math.min(cardPackageDetailState.page, pageCount);
+        return '<div class="pagination card-package-detail-pagination"><span>共 ' + total + ' 条</span><select class="page-size js-card-package-detail-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (cardPackageDetailState.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-card-package-detail-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + getCompactPaginationButtons(page, pageCount, 'js-card-package-detail-page-btn') + '<button class="page-btn js-card-package-detail-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-card-package-detail-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span></div>';
+      }
+
+      function getCardPackageDetailMainHtml() {
+        var filters = cardPackageDetailState.filters;
+        return '<section class="content-card card-package-detail-page">' +
+          '<div class="filters"><div class="filter-grid card-package-detail-filter-grid">' +
+          '<div class="field"><label>操作ID</label><input class="control js-card-package-detail-filter-operation" type="text" value="' + escapeHtml(filters.operationId) + '" placeholder="请输入操作ID"></div>' +
+          '<div class="field"><label>ICCID</label><input class="control js-card-package-detail-filter-iccid" type="text" value="' + escapeHtml(filters.iccid) + '" placeholder="请输入ICCID"></div>' +
+          '<div class="field"><label>群组信息</label><input class="control js-card-package-detail-filter-group" type="text" list="card-package-detail-group-options" autocomplete="off" value="' + escapeHtml(filters.groupInfo) + '" placeholder="请输入群组ID或群组名称"><datalist id="card-package-detail-group-options">' + getCardPackageDetailLookupOptions('group') + '</datalist></div>' +
+          '<div class="field"><label>套餐信息</label><input class="control js-card-package-detail-filter-package" type="text" list="card-package-detail-package-options" autocomplete="off" value="' + escapeHtml(filters.packageInfo) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="card-package-detail-package-options">' + getCardPackageDetailLookupOptions('package') + '</datalist></div>' +
+          '<div class="field"><label>套餐类型</label><div class="select-wrap"><select class="js-card-package-detail-filter-type"><option value="" selected disabled hidden>套餐类型</option><option value="群组基础套餐" ' + (filters.packageType === '群组基础套餐' ? 'selected' : '') + '>群组基础套餐</option><option value="群组叠加包套餐" ' + (filters.packageType === '群组叠加包套餐' ? 'selected' : '') + '>群组叠加包套餐</option><option value="流量池叠加包套餐" ' + (filters.packageType === '流量池叠加包套餐' ? 'selected' : '') + '>流量池叠加包套餐</option><option value="群组续费套餐" ' + (filters.packageType === '群组续费套餐' ? 'selected' : '') + '>群组续费套餐</option></select></div></div>' +
+          '<div class="field"><label>套餐状态</label><div class="select-wrap"><select class="js-card-package-detail-filter-status"><option value="" selected disabled hidden>套餐状态</option><option value="待生效" ' + (filters.packageStatus === '待生效' ? 'selected' : '') + '>待生效</option><option value="生效中" ' + (filters.packageStatus === '生效中' ? 'selected' : '') + '>生效中</option><option value="已失效" ' + (filters.packageStatus === '已失效' ? 'selected' : '') + '>已失效</option></select></div></div>' +
+          getDateRangeFilterHtml('套餐生效日期', 'js-card-package-detail-filter-effective', filters.effectiveDateStart, filters.effectiveDateEnd) +
+          getDateRangeFilterHtml('套餐结束日期', 'js-card-package-detail-filter-end', filters.endDateStart, filters.endDateEnd) +
+          '<div class="field"><label>套餐失效原因</label><input class="control js-card-package-detail-filter-reason" type="text" value="' + escapeHtml(filters.invalidReason) + '" placeholder="请输入套餐失效原因"></div>' +
+          getDateRangeFilterHtml('创建时间', 'js-card-package-detail-filter-created', filters.createdAtStart, filters.createdAtEnd) +
+          getDateRangeFilterHtml('更新时间', 'js-card-package-detail-filter-updated', filters.updatedAtStart, filters.updatedAtEnd) +
+          '<div class="filter-actions"><button class="btn primary js-card-package-detail-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-card-package-detail-reset" type="button">重置</button></div></div></div>' +
+          '<div class="table-toolbar card-package-detail-toolbar"><div class="toolbar-left"></div><div class="toolbar-right"><button class="card-package-detail-config js-card-package-columns" type="button" aria-label="字段配置" title="字段配置"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10"></path><path d="M18 7h2"></path><circle cx="16" cy="7" r="2"></circle><path d="M4 12h3"></path><path d="M11 12h9"></path><circle cx="9" cy="12" r="2"></circle><path d="M4 17h10"></path><path d="M18 17h2"></path><circle cx="16" cy="17" r="2"></circle></svg></button></div></div>' +
+          '<div class="table-area"><div class="table-scroll" role="region" aria-label="流量卡套餐详情列表" tabindex="0"><table class="card-package-detail-table"><thead><tr><th style="width:170px">操作ID</th><th style="width:190px">ICCID</th><th style="width:240px">群组信息</th><th style="width:120px">操作类型</th><th style="width:230px">套餐信息</th><th style="width:150px">套餐类型</th><th style="width:260px">套餐计费规则</th><th style="width:110px">套餐状态</th><th style="width:110px">套餐天数</th><th style="width:130px">套餐生效日期</th><th style="width:130px">套餐结束日期</th><th style="width:180px">套餐失效原因</th><th style="width:100px">沉默期</th><th style="width:150px">创建时间</th><th style="width:150px">更新时间</th></tr></thead><tbody>' + getCardPackageDetailRowsHtml() + '</tbody></table></div>' + getCardPackageDetailPaginationHtml() + '</div></section>';
+      }
+
+      function renderCardPackageDetailPage() {
+        document.querySelector('.main').innerHTML = getCardPackageDetailMainHtml();
+        bindCardPackageDetailControls(document.querySelector('.main'));
+      }
+
+      function bindCardPackageDetailControls(root) {
+        var page = (root || document).querySelector('.card-package-detail-page');
+        if (!page) return;
+        bindNumericIdentityInputs(page);
+        bindDateRangeControls(page);
+        enhanceSelectControls(page);
+        var operationId = page.querySelector('.js-card-package-detail-filter-operation');
+        var iccid = page.querySelector('.js-card-package-detail-filter-iccid');
+        var groupInfo = page.querySelector('.js-card-package-detail-filter-group');
+        var packageInfo = page.querySelector('.js-card-package-detail-filter-package');
+        var packageType = page.querySelector('.js-card-package-detail-filter-type');
+        var packageStatus = page.querySelector('.js-card-package-detail-filter-status');
+        var effectiveDate = page.querySelector('.js-card-package-detail-filter-effective');
+        var endDate = page.querySelector('.js-card-package-detail-filter-end');
+        var invalidReason = page.querySelector('.js-card-package-detail-filter-reason');
+        var createdAt = page.querySelector('.js-card-package-detail-filter-created');
+        var updatedAt = page.querySelector('.js-card-package-detail-filter-updated');
+        var search = page.querySelector('.js-card-package-detail-search');
+        var reset = page.querySelector('.js-card-package-detail-reset');
+        var columns = page.querySelector('.js-card-package-columns');
+        function applyFilters() {
+          var effectiveRange = getDateRangeFilterValue(effectiveDate);
+          var endRange = getDateRangeFilterValue(endDate);
+          var createdRange = getDateRangeFilterValue(createdAt);
+          var updatedRange = getDateRangeFilterValue(updatedAt);
+          cardPackageDetailState.filters = { operationId: operationId.value.trim(), iccid: iccid.value.trim(), groupInfo: groupInfo.value.trim(), packageInfo: packageInfo.value.trim(), packageType: packageType.value, packageStatus: packageStatus.value, effectiveDateStart: effectiveRange.start, effectiveDateEnd: effectiveRange.end, endDateStart: endRange.start, endDateEnd: endRange.end, invalidReason: invalidReason.value.trim(), createdAtStart: createdRange.start, createdAtEnd: createdRange.end, updatedAtStart: updatedRange.start, updatedAtEnd: updatedRange.end };
+          cardPackageDetailState.page = 1;
+          renderCardPackageDetailPage();
+          showToast('查询成功');
+        }
+        search.addEventListener('click', applyFilters);
+        [operationId, iccid, groupInfo, packageInfo, invalidReason].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
+        [packageType, packageStatus].forEach(function (input) { input.addEventListener('change', applyFilters); });
+        [effectiveDate, endDate, createdAt, updatedAt].forEach(function (input) { input.addEventListener('date-range-change', applyFilters); });
+        reset.addEventListener('click', function () { cardPackageDetailState.filters = { operationId: '', iccid: '', groupInfo: '', packageInfo: '', packageType: '', packageStatus: '', effectiveDateStart: '', effectiveDateEnd: '', endDateStart: '', endDateEnd: '', invalidReason: '', createdAtStart: '', createdAtEnd: '', updatedAtStart: '', updatedAtEnd: '' }; cardPackageDetailState.page = 1; renderCardPackageDetailPage(); showToast('重置成功'); });
+        if (columns) columns.addEventListener('click', function () { showToast('字段配置入口已打开'); });
+        page.querySelectorAll('.js-card-package-detail-page-btn').forEach(function (button) { button.addEventListener('click', function () { cardPackageDetailState.page = Number(button.dataset.page) || 1; renderCardPackageDetailPage(); }); });
+        var previous = page.querySelector('.js-card-package-detail-prev');
+        var next = page.querySelector('.js-card-package-detail-next');
+        if (previous) previous.addEventListener('click', function () { cardPackageDetailState.page = Math.max(1, cardPackageDetailState.page - 1); renderCardPackageDetailPage(); });
+        if (next) next.addEventListener('click', function () { cardPackageDetailState.page = Math.min(getPageCount(getFilteredCardPackageDetails().length, cardPackageDetailState.pageSize), cardPackageDetailState.page + 1); renderCardPackageDetailPage(); });
+        var pageSize = page.querySelector('.js-card-package-detail-page-size');
+        if (pageSize) pageSize.addEventListener('change', function (event) { cardPackageDetailState.pageSize = Number(event.target.value) || 20; cardPackageDetailState.page = 1; renderCardPackageDetailPage(); });
+        var jump = page.querySelector('.js-card-package-detail-jump');
+        if (jump) jump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { cardPackageDetailState.page = clampPage(event.target.value, getFilteredCardPackageDetails().length, cardPackageDetailState.pageSize); renderCardPackageDetailPage(); } });
+        page.querySelectorAll('.js-card-package-copy').forEach(function (button) { button.addEventListener('click', function (event) { event.preventDefault(); event.stopPropagation(); copyToClipboard(button.dataset.copy); }); });
+        page.querySelectorAll('.js-card-package-iccid').forEach(function (link) { link.addEventListener('click', function (event) { event.preventDefault(); openCardDetailPage(link.textContent.trim()); }); });
+      }
+
+      function getGroupBaseTariffRowsHtml(tabId) {
+        var config = getGroupBaseTariffConfig(tabId);
+        var state = config.state;
+        var rows = getFilteredGroupBaseTariffs(tabId);
+        var start = (state.page - 1) * state.pageSize;
+        var pageRows = rows.slice(start, start + state.pageSize);
+        if (!pageRows.length) {
+          return '<tr><td class="empty-cell" colspan="8"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
+        }
+        return pageRows.map(function (item) {
+          return '<tr>' +
+            '<td>' + escapeHtml(item.id) + '</td>' +
+            '<td>' + escapeHtml(item.name) + '</td>' +
+            '<td>' + escapeHtml(item.cardType) + '</td>' +
+            '<td>' + escapeHtml(item.trafficType) + '</td>' +
+            '<td>' + getTariffStackHtml(["套餐计费类型：" + item.billingType, "套餐计费周期：" + item.billingCycle, "套餐类型：" + item.packageType, "流量：" + item.traffic, "套餐金额：" + item.price + "元"]) + '</td>' +
+            '<td>' + escapeHtml(item.validity) + '</td>' +
+            '<td>' + escapeHtml(item.remark || "--") + '</td>' +
+            '<td><div class="row-actions"><button class="text-action js-tariff-edit" type="button" data-id="' + item.id + '">编辑</button></div></td>' +
+          '</tr>';
+        }).join('');
+      }
+
+      function getGroupBaseTariffPaginationHtml(tabId) {
+        var config = getGroupBaseTariffConfig(tabId);
+        var state = config.state;
+        var total = getFilteredGroupBaseTariffs(tabId).length;
+        var pageCount = getPageCount(total, state.pageSize);
+        var page = Math.min(state.page, pageCount);
+        var pages = [];
+        for (var i = 1; i <= pageCount; i += 1) pages.push(i);
+        return '<div class="pagination tariff-pagination">' +
+          '<span>共 ' + total + ' 条</span>' +
+          '<select class="page-size js-tariff-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (state.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select>' +
+          '<button class="page-btn js-tariff-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' +
+          pages.map(function (number) { return '<button class="page-btn js-tariff-page-btn ' + (number === page ? 'current' : '') + '" type="button" data-page="' + number + '">' + number + '</button>'; }).join('') +
+          '<button class="page-btn js-tariff-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button>' +
+          '<span>跳至</span><input class="jump js-tariff-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span>' +
+        '</div>';
+      }
+
+      function getGroupBaseTariffContentHtml(tabId) {
+        var id = tabId || "groupBase";
+        var state = getGroupBaseTariffConfig(id).state;
+        return '<div class="tariff-base-page">' +
+          '<div class="filters"><div class="filter-grid tariff-base-filter-grid">' +
+            '<div class="field"><label for="tariffNameFilter">套餐信息</label><input id="tariffNameFilter" class="control js-tariff-name-filter" type="text" list="tariff-base-package-options" autocomplete="off" value="' + escapeHtml(state.filters.name) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="tariff-base-package-options">' + getTariffPackageLookupOptions(getGroupBaseTariffConfig(id).catalog) + '</datalist></div>' +
+            '<div class="filter-actions"><button class="btn primary js-tariff-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-tariff-reset" type="button">重置</button></div>' +
+          '</div></div>' +
+          '<div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-tariff-create" type="button">套餐新增</button></div></div>' +
+          '<div class="table-area"><div class="table-scroll" role="region" aria-label="' + (id === "groupRenewal" ? "群组续费套餐列表" : "群组基础套餐列表") + '" tabindex="0"><table class="tariff-base-table"><thead><tr><th style="width: 150px;">套餐ID</th><th style="width: 220px;">套餐名称</th><th style="width: 120px;">卡板类型</th><th style="width: 120px;">流量类型</th><th style="width: 360px;">套餐计费规则</th><th style="width: 110px;">套餐时效</th><th style="width: 180px;">备注</th><th style="width: 86px;">操作</th></tr></thead><tbody>' + getGroupBaseTariffRowsHtml(id) + '</tbody></table></div>' + getGroupBaseTariffPaginationHtml(id) + '</div>' +
+        '</div>';
+      }
+
+      function getTariffPlaceholderHtml() {
+        return '<div class="tariff-list-placeholder" role="region" aria-label="套餐列表区"><div class="tariff-placeholder-icon">□</div><div class="tariff-placeholder-title">列表区占位符</div><div class="tariff-placeholder-desc">当前套餐类型暂无列表内容</div></div>';
+      }
+
+      function getTariffManagementMainHtml() {
+        var tabs = [
+          { id: "groupBase", label: "群组基础套餐" },
+          { id: "groupRenewal", label: "群组续费套餐" },
+          { id: "groupAddon", label: "群组叠加包套餐" },
+          { id: "poolAddon", label: "流量池叠加包套餐" }
+        ];
+        return `
+          <section class="content-card tariff-management-page">
+            <div class="tariff-tabs" role="tablist" aria-label="套餐类型">
+              ${tabs.map(function (tab) {
+                return `<button class="tariff-tab ${tariffManagementState.activeTab === tab.id ? "current" : ""}" type="button" role="tab" aria-selected="${tariffManagementState.activeTab === tab.id ? "true" : "false"}" data-tab="${tab.id}">${tab.label}</button>`;
+              }).join("")}
+            </div>
+            ${tariffManagementState.activeTab === "groupBase" || tariffManagementState.activeTab === "groupRenewal" ? getGroupBaseTariffContentHtml(tariffManagementState.activeTab) : getTariffAddonContentHtml(tariffManagementState.activeTab)}
+          </section>
+          ${getTariffCreateModalHtml()}
+        `;
+      }
+
+      function renderTariffManagementPage() {
+        document.querySelector(".main").innerHTML = getTariffManagementMainHtml();
+        bindTariffManagementControls(document.querySelector(".main"));
+      }
+
+      function bindTariffManagementControls(root) {
+        var page = (root || document).querySelector(".tariff-management-page");
+        if (!page) return;
+        bindTariffCreateModal(root || document);
+        page.querySelectorAll(".tariff-tab").forEach(function (button) {
+          button.addEventListener("click", function () {
+            tariffManagementState.activeTab = button.dataset.tab;
+            renderTariffManagementPage();
+          });
+        });
+        if (tariffManagementState.activeTab !== "groupBase" && tariffManagementState.activeTab !== "groupRenewal") {
+          bindTariffAddonControls(page, tariffManagementState.activeTab);
+          return;
+        }
+        var baseTabId = tariffManagementState.activeTab;
+        var baseState = getGroupBaseTariffConfig(baseTabId).state;
+        var nameInput = page.querySelector(".js-tariff-name-filter");
+        var searchButton = page.querySelector(".js-tariff-search");
+        var resetButton = page.querySelector(".js-tariff-reset");
+        var clearButton = page.querySelector(".clear-control");
+        if (nameInput && searchButton) {
+          searchButton.addEventListener("click", function () {
+            baseState.filters.name = nameInput.value.trim();
+            baseState.page = 1;
+            renderTariffManagementPage();
+            showToast("查询成功");
+          });
+          nameInput.addEventListener("keydown", function (event) { if (event.key === "Enter") searchButton.click(); });
+        }
+        if (resetButton) resetButton.addEventListener("click", function () {
+          baseState.filters.name = "";
+          baseState.page = 1;
+          renderTariffManagementPage();
+          showToast("重置成功");
+        });
+        if (clearButton) clearButton.addEventListener("click", function () {
+          if (nameInput) nameInput.value = "";
+          baseState.filters.name = "";
+          baseState.page = 1;
+          renderTariffManagementPage();
+        });
+        page.querySelectorAll(".js-tariff-edit").forEach(function (button) { button.addEventListener("click", function () { showToast("已打开套餐编辑"); }); });
+        page.querySelectorAll(".js-tariff-page-btn").forEach(function (button) { button.addEventListener("click", function () { baseState.page = Number(button.dataset.page) || 1; renderTariffManagementPage(); }); });
+        var previous = page.querySelector(".js-tariff-prev");
+        var next = page.querySelector(".js-tariff-next");
+        if (previous) previous.addEventListener("click", function () { baseState.page = Math.max(1, baseState.page - 1); renderTariffManagementPage(); });
+        if (next) next.addEventListener("click", function () { var count = getPageCount(getFilteredGroupBaseTariffs(baseTabId).length, baseState.pageSize); baseState.page = Math.min(count, baseState.page + 1); renderTariffManagementPage(); });
+        var pageSize = page.querySelector(".js-tariff-page-size");
+        if (pageSize) pageSize.addEventListener("change", function (event) { baseState.pageSize = Number(event.target.value) || 20; baseState.page = 1; renderTariffManagementPage(); });
+        var jump = page.querySelector(".js-tariff-jump");
+        if (jump) jump.addEventListener("keydown", function (event) { if (event.key === "Enter") { baseState.page = clampPage(event.target.value, getFilteredGroupBaseTariffs(baseTabId).length, baseState.pageSize); renderTariffManagementPage(); } });
+      }
+
+      function getTariffOrderConfig(tabId) {
+        var headers;
+        if (tabId === "groupAddon") headers = ["操作ID", "批次号", "套餐ID", "群组ID", "群组名称", "商户名称", "套餐名称", "套餐计费规则", "订购周期", "订购时间", "备注", "订购状态", "操作"];
+        else if (tabId === "poolAddon") headers = ["操作ID", "套餐ID", "群组ID", "群组名称", "商户名称", "流量池名称", "套餐名称", "订购时间", "备注", "订购状态", "操作"];
+        else headers = ["操作ID", "套餐ID", "群组ID", "群组名称", "商户名称", "套餐名称", "套餐计费规则", "套餐时效", "订购时间", "备注", "订购状态", "操作"];
+        return { state: tariffOrderState[tabId], catalog: tariffOrderCatalogs[tabId], headers: headers };
+      }
+
+      function getFilteredTariffOrders(tabId) {
+        var config = getTariffOrderConfig(tabId);
+        var filters = config.state.filters;
+        return config.catalog.filter(function (item) {
+          return (!filters.merchantName || item.merchantName.indexOf(filters.merchantName) !== -1)
+            && (!filters.groupName || item.groupName.indexOf(filters.groupName) !== -1)
+            && (!filters.packageName || item.packageName.indexOf(filters.packageName) !== -1);
+        });
+      }
+
+      function getTariffOrderStatusHtml(status) {
+        var className = status === "已订购" ? "success" : status === "已退订" ? "danger" : "muted";
+        return '<span class="tag ' + className + '">' + escapeHtml(status) + '</span>';
+      }
+
+      function getTariffOrderRulesHtml(rules) {
+        return '<div class="cell-stack tariff-order-rule-stack">' + (rules || []).map(function (rule) { return '<div class="cell-line">' + escapeHtml(rule) + '</div>'; }).join('') + '</div>';
+      }
+
+      function getTariffOrderRowsHtmlSafe(tabId) {
+        var config = getTariffOrderConfig(tabId);
+        var rows = getFilteredTariffOrders(tabId);
+        var start = (config.state.page - 1) * config.state.pageSize;
+        var pageRows = rows.slice(start, start + config.state.pageSize);
+        if (!pageRows.length) return '<tr><td class="empty-cell" colspan="' + config.headers.length + '"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的订购记录</div></div></td></tr>';
+        return pageRows.map(function (item) {
+          var textCell = function (value) { return '<td>' + escapeHtml(value == null || value === "" ? "--" : String(value)) + '</td>'; };
+          var action = item.status === "已订购" ? '<td><button class="text-action js-tariff-order-unsubscribe" type="button" data-id="' + escapeHtml(item.id) + '">退订</button></td>' : '<td>--</td>';
+          var operationId = getOperationId(item.orderTime, config.catalog.indexOf(item));
+          var operationCell = tabId === 'groupBase' || tabId === 'groupAddon'
+            ? '<td><a class="link js-tariff-order-detail" href="#operation-' + escapeHtml(operationId) + '" data-operation-id="' + escapeHtml(operationId) + '">' + escapeHtml(operationId) + '</a></td>'
+            : textCell(operationId);
+          var cells = [operationCell];
+          if (tabId === "groupAddon") {
+            cells.push(textCell(item.batchNo), textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.packageName), '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.cycle), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+          } else if (tabId === "poolAddon") {
+            cells.push(textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.poolName), textCell(item.packageName), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+          } else {
+            cells.push(textCell(item.packageId), textCell(item.groupId), textCell(item.groupName), textCell(item.merchantName), textCell(item.packageName), '<td>' + getTariffOrderRulesHtml(item.rule) + '</td>', textCell(item.validity), textCell(item.orderTime), textCell(item.remark), '<td>' + getTariffOrderStatusHtml(item.status) + '</td>', action);
+          }
+          return '<tr>' + cells.join('') + '</tr>';
+        }).join('');
+      }
+
+      function getTariffOrderPaginationHtml(tabId) {
+        var config = getTariffOrderConfig(tabId);
+        var total = getFilteredTariffOrders(tabId).length;
+        var pageCount = getPageCount(total, config.state.pageSize);
+        var page = Math.min(config.state.page, pageCount);
+        var pages = [];
+        for (var i = 1; i <= pageCount; i += 1) pages.push(i);
+        return '<div class="pagination tariff-order-pagination"><span>共 ' + total + ' 条</span><select class="page-size js-tariff-order-page-size" aria-label="每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (config.state.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-tariff-order-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + pages.map(function (number) { return '<button class="page-btn js-tariff-order-page-btn ' + (number === page ? 'current' : '') + '" type="button" data-page="' + number + '">' + number + '</button>'; }).join('') + '<button class="page-btn js-tariff-order-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-tariff-order-jump" type="number" min="1" max="' + pageCount + '" aria-label="跳转页码"><span>页</span></div>';
+      }
+
+      function getTariffRenewModalHtml() {
+        var isSingle = tariffRenewState.mode === "single";
+        var packageIsBase = tariffRenewState.packageType === "base";
+        var packageUnit = tariffRenewState.renewalUnit || getTariffRenewUnit();
+        var renewalPackageOptions = groupRenewalTariffCatalog.map(function (item) { return '<option value="' + escapeHtml(item.name) + '"></option>'; }).join('');
+        var renewalPackageField = !packageIsBase ? '<div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>群组续费套餐</div><div class="tariff-renew-body"><input class="js-tariff-renew-package" type="text" list="tariff-renew-package-options" autocomplete="off" value="' + escapeHtml(tariffRenewState.renewalPackageName) + '" placeholder="请输入或选择群组续费套餐"><datalist id="tariff-renew-package-options">' + renewalPackageOptions + '</datalist></div></div>' : '';
+        var iccidField = '<div class="tariff-renew-row" ' + (isSingle ? '' : 'hidden') + '><div class="tariff-renew-label"><span class="required-mark">*</span>ICCID</div><div class="tariff-renew-body"><input class="js-tariff-renew-iccid" type="text" inputmode="numeric" autocomplete="off" value="' + escapeHtml(tariffRenewState.iccid) + '" placeholder="请输入ICCID"></div></div>';
+        var fileField = '<div class="tariff-renew-row" ' + (isSingle ? 'hidden' : '') + '><div class="tariff-renew-label"><span class="required-mark">*</span>选择文件</div><div class="tariff-renew-body"><div class="tariff-renew-file-actions"><button class="btn primary js-tariff-renew-choose-file" type="button">选择文件</button><span class="tariff-renew-file-name js-tariff-renew-file-name">' + (tariffRenewState.fileName ? escapeHtml(tariffRenewState.fileName) : '未选择文件') + '</span></div><input class="tariff-renew-hidden-input js-tariff-renew-file" type="file" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"><div class="tariff-renew-hint">支持文件格式：.XLS、.XLSX 表格格式，单次导入文件上限为10MB</div></div></div>';
+        return '<div class="modal-overlay tariff-renew-modal-overlay ' + (tariffRenewState.open ? 'show' : '') + ' js-tariff-renew-modal" aria-hidden="' + (tariffRenewState.open ? 'false' : 'true') + '"><section class="merchant-modal tariff-renew-modal" role="dialog" aria-modal="true" aria-labelledby="tariffRenewTitle"><div class="modal-head"><div id="tariffRenewTitle" class="modal-title">套餐续费</div><button class="modal-close js-close-tariff-renew" type="button" aria-label="关闭套餐续费">×</button></div><div class="modal-body"><div class="tariff-renew-form"><div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>操作方式</div><div class="tariff-renew-body"><div class="tariff-renew-mode"><label><input class="js-tariff-renew-mode" type="radio" name="tariffRenewMode" value="batch" ' + (!isSingle ? 'checked' : '') + '> 批量续费</label><label><input class="js-tariff-renew-mode" type="radio" name="tariffRenewMode" value="single" ' + (isSingle ? 'checked' : '') + '> 单卡续费</label></div></div></div><div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>续费套餐类型</div><div class="tariff-renew-body"><div class="tariff-renew-mode"><label><input class="js-tariff-renew-package-type" type="radio" name="tariffRenewPackageType" value="base" ' + (packageIsBase ? 'checked' : '') + '> 当前群组基础套餐</label><label><input class="js-tariff-renew-package-type" type="radio" name="tariffRenewPackageType" value="renewal" ' + (!packageIsBase ? 'checked' : '') + '> 群组续费套餐</label></div></div></div>' + renewalPackageField + iccidField + fileField + '<div class="tariff-renew-row"><div class="tariff-renew-label">备注</div><div class="tariff-renew-body"><textarea class="js-tariff-renew-remark" placeholder="请输入备注">' + escapeHtml(tariffRenewState.remark || '') + '</textarea></div></div></div><div class="modal-error js-tariff-renew-error"></div></div><div class="modal-foot"><button class="btn js-cancel-tariff-renew" type="button">取消</button><button class="btn primary js-confirm-tariff-renew" type="button">确认</button></div></section></div>';
+        return '<div class="modal-overlay tariff-renew-modal-overlay ' + (tariffRenewState.open ? 'show' : '') + ' js-tariff-renew-modal" aria-hidden="' + (tariffRenewState.open ? 'false' : 'true') + '"><section class="merchant-modal tariff-renew-modal" role="dialog" aria-modal="true" aria-labelledby="tariffRenewTitle"><div class="modal-head"><div id="tariffRenewTitle" class="modal-title">套餐续费</div><button class="modal-close js-close-tariff-renew" type="button" aria-label="关闭套餐续费">×</button></div><div class="modal-body"><div class="tariff-renew-form"><div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>操作方式</div><div class="tariff-renew-body"><div class="tariff-renew-mode"><label><input class="js-tariff-renew-mode" type="radio" name="tariffRenewMode" value="batch" ' + (!isSingle ? 'checked' : '') + '> 批量续费</label><label><input class="js-tariff-renew-mode" type="radio" name="tariffRenewMode" value="single" ' + (isSingle ? 'checked' : '') + '> 单卡续费</label></div></div></div><div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>续费套餐类型</div><div class="tariff-renew-body"><div class="tariff-renew-mode"><label><input class="js-tariff-renew-package-type" type="radio" name="tariffRenewPackageType" value="base" ' + (packageIsBase ? 'checked' : '') + '> 当前群组基础套餐</label><label><input class="js-tariff-renew-package-type" type="radio" name="tariffRenewPackageType" value="renewal" ' + (!packageIsBase ? 'checked' : '') + '> 群组续费套餐</label></div></div></div>' + (!packageIsBase ? '<div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>群组续费套餐</div><div class="tariff-renew-body"><input class="js-tariff-renew-package" type="text" list="tariff-renew-package-options" autocomplete="off" value="' + escapeHtml(tariffRenewState.renewalPackageName) + '" placeholder="请输入或选择群组续费套餐"><datalist id="tariff-renew-package-options">' + renewalPackageOptions + '</datalist></div></div>' : '') + (packageIsBase ? '<div class="tariff-renew-row"><div class="tariff-renew-label"><span class="required-mark">*</span>续费时长</div><div class="tariff-renew-body"><div class="tariff-renew-time-control"><input class="js-tariff-renew-time" type="text" inputmode="numeric" autocomplete="off" value="' + escapeHtml(tariffRenewState.renewalTime) + '" placeholder="请输入续费时长"><select class="js-tariff-renew-unit" aria-label="续费时长单位"><option ' + (packageUnit === '年' ? 'selected' : '') + '>年</option><option ' + (packageUnit === '月' ? 'selected' : '') + '>月</option><option ' + (packageUnit === '日' ? 'selected' : '') + '>日</option></select></div></div></div>' : '') + '<div class="tariff-renew-row" ' + (isSingle ? '' : 'hidden') + '><div class="tariff-renew-label"><span class="required-mark">*</span>ICCID</div><div class="tariff-renew-body"><input class="js-tariff-renew-iccid" type="text" inputmode="numeric" autocomplete="off" value="' + escapeHtml(tariffRenewState.iccid) + '" placeholder="请输入ICCID"></div></div><div class="tariff-renew-row" ' + (isSingle ? 'hidden' : '') + '><div class="tariff-renew-label"><span class="required-mark">*</span>选择文件</div><div class="tariff-renew-body"><div class="tariff-renew-file-actions"><button class="btn primary js-tariff-renew-choose-file" type="button">选择文件</button><span class="tariff-renew-file-name js-tariff-renew-file-name">' + (tariffRenewState.fileName ? escapeHtml(tariffRenewState.fileName) : '未选择文件') + '</span></div><input class="tariff-renew-hidden-input js-tariff-renew-file" type="file" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"><div class="tariff-renew-hint">支持文件格式：.XLS、.XLSX 表格格式，单次导入文件上限为10MB</div></div></div>' + '<div class="tariff-renew-row"><div class="tariff-renew-label">备注</div><div class="tariff-renew-body"><textarea class="js-tariff-renew-remark" placeholder="请输入备注">' + escapeHtml(tariffRenewState.remark || '') + '</textarea></div></div></div><div class="modal-error js-tariff-renew-error"></div></div><div class="modal-foot"><button class="btn js-cancel-tariff-renew" type="button">取消</button><button class="btn primary js-confirm-tariff-renew" type="button">确认</button></div></section></div>';
+      }
+
+      function getTariffRenewUnit() {
+        var basePackage = groupBaseTariffCatalog[0];
+        var validity = basePackage && basePackage.validity ? basePackage.validity : "1个月";
+        return validity.indexOf("天") !== -1 ? "天" : validity.indexOf("年") !== -1 ? "年" : "月";
+      }
+
+      function getTariffRenewalBaseValidity() {
+        var basePackage = groupBaseTariffCatalog[0];
+        return basePackage && basePackage.validity ? basePackage.validity : "1个月";
+      }
+
+      function getGroupRenewalPackageValidity(packageName) {
+        var selectedPackage = groupRenewalTariffCatalog.find(function (item) { return item.name === packageName; });
+        return selectedPackage && selectedPackage.validity ? selectedPackage.validity : "--";
+      }
+
+      function getTariffOrderMainHtml() {
+        var tabs = [{ id: "groupBase", label: "群组基础套餐" }, { id: "groupAddon", label: "群组叠加包套餐" }, { id: "poolAddon", label: "流量池叠加包套餐" }];
+        var config = getTariffOrderConfig(tariffOrderState.activeTab);
+        return '<section class="content-card tariff-order-page"><div class="tariff-tabs" role="tablist" aria-label="订购套餐类型">' + tabs.map(function (tab) { return '<button class="tariff-tab ' + (tariffOrderState.activeTab === tab.id ? 'current' : '') + ' js-tariff-order-tab" type="button" role="tab" aria-selected="' + (tariffOrderState.activeTab === tab.id ? 'true' : 'false') + '" data-tab="' + tab.id + '">' + tab.label + '</button>'; }).join('') + '</div><div class="filters"><div class="filter-grid tariff-order-filter-grid"><div class="field"><label>商户名称</label><input class="control js-tariff-order-filter-merchant" type="text" value="' + escapeHtml(config.state.filters.merchantName) + '" placeholder="请输入商户名称"></div><div class="field"><label>群组名称</label><input class="control js-tariff-order-filter-group" type="text" value="' + escapeHtml(config.state.filters.groupName) + '" placeholder="请输入群组名称"></div><div class="field"><label>套餐</label><input class="control js-tariff-order-filter-package" type="text" value="' + escapeHtml(config.state.filters.packageName) + '" placeholder="请输入套餐名称"></div><div class="filter-actions"><button class="btn primary js-tariff-order-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-tariff-order-reset" type="button">重置</button></div></div></div><div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-tariff-order-create" type="button">套餐订购</button><button class="btn js-tariff-order-change" type="button">变更群组基础套餐</button></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="套餐订购列表" tabindex="0"><table class="tariff-order-table tariff-order-' + tariffOrderState.activeTab + '"><thead><tr>' + config.headers.map(function (header, index) { return '<th style="width:' + (index === 0 ? 150 : 132) + 'px">' + header + '</th>'; }).join('') + '</tr></thead><tbody>' + getTariffOrderRowsHtmlSafe(tariffOrderState.activeTab) + '</tbody></table></div>' + getTariffOrderPaginationHtml(tariffOrderState.activeTab) + '</div></section>';
+      }
+
+      function renderTariffOrderPage() {
+        document.querySelector('.main').innerHTML = getTariffOrderMainHtml();
+        bindTariffOrderControls(document.querySelector('.main'));
+      }
+
+      function bindTariffOrderControls(root) {
+        var page = (root || document).querySelector('.tariff-order-page');
+        if (!page) return;
+        page.querySelectorAll('.js-tariff-order-tab').forEach(function (button) { button.addEventListener('click', function () { tariffOrderState.activeTab = button.dataset.tab; renderTariffOrderPage(); }); });
+        var config = getTariffOrderConfig(tariffOrderState.activeTab);
+        var merchant = page.querySelector('.js-tariff-order-filter-merchant');
+        var group = page.querySelector('.js-tariff-order-filter-group');
+        var packageInput = page.querySelector('.js-tariff-order-filter-package');
+        var search = page.querySelector('.js-tariff-order-search');
+        var reset = page.querySelector('.js-tariff-order-reset');
+        function applyFilters() { config.state.filters.merchantName = merchant.value.trim(); config.state.filters.groupName = group.value.trim(); config.state.filters.packageName = packageInput.value.trim(); config.state.page = 1; renderTariffOrderPage(); showToast('查询成功'); }
+        search.addEventListener('click', applyFilters);
+        [merchant, group, packageInput].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
+        reset.addEventListener('click', function () { config.state.filters = { merchantName: '', groupName: '', packageName: '' }; config.state.page = 1; renderTariffOrderPage(); showToast('重置成功'); });
+        page.querySelectorAll('.js-tariff-order-create, .js-tariff-order-change').forEach(function (button) { button.addEventListener('click', function () { showToast(button.textContent.trim() + '入口已打开'); }); });
+        page.querySelectorAll('.js-tariff-order-detail').forEach(function (link) { link.addEventListener('click', function (event) { event.preventDefault(); openCardPackageDetailPageFromOperation(link.dataset.operationId); }); });
+        page.querySelectorAll('.js-tariff-order-unsubscribe').forEach(function (button) { button.addEventListener('click', function () { var target = config.catalog.find(function (item) { return item.id === button.dataset.id; }); if (target) { target.status = '已退订'; renderTariffOrderPage(); showToast('退订成功', { force: true }); } }); });
+        page.querySelectorAll('.js-tariff-order-page-btn').forEach(function (button) { button.addEventListener('click', function () { config.state.page = Number(button.dataset.page) || 1; renderTariffOrderPage(); }); });
+        var prev = page.querySelector('.js-tariff-order-prev');
+        var next = page.querySelector('.js-tariff-order-next');
+        if (prev) prev.addEventListener('click', function () { config.state.page = Math.max(1, config.state.page - 1); renderTariffOrderPage(); });
+        if (next) next.addEventListener('click', function () { config.state.page = Math.min(getPageCount(getFilteredTariffOrders(tariffOrderState.activeTab).length, config.state.pageSize), config.state.page + 1); renderTariffOrderPage(); });
+        var pageSize = page.querySelector('.js-tariff-order-page-size');
+        if (pageSize) pageSize.addEventListener('change', function (event) { config.state.pageSize = Number(event.target.value) || 20; config.state.page = 1; renderTariffOrderPage(); });
+        var jump = page.querySelector('.js-tariff-order-jump');
+        if (jump) jump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { config.state.page = clampPage(event.target.value, getFilteredTariffOrders(tariffOrderState.activeTab).length, config.state.pageSize); renderTariffOrderPage(); } });
+      }
+
+      function bindTariffRenewControls(root) {
+        var modal = (root || document).querySelector('.js-tariff-renew-modal');
+        if (!modal) return;
+        var error = modal.querySelector('.js-tariff-renew-error');
+        var iccid = modal.querySelector('.js-tariff-renew-iccid');
+        var renewalPackage = modal.querySelector('.js-tariff-renew-package');
+        var renewalTime = modal.querySelector('.js-tariff-renew-time');
+        var renewalUnit = modal.querySelector('.js-tariff-renew-unit');
+        var fileInput = modal.querySelector('.js-tariff-renew-file');
+        var remark = modal.querySelector('.js-tariff-renew-remark');
+        if (renewalTime) {
+          var renewalDurationRow = renewalTime.closest('.tariff-renew-row');
+          if (renewalDurationRow) renewalDurationRow.remove();
+          renewalTime = null;
+          renewalUnit = null;
+        }
+        function closeModal() {
+          tariffRenewState.open = false;
+          renderTariffRenewalPage();
+        }
+        modal.querySelectorAll('.js-tariff-renew-mode').forEach(function (radio) {
+          radio.addEventListener('change', function () {
+            tariffRenewState.mode = radio.value;
+            tariffRenewState.iccid = iccid ? iccid.value.replace(/\D/g, '') : tariffRenewState.iccid;
+            tariffRenewState.remark = remark ? remark.value : tariffRenewState.remark;
+            renderTariffRenewalPage();
+          });
+        });
+        modal.querySelectorAll('.js-tariff-renew-package-type').forEach(function (radio) {
+          radio.addEventListener('change', function () {
+            tariffRenewState.packageType = radio.value;
+            tariffRenewState.renewalPackageName = renewalPackage ? renewalPackage.value.trim() : tariffRenewState.renewalPackageName;
+            tariffRenewState.remark = remark ? remark.value : tariffRenewState.remark;
+            renderTariffRenewalPage();
+          });
+        });
+        if (renewalPackage) renewalPackage.addEventListener('input', function () {
+          tariffRenewState.renewalPackageName = renewalPackage.value;
+          error.textContent = '';
+        });
+        if (remark) remark.addEventListener('input', function () {
+          tariffRenewState.remark = remark.value;
+        });
+        if (iccid) iccid.addEventListener('input', function () {
+          iccid.value = iccid.value.replace(/\D/g, '');
+          tariffRenewState.iccid = iccid.value;
+          error.textContent = '';
+        });
+        var chooseFile = modal.querySelector('.js-tariff-renew-choose-file');
+        if (chooseFile && fileInput) chooseFile.addEventListener('click', function () { fileInput.click(); });
+        if (fileInput) fileInput.addEventListener('change', function () {
+          tariffRenewState.fileName = fileInput.files && fileInput.files[0] ? fileInput.files[0].name : '';
+          error.textContent = '';
+          renderTariffRenewalPage();
+        });
+        modal.querySelector('.js-close-tariff-renew').addEventListener('click', closeModal);
+        modal.querySelector('.js-cancel-tariff-renew').addEventListener('click', closeModal);
+        modal.addEventListener('click', function (event) { if (event.target === modal) closeModal(); });
+        modal.querySelector('.js-confirm-tariff-renew').addEventListener('click', function () {
+          if (tariffRenewState.mode === 'single') {
+            tariffRenewState.iccid = iccid ? iccid.value.replace(/\D/g, '') : tariffRenewState.iccid;
+            if (!tariffRenewState.iccid) { error.textContent = '请输入ICCID'; return; }
+          } else if (!tariffRenewState.fileName) {
+            error.textContent = '请选择文件';
+            return;
+          }
+          tariffRenewState.remark = remark ? remark.value : tariffRenewState.remark;
+          if (tariffRenewState.packageType !== 'base' && !tariffRenewState.renewalPackageName.trim()) {
+            error.textContent = '请选择群组续费套餐';
+            return;
+          }
+          var sourceRecord = tariffRenewalRecords[0];
+          var nextNumber = String(tariffRenewalRecords.length + 1).padStart(3, '0');
+          var renewalTimeText = formatNowDateTime();
+          tariffRenewalRecords.unshift({
+            batchNo: 'RF' + renewalTimeText.slice(0, 10).replace(/-/g, '') + nextNumber,
+            mode: tariffRenewState.mode === 'single' ? '单卡续费' : '批量续费',
+            packageType: tariffRenewState.packageType === 'base' ? '当前群组基础套餐' : '群组续费套餐',
+            remark: tariffRenewState.remark || '',
+            renewalDuration: tariffRenewState.packageType === 'base' ? getTariffRenewalBaseValidity() : getGroupRenewalPackageValidity(tariffRenewState.renewalPackageName),
+            renewalTime: renewalTimeText,
+            creator: '运营管理员',
+            operator: '运营管理员',
+            packageId: sourceRecord.packageId,
+            groupId: sourceRecord.groupId,
+            groupName: sourceRecord.groupName,
+            merchantName: sourceRecord.merchantName,
+            packageName: tariffRenewState.packageType === 'base' ? sourceRecord.packageName : tariffRenewState.renewalPackageName,
+            packageRule: sourceRecord.packageRule.slice(),
+            renewalStatus: '已续费',
+            items: tariffRenewState.mode === 'single' ? [tariffRenewState.iccid] : ['898604231900000001', '898604231900000002']
+          });
+          closeModal();
+          showToast('续费套餐提交成功');
+        });
       }
 
       function getTrafficPoolWarningDraftFromRule(rule) {
@@ -8146,7 +10636,6 @@
                       <th style="width: 126px;">激活时间</th>
                       <th style="width: 190px;">测试期</th>
                       <th style="width: 120px;">沉默期</th>
-                      <th style="width: 150px;">当前套餐到期时间</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -8160,7 +10649,7 @@
                         </div>
                       </td>
                       <td><span class="tag success card-status">已激活</span></td>
-                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 月度 20GB 套餐</div><div><span class="cell-key">套餐生效方式</span> 激活后生效</div><div><span class="cell-key">套餐有效期</span> 2026-05-01 至 2026-06-30</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div></div></td>
+                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 月度 20GB 套餐</div><div><span class="cell-key">套餐生效方式</span> 激活后生效</div><div><span class="cell-key">套餐有效期</span> 2026-05-01 至 2026-06-30</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div><div><span class="cell-key">当前套餐到期时间</span> 2026-06-30</div></div></td>
                       <td><span class="remark-cell">物流车载主卡<button class="inline-icon-btn" type="button" aria-label="编辑备注"><svg class="action-icon" viewBox="0 0 24 24"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4z"></path></svg></button></span></td>
                       <td><span class="traffic-cell">18,420<button class="refresh-cell-btn" type="button" aria-label="刷新本月已用流量"><svg class="action-icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg></button></span></td>
                       <td>2,060</td>
@@ -8170,37 +10659,36 @@
                       <td>2026-05-12</td>
                       <td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-05-20</div><div><span class="cell-key">测试期可用流量上限</span> 500MB</div></div></td>
                       <td>已结束</td>
-                      <td>2026-06-30</td>
                     </tr>
                     <tr data-status="测试期" data-package-status="生效中">
                       <td class="check-cell"><input type="checkbox" aria-label="选择此行"></td>
                       <td><div class="cell-stack"><div class="cell-line"><span class="cell-key">ICCID</span><a class="link card-link" href="#card-8986042310281000456">8986042310281000456</a><button class="copy-btn" type="button" data-copy="8986042310281000456" aria-label="复制ICCID"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">MSISDN</span><span>17721883909</span><button class="copy-btn" type="button" data-copy="17721883909" aria-label="复制MSISDN"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">IMSI</span><span>460011982762118</span><button class="copy-btn" type="button" data-copy="460011982762118" aria-label="复制IMSI"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div></div></td>
                       <td><span class="tag muted card-status">测试期</span></td>
-                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 季度共享 30GB</div><div><span class="cell-key">套餐生效方式</span> 出库后生效</div><div><span class="cell-key">套餐有效期</span> 2026-04-01 至 2026-07-01</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div></div></td>
+                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 季度共享 30GB</div><div><span class="cell-key">套餐生效方式</span> 出库后生效</div><div><span class="cell-key">套餐有效期</span> 2026-04-01 至 2026-07-01</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div><div><span class="cell-key">当前套餐到期时间</span> 2026-07-01</div></div></td>
                       <td><span class="remark-cell">北区摄像头<button class="inline-icon-btn" type="button" aria-label="编辑备注"><svg class="action-icon" viewBox="0 0 24 24"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4z"></path></svg></button></span></td>
                       <td><span class="traffic-cell">6,170<button class="refresh-cell-btn" type="button" aria-label="刷新本月已用流量"><svg class="action-icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg></button></span></td>
                       <td>24,550</td>
-                      <td>共享设备组</td><td>星环设备</td><td>中国联通</td><td>2026-04-28</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-05-05</div><div><span class="cell-key">测试期可用流量上限</span> 300MB</div></div></td><td>30 天</td><td>2026-07-01</td>
+                      <td>共享设备组</td><td>星环设备</td><td>中国联通</td><td>2026-04-28</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-05-05</div><div><span class="cell-key">测试期可用流量上限</span> 300MB</div></div></td><td>30 天</td>
                     </tr>
                     <tr data-status="已停用" data-package-status="已过期">
                       <td class="check-cell"><input type="checkbox" aria-label="选择此行"></td>
                       <td><div class="cell-stack"><div class="cell-line"><span class="cell-key">ICCID</span><a class="link card-link" href="#card-8986061901128893150">8986061901128893150</a><button class="copy-btn" type="button" data-copy="8986061901128893150" aria-label="复制ICCID"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">MSISDN</span><span>15300648821</span><button class="copy-btn" type="button" data-copy="15300648821" aria-label="复制MSISDN"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">IMSI</span><span>460031982889315</span><button class="copy-btn" type="button" data-copy="460031982889315" aria-label="复制IMSI"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div></div></td>
                       <td><span class="tag danger card-status">已停用</span></td>
-                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 全球漫游 10GB</div><div><span class="cell-key">套餐生效方式</span> 首次联网生效</div><div><span class="cell-key">套餐有效期</span> 2026-03-01 至 2026-06-01</div><div><span class="cell-key">套餐状态</span> <span class="tag danger">已过期</span></div></div></td>
+                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 全球漫游 10GB</div><div><span class="cell-key">套餐生效方式</span> 首次联网生效</div><div><span class="cell-key">套餐有效期</span> 2026-03-01 至 2026-06-01</div><div><span class="cell-key">套餐状态</span> <span class="tag danger">已过期</span></div><div><span class="cell-key">当前套餐到期时间</span> 2026-06-01</div></div></td>
                       <td><span class="remark-cell">海外节点备用<button class="inline-icon-btn" type="button" aria-label="编辑备注"><svg class="action-icon" viewBox="0 0 24 24"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4z"></path></svg></button></span></td>
                       <td><span class="traffic-cell">820<button class="refresh-cell-btn" type="button" aria-label="刷新本月已用流量"><svg class="action-icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg></button></span></td>
                       <td>9,420</td>
-                      <td>海外漫游组</td><td>北辰科技</td><td>中国电信</td><td>2026-03-06</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-03-13</div><div><span class="cell-key">测试期可用流量上限</span> 200MB</div></div></td><td>60 天</td><td>2026-06-01</td>
+                      <td>海外漫游组</td><td>北辰科技</td><td>中国电信</td><td>2026-03-06</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-03-13</div><div><span class="cell-key">测试期可用流量上限</span> 200MB</div></div></td><td>60 天</td>
                     </tr>
                     <tr data-status="库存" data-package-status="生效中">
                       <td class="check-cell"><input type="checkbox" aria-label="选择此行"></td>
                       <td><div class="cell-stack"><div class="cell-line"><span class="cell-key">ICCID</span><a class="link card-link" href="#card-8986042310281000789">8986042310281000789</a><button class="copy-btn" type="button" data-copy="8986042310281000789" aria-label="复制ICCID"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">MSISDN</span><span>18976521045</span><button class="copy-btn" type="button" data-copy="18976521045" aria-label="复制MSISDN"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="cell-line"><span class="cell-key">IMSI</span><span>460001982100789</span><button class="copy-btn" type="button" data-copy="460001982100789" aria-label="复制IMSI"><svg class="action-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div></div></td>
                       <td><span class="tag muted card-status">库存</span></td>
-                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 自然月 20GB 套餐</div><div><span class="cell-key">套餐生效方式</span> 自然月生效</div><div><span class="cell-key">套餐有效期</span> 2026-06-01 至 2026-06-30</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div></div></td>
+                      <td><div class="cell-stack"><div><span class="cell-key">套餐名称</span> 自然月 20GB 套餐</div><div><span class="cell-key">套餐生效方式</span> 自然月生效</div><div><span class="cell-key">套餐有效期</span> 2026-06-01 至 2026-06-30</div><div><span class="cell-key">套餐状态</span> <span class="tag success">生效中</span></div><div><span class="cell-key">当前套餐到期时间</span> 2026-06-30</div></div></td>
                       <td><span class="remark-cell">能源表计卡<button class="inline-icon-btn" type="button" aria-label="编辑备注"><svg class="action-icon" viewBox="0 0 24 24"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4z"></path></svg></button></span></td>
                       <td><span class="traffic-cell">12,040<button class="refresh-cell-btn" type="button" aria-label="刷新本月已用流量"><svg class="action-icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg></button></span></td>
                       <td>8,440</td>
-                      <td>测试设备组</td><td>汇联能源</td><td>中国移动</td><td>2026-05-20</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-05-27</div><div><span class="cell-key">测试期可用流量上限</span> 800MB</div></div></td><td>15 天</td><td>2026-06-30</td>
+                      <td>测试设备组</td><td>汇联能源</td><td>中国移动</td><td>2026-05-20</td><td><div class="cell-stack"><div><span class="cell-key">测试期截止日期</span> 2026-05-27</div><div><span class="cell-key">测试期可用流量上限</span> 800MB</div></div></td><td>15 天</td>
                     </tr>
                   </tbody>
                 </table>
@@ -8361,10 +10849,45 @@
         });
       }
 
+      function ensureQuerySelectClearControl(select, host) {
+        if (!select.closest(".filters") || !host) {
+          return;
+        }
+
+        host.classList.add("clearable-select");
+        var clearButton = host.querySelector(".clear-control");
+        if (!clearButton) {
+          clearButton = document.createElement("button");
+          clearButton.type = "button";
+          clearButton.className = "clear-control";
+          clearButton.textContent = "×";
+          clearButton.setAttribute("aria-label", "清除" + getSelectPlaceholder(select));
+          host.appendChild(clearButton);
+        }
+
+        if (clearButton.dataset.querySelectClearBound === "true") {
+          return;
+        }
+
+        clearButton.dataset.querySelectClearBound = "true";
+        clearButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          select.value = "";
+          select.dispatchEvent(new Event("input", { bubbles: true }));
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+          refreshCustomSelect(select);
+          closeCustomSelects();
+          var trigger = host.querySelector(".custom-select-trigger");
+          (trigger || select).focus();
+        });
+      }
+
       function enhanceSelectControls(root) {
-        (root || document).querySelectorAll(".select-wrap select, .modal-field select").forEach(function (select) {
+        (root || document).querySelectorAll(".select-wrap select, .modal-field select, .filters select").forEach(function (select) {
           if (select.dataset.customSelectBound === "true") {
             refreshCustomSelect(select);
+            ensureQuerySelectClearControl(select, select.closest(".custom-select-host"));
             return;
           }
 
@@ -8427,6 +10950,7 @@
           host.appendChild(trigger);
           host.appendChild(list);
           refreshCustomSelect(select);
+          ensureQuerySelectClearControl(select, host);
         });
       }
 
@@ -8458,6 +10982,10 @@
           control.addEventListener("change", function () {
             updateClearableState(wrapper.parentElement || document);
           });
+          if (clearButton && clearButton.dataset.querySelectClearBound === "true") {
+            updateClearableState(wrapper.parentElement || document);
+            return;
+          }
           clearButton.addEventListener("click", function () {
             control.value = "";
             control.dispatchEvent(new Event("input", { bubbles: true }));
@@ -8485,6 +11013,23 @@
 
       function formatDate(date) {
         return date.getFullYear() + "-" + padDate(date.getMonth() + 1) + "-" + padDate(date.getDate());
+      }
+
+      function getDateRangeFilterHtml(label, className, start, end) {
+        var dateLabel = label.replace(/(时间|日期)$/, "");
+        var startLabel = dateLabel + "开始日期";
+        var endLabel = dateLabel + "结束日期";
+        var hasValue = Boolean(start && end);
+        return '<div class="field"><label>' + escapeHtml(label) + '</label><button class="date-range-control js-date-range ' + className + (hasValue ? ' has-value' : '') + '" type="button" data-start-label="' + escapeHtml(startLabel) + '" data-end-label="' + escapeHtml(endLabel) + '"' + (start ? ' data-start="' + escapeHtml(start) + '"' : '') + (end ? ' data-end="' + escapeHtml(end) + '"' : '') + ' data-shortcuts="quick" aria-label="' + escapeHtml(label) + '范围"><span class="date-range-text"><span class="date-start">' + escapeHtml(start || startLabel) + '</span><span class="date-range-separator">至</span><span class="date-end">' + escapeHtml(end || endLabel) + '</span></span><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 11h18"></path></svg></button></div>';
+      }
+
+      function getDateRangeFilterValue(button) {
+        return { start: button && button.dataset.start ? button.dataset.start : "", end: button && button.dataset.end ? button.dataset.end : "" };
+      }
+
+      function matchesDateRange(value, start, end) {
+        var dateValue = String(value || "").slice(0, 10);
+        return (!start || dateValue >= start) && (!end || dateValue <= end);
       }
 
       function parseDate(value) {
@@ -8648,6 +11193,7 @@
             state.end = selected;
             setDateRangeValue(state.button, state.start, state.end);
             hideDatePicker();
+            state.button.dispatchEvent(new CustomEvent("date-range-change", { bubbles: true }));
             showToast("日期范围已选择");
           });
 
@@ -8678,8 +11224,7 @@
           { label: "最近半年", days: 180 },
           { label: "最近一年", days: 365 },
           { label: "上月", offset: -1 },
-          { label: "本月", offset: 0 },
-          { label: "次月", offset: 1 }
+          { label: "本月", offset: 0 }
         ].forEach(function (item) {
           var shortcut = document.createElement("button");
           shortcut.type = "button";
@@ -8693,6 +11238,7 @@
               setDateRangeValue(state.button, startOfMonth(targetMonth), endOfMonth(targetMonth));
             }
             hideDatePicker();
+            state.button.dispatchEvent(new CustomEvent("date-range-change", { bubbles: true }));
             showToast(item.label + "日期范围已选择");
           });
           shortcuts.appendChild(shortcut);
@@ -8770,6 +11316,7 @@
             resetDateRangeValue(button);
             hideDatePicker();
             button.focus();
+            button.dispatchEvent(new CustomEvent("date-range-change", { bubbles: true }));
           });
         });
       }
@@ -8992,6 +11539,54 @@
           document.querySelector(".breadcrumb").textContent = "进销存管理 / 库存管理";
           document.querySelector(".main").innerHTML = getInventoryManagementMainHtml();
           bindInventoryManagementControls(document.querySelector(".main"));
+        }
+
+        if (tab.textContent.indexOf("套餐订购") !== -1) {
+          currentView = "tariffOrder";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("tariffOrder");
+          markTariffOrderMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐订购";
+          ensureTariffOrderTab();
+          renderTariffOrderPage();
+        }
+
+        if (tab.textContent.indexOf("套餐续费") !== -1) {
+          currentView = "tariffRenewal";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("tariffRenewal");
+          markTariffRenewalMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐续费";
+          ensureTariffRenewalTab();
+          renderTariffRenewalPage();
+        }
+
+        if (tab.textContent.indexOf("流量卡套餐详情") !== -1) {
+          currentView = "cardPackageDetail";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("cardPackageDetail");
+          markCardPackageDetailMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "资费中心 / 流量卡套餐详情";
+          ensureCardPackageDetailTab();
+          renderCardPackageDetailPage();
+        }
+
+        if (tab.textContent.indexOf("套餐管理") !== -1) {
+          currentView = "tariff";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("tariff");
+          markTariffMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐管理";
+          renderTariffManagementPage();
+        }
+
+        if (tab.textContent.indexOf("群组管理") !== -1) {
+          currentView = "group";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("group");
+          markGroupMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "群组中心 / 群组管理";
+          renderGroupManagementPage();
         }
 
         if (tab.textContent.indexOf("流量卡管理") !== -1) {
@@ -9312,6 +11907,71 @@
         bindCurrentTabInteractions();
       }
 
+      function ensureTariffOrderTab() {
+        var orderTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) { return tab.textContent.indexOf("套餐订购") !== -1; });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!orderTab) {
+          orderTab = document.createElement("div");
+          orderTab.className = "tab current";
+          orderTab.innerHTML = '套餐订购 <button class="tab-close" type="button" aria-label="关闭套餐订购页面">×</button>';
+          document.querySelector(".tabs").appendChild(orderTab);
+        }
+        orderTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureTariffRenewalTab() {
+        var renewalTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) { return tab.textContent.indexOf("套餐续费") !== -1; });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!renewalTab) {
+          renewalTab = document.createElement("div");
+          renewalTab.className = "tab current";
+          renewalTab.innerHTML = '套餐续费 <button class="tab-close" type="button" aria-label="关闭套餐续费页面">×</button>';
+          document.querySelector(".tabs").appendChild(renewalTab);
+        }
+        renewalTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureCardPackageDetailTab() {
+        var detailTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) { return tab.textContent.indexOf("流量卡套餐详情") !== -1; });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!detailTab) {
+          detailTab = document.createElement("div");
+          detailTab.className = "tab current";
+          detailTab.innerHTML = '流量卡套餐详情 <button class="tab-close" type="button" aria-label="关闭流量卡套餐详情页面">×</button>';
+          document.querySelector(".tabs").appendChild(detailTab);
+        }
+        detailTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureTariffManagementTab() {
+        var tariffTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) { return tab.textContent.indexOf("套餐管理") !== -1; });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!tariffTab) {
+          tariffTab = document.createElement("div");
+          tariffTab.className = "tab current";
+          tariffTab.innerHTML = '套餐管理 <button class="tab-close" type="button" aria-label="关闭套餐管理页面">×</button>';
+          document.querySelector(".tabs").appendChild(tariffTab);
+        }
+        tariffTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureGroupManagementTab() {
+        var groupTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) { return tab.textContent.indexOf("群组管理") !== -1; });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!groupTab) {
+          groupTab = document.createElement("div");
+          groupTab.className = "tab current";
+          groupTab.innerHTML = '群组管理 <button class="tab-close" type="button" aria-label="关闭群组管理页面">×</button>';
+          document.querySelector(".tabs").appendChild(groupTab);
+        }
+        groupTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
       function ensureTrafficPoolManagementTab() {
         var poolTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) {
           return tab.textContent.indexOf("流量池管理") !== -1;
@@ -9373,6 +12033,31 @@
 
         warningStrategyTab.classList.add("current");
         bindCurrentTabInteractions();
+      }
+
+      function markTariffOrderMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) { item.classList.toggle("current", item.textContent.trim() === "套餐订购"); });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) { item.classList.remove("active"); });
+      }
+
+      function markTariffRenewalMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) { item.classList.toggle("current", item.textContent.trim() === "套餐续费"); });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) { item.classList.remove("active"); });
+      }
+
+      function markCardPackageDetailMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) { item.classList.toggle("current", item.textContent.trim() === "流量卡套餐详情"); });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) { item.classList.remove("active"); });
+      }
+
+      function markTariffMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) { item.classList.toggle("current", item.textContent.trim() === "套餐管理"); });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) { item.classList.remove("active"); });
+      }
+
+      function markGroupMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) { item.classList.toggle("current", item.textContent.trim() === "群组管理"); });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) { item.classList.remove("active"); });
       }
 
       function markTrafficPoolMenuSelected() {
@@ -13052,6 +15737,72 @@
         showToast("已打开流量卡管理");
       }
 
+      function openTariffOrderPageFromSidebar(options) {
+        currentView = "tariffOrder";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("tariffOrder");
+        markTariffOrderMenuSelected();
+        ensureTariffOrderTab();
+        document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐订购";
+        renderTariffOrderPage();
+        if (!(options && options.silent)) showToast("已打开套餐订购");
+      }
+
+      function openTariffRenewalPageFromSidebar(options) {
+        currentView = "tariffRenewal";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("tariffRenewal");
+        markTariffRenewalMenuSelected();
+        tariffRenewalPageState.activeTab = "records";
+        tariffRenewalPageState.detailBatchNo = "";
+        tariffRenewalPageState.detailFilters = { batchNo: "", iccid: "", packageId: "", groupId: "", groupName: "", merchantName: "", packageType: "", packageName: "", renewalTime: "", renewalStatus: "", operator: "" };
+        tariffRenewalPageState.detailPage = 1;
+        ensureTariffRenewalTab();
+        document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐续费";
+        renderTariffRenewalPage();
+        if (!(options && options.silent)) showToast("已打开套餐续费");
+      }
+
+      function openCardPackageDetailPageFromSidebar(options) {
+        currentView = "cardPackageDetail";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("cardPackageDetail");
+        markCardPackageDetailMenuSelected();
+        ensureCardPackageDetailTab();
+        document.querySelector(".breadcrumb").textContent = "资费中心 / 流量卡套餐详情";
+        renderCardPackageDetailPage();
+        if (!(options && options.silent)) showToast("已打开流量卡套餐详情");
+      }
+
+      function openCardPackageDetailPageFromOperation(operationId) {
+        cardPackageDetailState.filters = { operationId: operationId || '', iccid: '', groupInfo: '', packageInfo: '', packageType: '', packageStatus: '', effectiveDateStart: '', effectiveDateEnd: '', endDateStart: '', endDateEnd: '', invalidReason: '', createdAtStart: '', createdAtEnd: '', updatedAtStart: '', updatedAtEnd: '' };
+        cardPackageDetailState.page = 1;
+        openCardPackageDetailPageFromSidebar({ silent: true });
+        showToast('已按操作ID打开流量卡套餐详情');
+      }
+
+      function openTariffManagementPageFromSidebar(options) {
+        currentView = "tariff";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("tariff");
+        markTariffMenuSelected();
+        ensureTariffManagementTab();
+        document.querySelector(".breadcrumb").textContent = "资费中心 / 套餐管理";
+        renderTariffManagementPage();
+        if (!(options && options.silent)) showToast("已打开套餐管理");
+      }
+
+      function openGroupManagementPageFromSidebar(options) {
+        currentView = "group";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("group");
+        markGroupMenuSelected();
+        ensureGroupManagementTab();
+        document.querySelector(".breadcrumb").textContent = "群组中心 / 群组管理";
+        renderGroupManagementPage();
+        if (!(options && options.silent)) showToast("已打开群组管理");
+      }
+
       function openTrafficPoolManagementPageFromSidebar(options) {
         currentView = "trafficPool";
         document.body.classList.remove("page-cleared");
@@ -13206,6 +15957,11 @@
         var inventoryMenu = event.target.closest(".js-inventory-page");
         var flowMenu = event.target.closest(".js-side-page");
         var trafficPoolMenu = event.target.closest(".js-traffic-pool-page");
+        var groupMenu = event.target.closest(".js-group-page");
+        var tariffMenu = event.target.closest(".js-tariff-page");
+        var tariffOrderMenu = event.target.closest(".js-tariff-order-page");
+        var tariffRenewalMenu = event.target.closest(".js-tariff-renewal-page");
+        var cardPackageDetailMenu = event.target.closest(".js-card-package-detail-page");
         var warningStrategyMenu = event.target.closest(".js-warning-strategy-page");
         var merchantMenu = event.target.closest(".js-merchant-page");
         var taskMenu = event.target.closest(".js-task-page");
@@ -13234,6 +15990,36 @@
         if (trafficPoolMenu) {
           event.preventDefault();
           runWithTrafficPoolLeaveGuard(openTrafficPoolManagementPageFromSidebar);
+          return;
+        }
+
+        if (tariffOrderMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openTariffOrderPageFromSidebar);
+          return;
+        }
+
+        if (tariffRenewalMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openTariffRenewalPageFromSidebar);
+          return;
+        }
+
+        if (cardPackageDetailMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openCardPackageDetailPageFromSidebar);
+          return;
+        }
+
+        if (tariffMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openTariffManagementPageFromSidebar);
+          return;
+        }
+
+        if (groupMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openGroupManagementPageFromSidebar);
           return;
         }
 
