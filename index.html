@@ -221,6 +221,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 18px;
+      position: relative;
     }
 
     .left-tools,
@@ -255,14 +256,20 @@
     }
 
     .quick-search {
-      width: 300px;
-      height: 32px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 440px;
+      height: 36px;
       display: flex;
       align-items: center;
+      gap: 0;
+      padding: 3px;
       border: 1px solid var(--border);
       border-radius: 18px;
       background: #fff;
       overflow: hidden;
+      transform: translate(-50%, -50%);
       transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
     }
 
@@ -280,11 +287,28 @@
       flex: 1 1 auto;
       height: 100%;
       border: 0;
-      padding: 0 9px;
+      padding: 0 12px;
       background: transparent;
       color: #374151;
       font-size: 12px;
       outline: none;
+    }
+
+    .quick-search-scope {
+      flex: 0 0 auto;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 12px 0 10px;
+      border-right: 1px solid var(--border);
+      color: var(--blue);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .quick-search-scope svg {
+      display: none;
     }
 
     .quick-search input::placeholder {
@@ -292,20 +316,29 @@
     }
 
     .quick-search button {
-      width: 32px;
-      height: 100%;
+      width: auto;
+      min-width: 72px;
+      height: 28px;
       display: inline-grid;
+      grid-auto-flow: column;
       place-items: center;
+      gap: 5px;
+      padding: 0 12px;
       border: 0;
-      border-left: 1px solid var(--border);
-      background: transparent;
-      color: #6b7280;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
       cursor: pointer;
     }
 
     .quick-search button:hover {
-      color: var(--blue);
-      background: var(--blue-050);
+      color: #fff;
+      background: #176fd1;
+    }
+
+    .quick-search button .tool-icon {
+      width: 14px;
+      height: 14px;
     }
 
     .user {
@@ -910,6 +943,10 @@
       background: #f4f9ff;
     }
 
+    .approval-table tbody td:last-child:has(.approval-action-menu.open) {
+      z-index: 12;
+    }
+
     .approval-head {
       padding: 18px;
       border-bottom: 1px solid var(--border-soft);
@@ -1079,6 +1116,103 @@
     .approval-action.danger:hover {
       color: #b42318;
       text-decoration: underline;
+    }
+
+    .approval-action-select {
+      width: 78px;
+      height: 28px;
+      padding: 0 24px 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: #4b5563;
+      font-size: 12px;
+      line-height: 26px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .approval-action-select:hover,
+    .approval-action-select:focus {
+      border-color: #8fc6ff;
+      background: var(--blue-050);
+      color: var(--blue);
+    }
+
+    .approval-action-menu {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .approval-action-menu-trigger {
+      min-width: 64px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      color: #4b5563;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .approval-action-menu-trigger:hover,
+    .approval-action-menu.open .approval-action-menu-trigger {
+      border-color: #b8dfff;
+      background: var(--blue-050);
+      color: var(--blue);
+    }
+
+    .approval-action-menu-trigger svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+    }
+
+    .approval-action-menu-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      z-index: 20;
+      display: none;
+      min-width: 104px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 6px 14px rgba(31, 45, 61, 0.14);
+    }
+
+    .approval-action-menu.open .approval-action-menu-panel {
+      display: grid;
+      gap: 1px;
+    }
+
+    .approval-action-menu-panel.open-upward {
+      top: auto;
+      bottom: calc(100% + 4px);
+    }
+
+    .approval-action-menu-panel .approval-action {
+      width: 100%;
+      min-height: 28px;
+      padding: 0 8px;
+      text-align: left;
+      border-radius: 3px;
+    }
+
+    .approval-action-menu-panel .approval-action:hover {
+      background: var(--blue-050);
+    }
+
+    .approval-action-menu-panel .approval-action.danger:hover {
+      background: var(--danger-bg);
     }
 
     .approval-empty {
@@ -3936,7 +4070,7 @@
 
     table.tariff-addon-table {
       width: 100%;
-      min-width: 960px;
+      min-width: 1260px;
     }
 
     .tariff-addon-table tbody td {
@@ -3993,7 +4127,7 @@
 
     table.tariff-base-table {
       width: 100%;
-      min-width: 1280px;
+      min-width: 1560px;
     }
 
     .tariff-base-table tbody td {
@@ -5949,8 +6083,8 @@
 
     .toast {
       position: fixed;
-      right: 28px;
-      top: 68px;
+      top: 64px;
+      left: 50%;
       z-index: 50;
       min-width: 180px;
       padding: 10px 14px;
@@ -5962,13 +6096,13 @@
       font-size: 12px;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(-8px);
+      transform: translate(-50%, -8px);
       transition: opacity 0.18s ease, transform 0.18s ease;
     }
 
     .toast.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate(-50%, 0);
     }
 
     @keyframes spin {
@@ -6023,9 +6157,10 @@
           </div>
           <div class="right-tools">
             <div class="quick-search" role="search">
-              <input class="js-quick-card-search" type="text" placeholder="搜索 ICCID / MSISDN / IMSI" aria-label="快捷搜索ICCID、MSISDN、IMSI">
+              <span class="quick-search-scope" title="查询对象：流量卡">流量卡查询<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"></path></svg></span>
+              <input class="js-quick-card-search" type="text" placeholder="请输入 ICCID / MSISDN / IMSI" aria-label="快捷搜索ICCID、MSISDN、IMSI">
               <button class="js-quick-card-search-btn" type="button" aria-label="搜索流量卡详情">
-                <svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                <svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg><span>搜索</span>
               </button>
             </div>
             <button class="icon-btn" aria-label="下载管理">
@@ -6536,6 +6671,12 @@
         { id: "pool-addon-003", name: "流量池叠加包-100GB", traffic: "100GB", price: "320.00", remark: "企业流量池专用" },
         { id: "pool-addon-004", name: "流量池叠加包-500GB", traffic: "500GB", price: "1280.00", remark: "高用量场景专用" }
       ];
+      [groupBaseTariffCatalog, groupRenewalTariffCatalog, groupAddonTariffCatalog, poolAddonTariffCatalog].forEach(function (catalog, catalogIndex) {
+        catalog.forEach(function (item, index) {
+          item.updatedAt = '2026-08-' + String(18 - index).padStart(2, '0') + ' ' + String(16 - catalogIndex).padStart(2, '0') + ':20';
+          item.operator = ['运营管理员', '张晨', '李青', '周明'][index % 4];
+        });
+      });
       var tariffOrderState = {
         activeTab: "groupBase",
         groupBase: { filters: { merchantName: "", groupName: "", packageName: "" }, page: 1, pageSize: 20 },
@@ -7877,11 +8018,11 @@
         if (tariffCreateState.packageType === "groupBase" || tariffCreateState.packageType === "groupRenewal") {
           var targetCatalog = tariffCreateState.packageType === "groupRenewal" ? groupRenewalTariffCatalog : groupBaseTariffCatalog;
           var label = tariffCreateState.packageType === "groupRenewal" ? "群组续费套餐-" : "群组基础套餐-";
-          targetCatalog.push({ id: (tariffCreateState.packageType === "groupRenewal" ? "renewal-" : "base-") + Date.now(), name: label + suffix, cardType: form.cardType, trafficType: form.trafficType, billingType: form.billingType, billingCycle: form.billingCycle, packageType: tariffCreateState.packageType === "groupRenewal" ? "续费套餐" : "基础套餐", traffic: suffix, validity: form.validity + getTariffCreateCycleUnit(), price: form.price, remark: form.remark });
+          targetCatalog.push({ id: (tariffCreateState.packageType === "groupRenewal" ? "renewal-" : "base-") + Date.now(), name: label + suffix, cardType: form.cardType, trafficType: form.trafficType, billingType: form.billingType, billingCycle: form.billingCycle, packageType: tariffCreateState.packageType === "groupRenewal" ? "续费套餐" : "基础套餐", traffic: suffix, validity: form.validity + getTariffCreateCycleUnit(), price: form.price, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
         } else if (tariffCreateState.packageType === "groupAddon") {
-          groupAddonTariffCatalog.push({ id: "group-addon-" + Date.now(), name: "群组叠加包-" + suffix, traffic: suffix, validity: form.validity ? form.validity + "月" : "当月有效", price: form.price, remark: form.remark });
+          groupAddonTariffCatalog.push({ id: "group-addon-" + Date.now(), name: "群组叠加包-" + suffix, traffic: suffix, validity: form.validity ? form.validity + "月" : "当月有效", price: form.price, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
         } else {
-          poolAddonTariffCatalog.push({ id: "pool-addon-" + Date.now(), name: "流量池叠加包-" + suffix, trafficType: form.trafficType, traffic: suffix, price: form.price, remark: form.remark });
+          poolAddonTariffCatalog.push({ id: "pool-addon-" + Date.now(), name: "流量池叠加包-" + suffix, trafficType: form.trafficType, traffic: suffix, price: form.price, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
         }
         tariffCreateState.open = false;
         renderTariffManagementPage();
@@ -7932,10 +8073,10 @@
       function getFilteredGroupBaseTariffs(tabId) {
         var config = getGroupBaseTariffConfig(tabId);
         var keyword = (config.state.filters.name || "").trim().toLowerCase();
-        if (!keyword) return config.catalog.slice();
-        return config.catalog.filter(function (item) {
+        var rows = !keyword ? config.catalog.slice() : config.catalog.filter(function (item) {
           return matchesTariffPackageLookup(keyword, item);
         });
+        return sortTariffsByUpdatedAt(rows);
       }
 
       function getTariffPackageLookupOptions(catalog) {
@@ -7952,6 +8093,12 @@
         return id.indexOf(normalized) !== -1 || name.indexOf(normalized) !== -1 || ('(' + id + ')' + name).indexOf(normalized) !== -1;
       }
 
+      function sortTariffsByUpdatedAt(items) {
+        return (items || []).slice().sort(function (left, right) {
+          return String(right.updatedAt || '').localeCompare(String(left.updatedAt || ''));
+        });
+      }
+
       function getTariffStackHtml(items) {
         return '<div class="cell-stack tariff-cell-stack">' + items.map(function (item) {
           return '<div class="cell-line">' + escapeHtml(item) + '</div>';
@@ -7964,23 +8111,23 @@
           catalog: groupAddonTariffCatalog,
           tableClass: "group-addon-table",
           ariaLabel: "群组叠加包套餐列表",
-          emptyColspan: 7,
-          headers: ["套餐ID", "套餐名称", "流量", "套餐时效", "金额（元）", "备注", "操作"]
+          emptyColspan: 9,
+          headers: ["套餐ID", "套餐名称", "流量", "套餐时效", "金额（元）", "备注", "更新时间", "操作人", "操作"]
         } : {
           state: tariffManagementState.poolAddon,
           catalog: poolAddonTariffCatalog,
           tableClass: "pool-addon-table",
           ariaLabel: "流量池叠加包套餐列表",
-          emptyColspan: 6,
-          headers: ["套餐ID", "套餐名称", "流量", "金额（元）", "备注", "操作"]
+          emptyColspan: 8,
+          headers: ["套餐ID", "套餐名称", "流量", "金额（元）", "备注", "更新时间", "操作人", "操作"]
         };
       }
 
       function getFilteredTariffAddons(tabId) {
         var config = getTariffAddonConfig(tabId);
         var keyword = (config.state.filters.name || "").trim().toLowerCase();
-        if (!keyword) return config.catalog.slice();
-        return config.catalog.filter(function (item) { return matchesTariffPackageLookup(keyword, item); });
+        var rows = !keyword ? config.catalog.slice() : config.catalog.filter(function (item) { return matchesTariffPackageLookup(keyword, item); });
+        return sortTariffsByUpdatedAt(rows);
       }
 
       function getTariffAddonRowsHtml(tabId) {
@@ -7996,7 +8143,7 @@
             escapeHtml(item.traffic)
           ];
           if (tabId === "groupAddon") cells.push(escapeHtml(item.validity));
-          cells.push(escapeHtml(item.price), escapeHtml(item.remark || "--"), '<div class="row-actions"><button class="text-action js-tariff-edit" type="button" data-id="' + item.id + '">编辑</button></div>');
+          cells.push(escapeHtml(item.price), escapeHtml(item.remark || "--"), escapeHtml(item.updatedAt || "--"), escapeHtml(item.operator || "--"), '<div class="row-actions"><button class="text-action js-tariff-edit" type="button" data-id="' + item.id + '">编辑</button></div>');
           return '<tr>' + cells.map(function (cell) { return '<td>' + cell + '</td>'; }).join('') + '</tr>';
         }).join('');
       }
@@ -8013,7 +8160,7 @@
 
       function getTariffAddonContentHtml(tabId) {
         var config = getTariffAddonConfig(tabId);
-        var widths = tabId === "groupAddon" ? [150, 260, 140, 140, 140, 220, 86] : [150, 280, 160, 140, 240, 86];
+        var widths = tabId === "groupAddon" ? [150, 240, 120, 120, 120, 180, 150, 110, 86] : [150, 250, 140, 120, 180, 150, 110, 86];
         return '<div class="tariff-addon-page"><div class="filters"><div class="filter-grid tariff-addon-filter-grid"><div class="field"><label for="addonTariffNameFilter">套餐信息</label><input id="addonTariffNameFilter" class="control js-addon-name-filter" type="text" list="tariff-addon-package-options" autocomplete="off" value="' + escapeHtml(config.state.filters.name) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="tariff-addon-package-options">' + getTariffPackageLookupOptions(config.catalog) + '</datalist></div><div class="filter-actions"><button class="btn primary js-addon-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-addon-reset" type="button">重置</button></div></div></div><div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-addon-create" type="button">套餐新增</button></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="' + config.ariaLabel + '" tabindex="0"><table class="tariff-addon-table ' + config.tableClass + '"><thead><tr>' + config.headers.map(function (header, index) { return '<th style="width: ' + widths[index] + 'px;">' + header + '</th>'; }).join('') + '</tr></thead><tbody>' + getTariffAddonRowsHtml(tabId) + '</tbody></table></div>' + getTariffAddonPaginationHtml(tabId) + '</div></div>';
       }
 
@@ -8559,7 +8706,7 @@
         var start = (state.page - 1) * state.pageSize;
         var pageRows = rows.slice(start, start + state.pageSize);
         if (!pageRows.length) {
-          return '<tr><td class="empty-cell" colspan="8"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
+          return '<tr><td class="empty-cell" colspan="10"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
         }
         return pageRows.map(function (item) {
           return '<tr>' +
@@ -8570,6 +8717,8 @@
             '<td>' + getTariffStackHtml(["套餐计费类型：" + item.billingType, "套餐计费周期：" + item.billingCycle, "套餐类型：" + item.packageType, "流量：" + item.traffic, "套餐金额：" + item.price + "元"]) + '</td>' +
             '<td>' + escapeHtml(item.validity) + '</td>' +
             '<td>' + escapeHtml(item.remark || "--") + '</td>' +
+            '<td>' + escapeHtml(item.updatedAt || "--") + '</td>' +
+            '<td>' + escapeHtml(item.operator || "--") + '</td>' +
             '<td><div class="row-actions"><button class="text-action js-tariff-edit" type="button" data-id="' + item.id + '">编辑</button></div></td>' +
           '</tr>';
         }).join('');
@@ -8651,6 +8800,18 @@
         }
         var baseTabId = tariffManagementState.activeTab;
         var baseState = getGroupBaseTariffConfig(baseTabId).state;
+        var baseHeaderRow = page.querySelector('.tariff-base-table thead tr');
+        var baseActionHeader = baseHeaderRow && baseHeaderRow.lastElementChild;
+        if (baseHeaderRow && baseActionHeader) {
+          var updatedAtHeader = document.createElement('th');
+          updatedAtHeader.textContent = '更新时间';
+          updatedAtHeader.style.width = '150px';
+          var operatorHeader = document.createElement('th');
+          operatorHeader.textContent = '操作人';
+          operatorHeader.style.width = '110px';
+          baseHeaderRow.insertBefore(updatedAtHeader, baseActionHeader);
+          baseHeaderRow.insertBefore(operatorHeader, baseActionHeader);
+        }
         var nameInput = page.querySelector(".js-tariff-name-filter");
         var searchButton = page.querySelector(".js-tariff-search");
         var resetButton = page.querySelector(".js-tariff-reset");
@@ -10867,8 +11028,19 @@
         });
       }
 
-      function ensureQuerySelectClearControl(select, host) {
-        if (!select.closest(".filters") || !host) {
+      function resetSelectToDefault(select) {
+        var emptyOption = Array.prototype.slice.call(select.options).find(function (option) {
+          return option.value === "";
+        });
+        var defaultOption = Array.prototype.slice.call(select.options).find(function (option) {
+          return option.defaultSelected;
+        });
+        var targetOption = emptyOption || defaultOption || select.options[0];
+        select.value = targetOption ? targetOption.value : "";
+      }
+
+      function ensureSelectClearControl(select, host) {
+        if (!host || select.disabled) {
           return;
         }
 
@@ -10883,15 +11055,15 @@
           host.appendChild(clearButton);
         }
 
-        if (clearButton.dataset.querySelectClearBound === "true") {
+        if (clearButton.dataset.selectClearBound === "true") {
           return;
         }
 
-        clearButton.dataset.querySelectClearBound = "true";
+        clearButton.dataset.selectClearBound = "true";
         clearButton.addEventListener("click", function (event) {
           event.preventDefault();
           event.stopPropagation();
-          select.value = "";
+          resetSelectToDefault(select);
           select.dispatchEvent(new Event("input", { bubbles: true }));
           select.dispatchEvent(new Event("change", { bubbles: true }));
           refreshCustomSelect(select);
@@ -10905,7 +11077,7 @@
         (root || document).querySelectorAll(".select-wrap select, .modal-field select, .filters select").forEach(function (select) {
           if (select.dataset.customSelectBound === "true") {
             refreshCustomSelect(select);
-            ensureQuerySelectClearControl(select, select.closest(".custom-select-host"));
+            ensureSelectClearControl(select, select.closest(".custom-select-host"));
             return;
           }
 
@@ -10968,7 +11140,7 @@
           host.appendChild(trigger);
           host.appendChild(list);
           refreshCustomSelect(select);
-          ensureQuerySelectClearControl(select, host);
+          ensureSelectClearControl(select, host);
         });
       }
 
@@ -11000,7 +11172,7 @@
           control.addEventListener("change", function () {
             updateClearableState(wrapper.parentElement || document);
           });
-          if (clearButton && clearButton.dataset.querySelectClearBound === "true") {
+          if (clearButton && clearButton.dataset.selectClearBound === "true") {
             updateClearableState(wrapper.parentElement || document);
             return;
           }
@@ -13122,9 +13294,7 @@
             var functionTags = flow.functions.map(function (functionKey) {
               return '<span class="approval-function-tag">' + getApprovalFunctionLabel(functionKey) + '</span>';
             }).join("");
-            var toggleAction = flow.status === "启用"
-              ? '<button class="approval-action js-approval-disable" type="button" data-id="' + flow.id + '">停用流程</button>'
-              : '<button class="approval-action js-approval-enable" type="button" data-id="' + flow.id + '">启用流程</button>';
+            var toggleAction = flow.status === "启用" ? "停用流程" : "启用流程";
 
             return '' +
               '<tr>' +
@@ -13136,12 +13306,13 @@
                 '<td>' + flow.creator + '</td>' +
                 '<td>' + flow.createdAt + '</td>' +
                 '<td>' + flow.updatedAt + '</td>' +
-                '<td><div class="approval-actions">' +
-                  '<button class="approval-action js-approval-view" type="button" data-id="' + flow.id + '">查看流程</button>' +
-                  '<button class="approval-action js-approval-edit" type="button" data-id="' + flow.id + '">编辑流程</button>' +
-                  toggleAction +
-                  '<button class="approval-action danger js-approval-delete" type="button" data-id="' + flow.id + '">删除流程</button>' +
-                '</div></td>' +
+                '<td><select class="approval-action-select js-approval-action-select" data-id="' + flow.id + '" aria-label="操作">' +
+                  '<option value="">操作</option>' +
+                  '<option value="view">查看流程</option>' +
+                  '<option value="edit">编辑流程</option>' +
+                  '<option value="toggle">' + toggleAction + '</option>' +
+                  '<option value="delete">删除流程</option>' +
+                '</select></td>' +
               '</tr>';
           }).join("");
         }
@@ -13726,6 +13897,31 @@
               applyFilters();
             }
           });
+        });
+
+        page.addEventListener("change", function (event) {
+          var actionSelect = event.target.closest(".js-approval-action-select");
+          if (!actionSelect || !actionSelect.value) {
+            return;
+          }
+
+          var action = actionSelect.value;
+          var flow = getFlowById(actionSelect.dataset.id);
+          actionSelect.value = "";
+
+          if (!flow) {
+            return;
+          }
+
+          if (action === "view") {
+            openDrawer("detail", "", flow.id);
+          } else if (action === "edit") {
+            openDrawer("form", "edit", flow.id);
+          } else if (action === "toggle") {
+            toggleFlowStatus(flow.id, flow.status === "启用" ? "停用" : "启用");
+          } else if (action === "delete") {
+            deleteFlow(flow.id);
+          }
         });
 
         page.addEventListener("click", function (event) {
