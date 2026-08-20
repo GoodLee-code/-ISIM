@@ -219,7 +219,7 @@
       height: 56px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 0 18px;
       position: relative;
     }
@@ -230,6 +230,14 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
+    }
+
+    .left-tools {
+      display: flex;
+    }
+
+    .left-tools > .icon-btn {
+      display: none;
     }
 
     .icon-btn {
@@ -870,7 +878,7 @@
 
     .task-table {
       width: 100%;
-      min-width: 1450px;
+      min-width: 1320px;
       table-layout: fixed;
     }
 
@@ -1821,6 +1829,46 @@
 
     .approval-work-order-page {
       min-height: calc(100vh - 112px);
+      position: relative;
+    }
+
+    .work-order-approval-tip {
+      margin: 14px 18px 0;
+      padding: 9px 12px;
+      border: 1px solid #d6e8ff;
+      border-radius: 4px;
+      background: #f5f9ff;
+      color: #5f6b7a;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .approval-work-order-page .js-approval-work-order-drawer-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      background: #f8fafc;
+    }
+
+    .approval-work-order-page .approval-work-order-drawer {
+      width: 100%;
+      height: 100%;
+      box-shadow: none;
+    }
+
+    .work-order-page-back {
+      min-height: 28px;
+      padding: 0 8px;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .work-order-page-back:hover {
+      color: var(--blue-700);
+      text-decoration: underline;
     }
 
     .work-order-status-tabs {
@@ -1877,13 +1925,13 @@
     }
 
     .work-order-filter-grid {
-      grid-template-columns: repeat(2, minmax(0, calc((100% - 36px) / 4))) auto;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       width: 100%;
       justify-content: start;
     }
 
     .work-order-filter-grid .filter-actions {
-      grid-column: auto;
+      grid-column: 1 / -1;
       align-self: end;
     }
 
@@ -2047,7 +2095,7 @@
 
     .work-order-table {
       width: 100%;
-      min-width: 1280px;
+      min-width: 1400px;
       table-layout: fixed;
     }
 
@@ -2085,9 +2133,83 @@
     }
 
     .work-order-order-id {
-      color: #27364a;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
       font-size: 12px;
       font-weight: 400;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .work-order-order-id:hover,
+    .work-order-order-id:focus-visible {
+      color: var(--blue-dark);
+      text-decoration: underline;
+      outline: none;
+    }
+
+    .work-order-operation-status {
+      font-weight: 600;
+    }
+
+    .work-order-operation-status.success {
+      color: #389e0d;
+    }
+
+    .work-order-operation-status.failed {
+      color: #d93026;
+    }
+
+    .work-order-operation-status.partial {
+      color: #d97706;
+    }
+
+    .work-order-operation-status.empty {
+      color: #687386;
+      font-weight: 400;
+    }
+
+    .card-recycle-record-page {
+      min-height: calc(100vh - 112px);
+    }
+
+    .card-recycle-count-link {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+      padding: 0;
+    }
+
+    .card-recycle-count-link:hover,
+    .card-recycle-count-link:focus-visible {
+      color: var(--blue-dark);
+      text-decoration: underline;
+      outline: none;
+    }
+
+    .card-recycle-record-table {
+      min-width: 1260px;
+    }
+
+    .card-recycle-detection-modal {
+      width: min(1440px, calc(100vw - 40px));
+      max-height: calc(100vh - 48px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-recycle-detection-modal .modal-body {
+      overflow: auto;
+    }
+
+    .card-recycle-detection-table {
+      min-width: 1320px;
     }
 
     .work-order-number {
@@ -2329,25 +2451,28 @@
 
     .work-order-detail-timeline {
       display: grid;
-      gap: 0;
-      padding: 4px 0 0 4px;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(220px, 1fr);
+      gap: 12px;
+      padding: 6px 2px 2px;
+      overflow-x: auto;
     }
 
     .work-order-detail-step {
       position: relative;
       display: grid;
-      grid-template-columns: 24px minmax(0, 1fr);
-      gap: 12px;
-      min-height: 82px;
+      grid-template-rows: 24px minmax(0, 1fr);
+      gap: 8px;
+      min-width: 220px;
     }
 
     .work-order-detail-step:not(:last-child)::before {
       content: "";
       position: absolute;
-      left: 7px;
-      top: 18px;
-      bottom: -2px;
-      width: 2px;
+      left: 16px;
+      right: -20px;
+      top: 7px;
+      height: 2px;
       background: #dfe4ea;
     }
 
@@ -2360,7 +2485,7 @@
       z-index: 1;
       width: 16px;
       height: 16px;
-      margin-top: 2px;
+      margin: 0;
       border: 3px solid #d7dce3;
       border-radius: 50%;
       background: #fff;
@@ -2396,7 +2521,7 @@
     }
 
     .work-order-detail-step-card {
-      margin-bottom: 14px;
+      margin-bottom: 0;
       padding: 11px 13px;
       border: 1px solid #e7ebf0;
       border-radius: 6px;
@@ -2460,6 +2585,10 @@
       color: #d93026;
     }
 
+    .work-order-review-summary {
+      margin-bottom: 16px;
+    }
+
     .work-order-card-filter {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, calc((100% - 36px) / 4))) auto;
@@ -2481,7 +2610,7 @@
 
     .work-order-card-table {
       width: 100%;
-      min-width: 1450px;
+      min-width: 1520px;
       table-layout: fixed;
     }
 
@@ -2505,6 +2634,17 @@
       color: #c0c6d0;
       cursor: not-allowed;
       transform: none;
+    }
+
+    .work-order-card-table .cell-stack {
+      gap: 5px;
+      line-height: 1.55;
+    }
+
+    .work-order-card-table .cell-key {
+      display: inline-block;
+      min-width: 78px;
+      color: #7b8494;
     }
 
     .work-order-card-status {
@@ -2817,6 +2957,21 @@
       color: #374151;
       font-size: 12px;
       cursor: pointer;
+    }
+
+    .inventory-recycle-stop-tip {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border: 1px solid #d6e8ff;
+      border-radius: 4px;
+      background: #f5f9ff;
+      color: #5f6b7a;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .inventory-recycle-stop-tip[hidden] {
+      display: none !important;
     }
 
     .inventory-recycle-file-actions {
@@ -5713,6 +5868,12 @@
       color: var(--success);
     }
 
+    .tag.partial {
+      border: 1px solid #f9d9a4;
+      background: #fff7e8;
+      color: #d97706;
+    }
+
     .tag.muted {
       border: 1px solid var(--border);
       background: #f8fafc;
@@ -6158,7 +6319,7 @@
           <div class="right-tools">
             <div class="quick-search" role="search">
               <span class="quick-search-scope" title="查询对象：流量卡">流量卡查询<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"></path></svg></span>
-              <input class="js-quick-card-search" type="text" placeholder="请输入 ICCID / MSISDN / IMSI" aria-label="快捷搜索ICCID、MSISDN、IMSI">
+              <input class="js-quick-card-search" type="text" inputmode="numeric" placeholder="请输入 ICCID / MSISDN / IMSI" aria-label="快捷搜索ICCID、MSISDN、IMSI">
               <button class="js-quick-card-search-btn" type="button" aria-label="搜索流量卡详情">
                 <svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg><span>搜索</span>
               </button>
@@ -6558,7 +6719,7 @@
         { id: "user-02", account: "liqing", phone: "13800138012", email: "liqing@esimcube.cn", name: "李青", role: "风控专员" },
         { id: "user-03", account: "wangke", phone: "13800138013", email: "wangke@esimcube.cn", name: "王珂", role: "平台负责人" },
         { id: "user-04", account: "chenli", phone: "13800138014", email: "chenli@esimcube.cn", name: "陈立", role: "套餐运营" },
-        { id: "user-05", account: "zhaoyuan", phone: "13800138015", email: "zhaoyuan@esimcube.cn", name: "赵远", role: "财务审批" },
+        { id: "user-05", account: "zhaoyuan", phone: "13800138015", email: "zhaoyuan@esimcube.cn", name: "赵远", role: "财务审核" },
         { id: "user-06", account: "sunya", phone: "13800138016", email: "sunya@esimcube.cn", name: "孙雅", role: "系统管理员" },
         { id: "user-07", account: "hejun", phone: "13800138017", email: "hejun@esimcube.cn", name: "何俊", role: "审计专员" },
         { id: "user-08", account: "linfei", phone: "13800138018", email: "linfei@esimcube.cn", name: "林菲", role: "客服经理" },
@@ -6728,7 +6889,7 @@
         { batchNo: "RF20260726003", mode: "批量续费", packageType: "群组续费套餐", remark: "车载设备批量续费", renewalDuration: "6个月", renewalTime: "2026-07-26 09:18", creator: "李青", operator: "李青", packageId: "PKG-R-003", groupId: "9001771051632774", groupName: "中云图_监控设备", merchantName: "中云图", packageName: "群组续费-车载设备流量卡-20GB/月*6月", packageRule: ["套餐计费类型：按周期计费", "套餐流量结算周期：月套餐", "套餐类型：续费套餐", "流量：20GB", "套餐金额：168.00元"], renewalStatus: "取消续费", packageStatus: "已失效", packageInvalidReason: "取消续费", items: ["89860423192480374850", "89860423192480374867"] }
       ];
       var cardPackageDetailState = {
-        filters: { operationId: "", iccid: "", groupInfo: "", packageInfo: "", packageType: "", packageStatus: "", effectiveDateStart: "", effectiveDateEnd: "", endDateStart: "", endDateEnd: "", invalidReason: "", createdAtStart: "", createdAtEnd: "", updatedAtStart: "", updatedAtEnd: "" },
+        filters: { operationId: "", iccid: "", groupInfo: "", packageInfo: "", operationType: "", packageType: "", packageStatus: "", effectiveDateStart: "", effectiveDateEnd: "", endDateStart: "", endDateEnd: "", invalidReason: "", createdAtStart: "", createdAtEnd: "", updatedAtStart: "", updatedAtEnd: "" },
         page: 1,
         pageSize: 20
       };
@@ -6893,8 +7054,8 @@
         return [
           {
             id: "flow-001",
-            name: "设备高风险操作审批",
-            description: "设备停用与删除属于高风险操作，需经过风控复核与平台主管审批后方可执行。",
+            name: "设备高风险操作审核",
+            description: "设备停用与删除属于高风险操作，需经过风控复核与平台主管审核后方可执行。",
             functions: ["device-disable", "device-delete"],
             status: "启用",
             creator: "周明",
@@ -6902,13 +7063,13 @@
             updatedAt: "2026-06-02 09:18",
             nodes: [
               createApprovalNode({ id: "node-001", name: "风控复核", approverIds: ["user-02", "user-07"], approvalMode: "任一人通过", description: "确认设备停用/删除原因及风险等级。" }),
-              createApprovalNode({ id: "node-002", name: "平台主管审批", approverIds: ["user-03"], approvalMode: "全部人通过", description: "对最终风险决策进行批准。" })
+              createApprovalNode({ id: "node-002", name: "平台主管审核", approverIds: ["user-03"], approvalMode: "全部人通过", description: "对最终风险决策进行批准。" })
             ],
             ccRecipientIds: ["user-01"]
           },
           {
             id: "flow-002",
-            name: "套餐变更审批",
+            name: "套餐变更审核",
             description: "套餐调整会影响计费和服务时效，需由套餐运营和财务共同确认。",
             functions: ["package-change"],
             status: "启用",
@@ -6923,7 +7084,7 @@
           },
           {
             id: "flow-003",
-            name: "订单退款审批",
+            name: "订单退款审核",
             description: "订单退款需确认退款原因、金额及原始支付凭据。",
             functions: ["order-refund"],
             status: "停用",
@@ -6938,7 +7099,7 @@
           },
           {
             id: "flow-004",
-            name: "SIM 卡解绑审批",
+            name: "SIM 卡解绑审核",
             description: "SIM 卡解绑前需确认设备是否已完成迁移及用户授权信息。",
             functions: ["sim-unbind"],
             status: "草稿",
@@ -6952,8 +7113,8 @@
           },
           {
             id: "flow-005",
-            name: "权限变更审批",
-            description: "关键权限变更需经过系统管理员与审计专员审批，保证权限变更可追溯。",
+            name: "权限变更审核",
+            description: "关键权限变更需经过系统管理员与审计专员审核，保证权限变更可追溯。",
             functions: ["permission-change"],
             status: "启用",
             creator: "孙雅",
@@ -7028,7 +7189,7 @@
         return [
           {
             id: "AP202606040001",
-            status: "审批中",
+            status: "审核中",
             cardCount: 128,
             applicant: "张三",
             appliedAt: "2026-06-04 09:30",
@@ -7036,7 +7197,7 @@
             updatedAt: "2026-06-04 09:30",
             isMineToHandle: true,
             steps: [
-              { name: "运营负责人审核", status: "审批中", reviewer: "李四", current: true },
+              { name: "运营负责人审核", status: "审核中", reviewer: "李四", current: true },
               { name: "平台负责人复核", status: "未开始", reviewer: "王珂" }
             ],
             ccRecipients: ["林菲", "周明"],
@@ -7044,7 +7205,7 @@
           },
           {
             id: "AP202606040002",
-            status: "审批中",
+            status: "审核中",
             cardCount: 86,
             applicant: "王五",
             appliedAt: "2026-06-04 10:12",
@@ -7053,7 +7214,7 @@
             isCurrentApplicant: true,
             steps: [
               { name: "运营负责人审核", status: "已通过", reviewer: "李四", reviewedAt: "2026-06-04 10:20", completed: true },
-              { name: "平台负责人复核", status: "审批中", reviewer: "赵六", current: true }
+              { name: "平台负责人复核", status: "审核中", reviewer: "赵六", current: true }
             ],
             ccRecipients: ["林菲"],
             cards: cloneValue(cardRecords.slice(0, 3))
@@ -7066,9 +7227,9 @@
             appliedAt: "2026-06-03 16:20",
             approver: "李四",
             updatedAt: "2026-06-03 17:05",
-            rejectReason: "卡状态不符合审批条件",
+            rejectReason: "卡状态不符合审核条件",
             steps: [
-              { name: "运营负责人审核", status: "已驳回", reviewer: "李四", reviewedAt: "2026-06-03 17:05", rejectReason: "卡状态不符合审批条件", rejected: true, current: true },
+              { name: "运营负责人审核", status: "已驳回", reviewer: "李四", reviewedAt: "2026-06-03 17:05", rejectReason: "卡状态不符合审核条件", rejected: true, current: true },
               { name: "平台负责人复核", status: "未开始", reviewer: "王珂" }
             ],
             ccRecipients: ["林菲", "周明"],
@@ -7111,7 +7272,55 @@
         orders: getInitialApprovalWorkOrders(),
         pageSize: 20,
         activeTab: "待我处理",
-        applicantFilters: []
+        applicantFilters: [],
+        auditStatusFilter: "",
+        operationStatusFilter: ""
+      };
+
+      var approvalWorkOrderSubpage = {
+        mode: "",
+        orderId: ""
+      };
+
+      function createCardRecycleDetectionRows(batchNo, total, failedCount) {
+        var carriers = ["中国移动", "中国联通", "中国电信"];
+        var merchants = ["华东物流", "四川坤宝", "北辰科技"];
+        var suppliers = ["云链通信", "海联物联", "星瀚通信"];
+        return Array.from({ length: total }, function (_, index) {
+          var failed = index >= total - failedCount;
+          var suffix = String(index + 1).padStart(6, "0");
+          return {
+            iccid: "89860423102810" + suffix,
+            msisdn: "17" + String(290310000 + index).padStart(9, "0"),
+            imsi: "46000" + String(1982760000 + index).padStart(10, "0"),
+            cardType: index % 2 ? "插拔卡" : "贴片卡",
+            carrier: carriers[index % carriers.length],
+            merchant: merchants[index % merchants.length],
+            supplier: suppliers[index % suppliers.length],
+            status: failed ? "失败" : "成功",
+            reason: failed ? "卡片当前状态不允许回收" : "--",
+            batchNo: batchNo
+          };
+        });
+      }
+
+      function getInitialCardRecycleRecords() {
+        var seeds = [
+          { batchNo: "REC20260821093001", stopMode: "停机", total: 8, failed: 0, remark: "华东区域到期卡统一回收", status: "成功", operator: "运营管理员", operationTime: "2026-08-21 09:30" },
+          { batchNo: "REC20260820164518", stopMode: "不停机", total: 6, failed: 2, remark: "保留在线状态等待业务迁移", status: "部分成功", operator: "梁金", operationTime: "2026-08-20 16:45" },
+          { batchNo: "REC20260819111836", stopMode: "停机", total: 5, failed: 5, remark: "异常卡批次重新处理", status: "失败", operator: "周明", operationTime: "2026-08-19 11:18" },
+          { batchNo: "REC20260818140209", stopMode: "停机", total: 12, failed: 0, remark: "测试卡集中回收", status: "成功", operator: "陈凌枫", operationTime: "2026-08-18 14:02" }
+        ];
+        return seeds.map(function (record) {
+          record.success = record.total - record.failed;
+          record.details = createCardRecycleDetectionRows(record.batchNo, record.total, record.failed);
+          return record;
+        });
+      }
+
+      var cardRecycleRecordState = {
+        records: getInitialCardRecycleRecords(),
+        pageSize: 20
       };
 
       function getApprovalDeadline(appliedAt) {
@@ -7151,6 +7360,7 @@
             </button>
             <div class="sub-menu">
               <a class="sub-item ${activePage === "inventory" ? "current" : ""} js-inventory-page" href="#">库存管理</a>
+              <a class="sub-item ${activePage === "cardRecycleRecord" ? "current" : ""} js-card-recycle-page" href="#">卡片回收</a>
             </div>
           </div>
           <div class="nav-group">
@@ -7232,13 +7442,12 @@
             <button class="nav-item js-nav-toggle" type="button" aria-expanded="true">
               <span class="nav-label">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12"></path><path d="M6 12h12"></path><path d="M6 20h12"></path><path d="M4 6h.01"></path><path d="M4 14h.01"></path><path d="M4 22h.01"></path></svg>
-                审批中心
+                审核中心
               </span>
               <svg class="collapse-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5"></path></svg>
             </button>
             <div class="sub-menu">
-              <a class="sub-item ${activePage === "approval" ? "current" : ""} js-approval-page" href="#">审批流程管理</a>
-              <a class="sub-item ${activePage === "approvalWorkOrder" ? "current" : ""} js-approval-work-order-page" href="#">审批工单管理</a>
+              <a class="sub-item ${activePage === "approval" ? "current" : ""} js-approval-page" href="#">审核流程管理</a>
             </div>
           </div>
           <div class="nav-group">
@@ -7387,7 +7596,6 @@
             <div class="table-toolbar">
               <div class="toolbar-left">
                 <button class="btn primary js-inventory-action" type="button" data-action="stock-in">卡片入库</button>
-                <button class="btn primary js-inventory-action" type="button" data-action="recycle">卡片回收</button>
                 <button class="btn js-inventory-action" type="button" data-action="export">导出</button>
               </div>
               <div class="toolbar-right">
@@ -7509,6 +7717,16 @@
                 <div class="modal-body">
                   <div class="inventory-recycle-form">
                     <div class="inventory-recycle-row">
+                      <div class="inventory-recycle-label"><span class="required-mark">*</span>是否将卡片停机</div>
+                      <div class="inventory-recycle-body">
+                        <div class="inventory-recycle-mode">
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="stop" checked> 停机</label>
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="keep"> 不停机</label>
+                        </div>
+                        <div class="inventory-recycle-stop-tip js-inventory-recycle-stop-tip" hidden>无有效套餐的卡每日00:00系统自动停机。</div>
+                      </div>
+                    </div>
+                    <div class="inventory-recycle-row">
                       <div class="inventory-recycle-label"><span class="required-mark">*</span>录入方式</div>
                       <div class="inventory-recycle-body">
                         <div class="inventory-recycle-mode">
@@ -7566,6 +7784,180 @@
                 <div class="modal-foot">
                   <button class="btn js-cancel-inventory-recycle-confirm" type="button">取消</button>
                   <button class="btn primary js-confirm-inventory-recycle" type="button">确认继续</button>
+                </div>
+              </section>
+            </div>
+          </section>
+        `;
+      }
+
+      function getCardRecycleRecordMainHtml() {
+        return `
+          <section class="content-card card-recycle-record-page">
+            <div class="filters">
+              <div class="filter-grid">
+                <div class="field">
+                  <label for="cardRecycleBatchNo">批次号</label>
+                  <input id="cardRecycleBatchNo" class="control js-card-recycle-batch" type="text" placeholder="请输入批次号">
+                </div>
+                <div class="field">
+                  <label for="cardRecycleStopMode">是否将卡片停机</label>
+                  <div class="select-wrap clearable-select">
+                    <select id="cardRecycleStopMode" class="js-card-recycle-stop-mode">
+                      <option value="" selected disabled hidden>是否将卡片停机</option>
+                      <option value="停机">停机</option>
+                      <option value="不停机">不停机</option>
+                    </select>
+                    <button class="clear-control" type="button" aria-label="清除是否将卡片停机">×</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cardRecycleStatus">操作状态</label>
+                  <div class="select-wrap clearable-select">
+                    <select id="cardRecycleStatus" class="js-card-recycle-status">
+                      <option value="" selected disabled hidden>操作状态</option>
+                      <option value="成功">成功</option>
+                      <option value="失败">失败</option>
+                      <option value="部分成功">部分成功</option>
+                      <option value="处理中">处理中</option>
+                    </select>
+                    <button class="clear-control" type="button" aria-label="清除操作状态">×</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cardRecycleOperator">操作人</label>
+                  <input id="cardRecycleOperator" class="control js-card-recycle-operator" type="text" placeholder="请输入操作人">
+                </div>
+                <div class="field">
+                  <label>操作时间</label>
+                  <button class="date-range-control js-date-range js-card-recycle-date-range" type="button" data-range-key="card-recycle-operation" data-start-label="操作开始日期" data-end-label="操作结束日期" data-shortcuts="quick" aria-label="操作时间范围">
+                    <span class="date-range-text">
+                      <span class="date-start">操作开始日期</span>
+                      <span class="date-range-separator">至</span>
+                      <span class="date-end">操作结束日期</span>
+                    </span>
+                    <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 11h18"></path></svg>
+                  </button>
+                </div>
+                <div class="filter-actions">
+                  <button class="btn primary js-card-recycle-query" type="button">
+                    <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                    搜索
+                  </button>
+                  <button class="btn js-card-recycle-reset" type="button">重置</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-toolbar">
+              <div class="toolbar-left">
+                <button class="btn primary js-open-card-recycle" type="button">卡片回收</button>
+              </div>
+            </div>
+
+            <div class="table-area">
+              <div class="table-scroll" role="region" aria-label="卡片回收记录列表" tabindex="0">
+                <table class="work-order-table card-recycle-record-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 180px;">批次号</th>
+                      <th style="width: 130px;">是否将卡片停机</th>
+                      <th style="width: 100px;">操作总数</th>
+                      <th style="width: 90px;">成功数</th>
+                      <th style="width: 90px;">失败数</th>
+                      <th style="width: 220px;">备注</th>
+                      <th style="width: 110px;">操作状态</th>
+                      <th style="width: 110px;">操作人</th>
+                      <th style="width: 170px;">操作时间</th>
+                      <th class="sticky-action" style="width: 90px;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody class="js-card-recycle-record-tbody"></tbody>
+                </table>
+              </div>
+              <div class="pagination">
+                <span class="js-card-recycle-record-total">共 0 条</span>
+                <select class="page-size" aria-label="卡片回收每页条数">
+                  <option>10 条/页</option>
+                  <option selected>20 条/页</option>
+                  <option>50 条/页</option>
+                  <option>100 条/页</option>
+                  <option>500 条/页</option>
+                </select>
+                <button class="page-btn current" type="button">1</button>
+              </div>
+            </div>
+
+            <div class="modal-overlay js-card-recycle-detection-modal" aria-hidden="true">
+              <section class="merchant-modal card-recycle-detection-modal" role="dialog" aria-modal="true" aria-labelledby="cardRecycleDetectionTitle">
+                <div class="modal-head">
+                  <div id="cardRecycleDetectionTitle" class="modal-title">检测记录</div>
+                  <button class="modal-close js-close-card-recycle-detection" type="button" aria-label="关闭">×</button>
+                </div>
+                <div class="modal-body">
+                  <div class="filters">
+                    <div class="filter-grid">
+                      <div class="field">
+                        <label for="cardRecycleDetectionKeyword">ICCID/MSISDN/IMSI</label>
+                        <input id="cardRecycleDetectionKeyword" class="control js-card-recycle-detection-keyword" type="text" inputmode="numeric" placeholder="ICCID / MSISDN / IMSI">
+                      </div>
+                      <div class="field">
+                        <label for="cardRecycleDetectionStatus">操作状态</label>
+                        <div class="select-wrap clearable-select">
+                          <select id="cardRecycleDetectionStatus" class="js-card-recycle-detection-status">
+                            <option value="" selected disabled hidden>操作状态</option>
+                            <option value="成功">成功</option>
+                            <option value="失败">失败</option>
+                            <option value="处理中">处理中</option>
+                          </select>
+                          <button class="clear-control" type="button" aria-label="清除操作状态">×</button>
+                        </div>
+                      </div>
+                      <div class="filter-actions">
+                        <button class="btn primary js-card-recycle-detection-query" type="button">
+                          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+                          搜索
+                        </button>
+                        <button class="btn js-card-recycle-detection-reset" type="button">重置</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-toolbar">
+                    <div class="toolbar-left">
+                      <button class="btn primary js-card-recycle-detection-export" type="button">导出</button>
+                    </div>
+                  </div>
+                  <div class="table-area">
+                    <div class="table-scroll" role="region" aria-label="卡片回收检测记录列表" tabindex="0">
+                      <table class="card-recycle-detection-table">
+                        <thead>
+                          <tr>
+                            <th style="width: 190px;">ICCID</th>
+                            <th style="width: 140px;">MSISDN</th>
+                            <th style="width: 170px;">IMSI</th>
+                            <th style="width: 100px;">卡片类型</th>
+                            <th style="width: 100px;">运营商</th>
+                            <th style="width: 130px;">归属商户</th>
+                            <th style="width: 130px;">供应商</th>
+                            <th style="width: 100px;">操作状态</th>
+                            <th style="width: 220px;">失败原因</th>
+                          </tr>
+                        </thead>
+                        <tbody class="js-card-recycle-detection-tbody"></tbody>
+                      </table>
+                    </div>
+                    <div class="pagination">
+                      <span class="js-card-recycle-detection-total">共 0 条</span>
+                      <select class="page-size" aria-label="检测记录每页条数">
+                        <option>10 条/页</option>
+                        <option selected>20 条/页</option>
+                        <option>50 条/页</option>
+                        <option>100 条/页</option>
+                        <option>500 条/页</option>
+                      </select>
+                      <button class="page-btn current" type="button">1</button>
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -7689,7 +8081,7 @@
                       <th style="width: 250px;">群组名称</th>
                       <th style="width: 160px;">群组ID</th>
                       <th style="width: 120px;">商户名称</th>
-                      <th style="width: 90px;">卡数量</th>
+                      <th style="width: 110px;">操作类型</th>
                       <th style="width: 190px;">流量概览</th>
                       <th style="width: 90px;">创建人</th>
                       <th style="width: 170px;">操作</th>
@@ -7878,14 +8270,12 @@
           groupManagementState.filters.operatorType = operatorSelect.value || "";
           groupManagementState.page = 1;
           renderGroupManagementPage();
-          showToast("查询成功");
         });
         page.querySelector(".js-group-reset").addEventListener("click", function () {
           groupManagementState.filters.merchantName = "";
           groupManagementState.filters.operatorType = "";
           groupManagementState.page = 1;
           renderGroupManagementPage();
-          showToast("重置成功");
         });
         page.querySelector(".js-group-create").addEventListener("click", function () { showToast("群组新增入口已打开"); });
         var deleteModal = page.querySelector(".js-group-delete-modal");
@@ -8171,10 +8561,10 @@
         var reset = page.querySelector('.js-addon-reset');
         var clear = page.querySelector('.clear-control');
         if (input && search) {
-          search.addEventListener('click', function () { config.state.filters.name = input.value.trim(); config.state.page = 1; renderTariffManagementPage(); showToast('查询成功'); });
+          search.addEventListener('click', function () { config.state.filters.name = input.value.trim(); config.state.page = 1; renderTariffManagementPage(); });
           input.addEventListener('keydown', function (event) { if (event.key === 'Enter') search.click(); });
         }
-        if (reset) reset.addEventListener('click', function () { config.state.filters.name = ''; config.state.page = 1; renderTariffManagementPage(); showToast('重置成功'); });
+        if (reset) reset.addEventListener('click', function () { config.state.filters.name = ''; config.state.page = 1; renderTariffManagementPage(); });
         if (clear) clear.addEventListener('click', function () { config.state.filters.name = ''; config.state.page = 1; renderTariffManagementPage(); });
         page.querySelectorAll('.js-tariff-edit').forEach(function (button) { button.addEventListener('click', function () { showToast('已打开套餐编辑'); }); });
         page.querySelectorAll('.js-addon-page-btn').forEach(function (button) { button.addEventListener('click', function () { config.state.page = Number(button.dataset.page) || 1; renderTariffManagementPage(); }); });
@@ -8360,14 +8750,12 @@
             tariffRenewalPageState.detailFilters = nextFilters;
             tariffRenewalPageState.detailPage = 1;
             renderTariffRenewalPage();
-            showToast('查询成功');
           }
           if (detailSearch) detailSearch.addEventListener('click', applyDetailFilters);
           if (detailReset) detailReset.addEventListener('click', function () {
             tariffRenewalPageState.detailFilters = { batchNo: detailRecord ? detailRecord.batchNo : '', iccid: '', packageId: '', groupId: '', groupName: '', merchantName: '', packageType: '', packageName: '', renewalTime: '', renewalStatus: '', operator: '' };
             tariffRenewalPageState.detailPage = 1;
             renderTariffRenewalPage();
-            showToast('重置成功');
           });
           Object.keys(detailSelectors).forEach(function (key) {
             var control = page.querySelector(detailSelectors[key]);
@@ -8411,13 +8799,13 @@
         var creator = page.querySelector('.js-tariff-renewal-filter-creator');
         var search = page.querySelector('.js-tariff-renewal-search');
         var reset = page.querySelector('.js-tariff-renewal-reset');
-        function applyFilters() { var dateRange = getDateRangeFilterValue(time); tariffRenewalPageState.filters = { batchNo: batch.value.trim(), packageType: type.value, remark: remark.value.trim(), renewalTimeStart: dateRange.start, renewalTimeEnd: dateRange.end, renewalStatus: renewalStatus.value, creator: creator.value.trim() }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); showToast('查询成功'); }
+        function applyFilters() { var dateRange = getDateRangeFilterValue(time); tariffRenewalPageState.filters = { batchNo: batch.value.trim(), packageType: type.value, remark: remark.value.trim(), renewalTimeStart: dateRange.start, renewalTimeEnd: dateRange.end, renewalStatus: renewalStatus.value, creator: creator.value.trim() }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); }
         search.addEventListener('click', applyFilters);
         [batch, remark, creator].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
         type.addEventListener('change', applyFilters);
         renewalStatus.addEventListener('change', applyFilters);
         time.addEventListener('date-range-change', applyFilters);
-        reset.addEventListener('click', function () { tariffRenewalPageState.filters = { batchNo: '', packageType: '', remark: '', renewalTimeStart: '', renewalTimeEnd: '', renewalStatus: '', creator: '' }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); showToast('重置成功'); });
+        reset.addEventListener('click', function () { tariffRenewalPageState.filters = { batchNo: '', packageType: '', remark: '', renewalTimeStart: '', renewalTimeEnd: '', renewalStatus: '', creator: '' }; tariffRenewalPageState.page = 1; renderTariffRenewalPage(); });
         page.querySelectorAll('.js-tariff-renewal-operation-detail').forEach(function (link) { link.addEventListener('click', function (event) { event.preventDefault(); openCardPackageDetailPageFromOperation(link.dataset.operationId); }); });
         page.querySelectorAll('.js-tariff-renewal-cancel').forEach(function (button) {
           button.addEventListener('click', function () {
@@ -8579,6 +8967,7 @@
             (!filters.iccid || item.iccid.indexOf(filters.iccid) !== -1) &&
             matchesCardPackageLookup(filters.groupInfo, item.groupId, item.groupName) &&
             matchesCardPackageLookup(filters.packageInfo, item.packageId, item.packageName) &&
+            (!filters.operationType || item.operationType === filters.operationType) &&
             (!filters.packageType || item.packageType === filters.packageType) &&
             (!filters.packageStatus || item.packageStatus === filters.packageStatus) &&
             matchesDateRange(item.effectiveDate, filters.effectiveDateStart, filters.effectiveDateEnd) &&
@@ -8633,6 +9022,7 @@
           '<div class="field"><label>ICCID</label><input class="control js-card-package-detail-filter-iccid" type="text" value="' + escapeHtml(filters.iccid) + '" placeholder="请输入ICCID"></div>' +
           '<div class="field"><label>群组信息</label><input class="control js-card-package-detail-filter-group" type="text" list="card-package-detail-group-options" autocomplete="off" value="' + escapeHtml(filters.groupInfo) + '" placeholder="请输入群组ID或群组名称"><datalist id="card-package-detail-group-options">' + getCardPackageDetailLookupOptions('group') + '</datalist></div>' +
           '<div class="field"><label>套餐信息</label><input class="control js-card-package-detail-filter-package" type="text" list="card-package-detail-package-options" autocomplete="off" value="' + escapeHtml(filters.packageInfo) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="card-package-detail-package-options">' + getCardPackageDetailLookupOptions('package') + '</datalist></div>' +
+          '<div class="field"><label>操作类型</label><div class="select-wrap"><select class="js-card-package-detail-filter-operation-type"><option value="" ' + (!filters.operationType ? 'selected' : '') + ' disabled hidden>操作类型</option><option value="套餐订购" ' + (filters.operationType === '套餐订购' ? 'selected' : '') + '>套餐订购</option><option value="套餐续费" ' + (filters.operationType === '套餐续费' ? 'selected' : '') + '>套餐续费</option></select></div></div>' +
           '<div class="field"><label>套餐类型</label><div class="select-wrap"><select class="js-card-package-detail-filter-type"><option value="" selected disabled hidden>套餐类型</option><option value="群组基础套餐" ' + (filters.packageType === '群组基础套餐' ? 'selected' : '') + '>群组基础套餐</option><option value="群组叠加包套餐" ' + (filters.packageType === '群组叠加包套餐' ? 'selected' : '') + '>群组叠加包套餐</option><option value="流量池叠加包套餐" ' + (filters.packageType === '流量池叠加包套餐' ? 'selected' : '') + '>流量池叠加包套餐</option><option value="群组续费套餐" ' + (filters.packageType === '群组续费套餐' ? 'selected' : '') + '>群组续费套餐</option></select></div></div>' +
           '<div class="field"><label>套餐状态</label><div class="select-wrap"><select class="js-card-package-detail-filter-status"><option value="" selected disabled hidden>套餐状态</option><option value="待生效" ' + (filters.packageStatus === '待生效' ? 'selected' : '') + '>待生效</option><option value="生效中" ' + (filters.packageStatus === '生效中' ? 'selected' : '') + '>生效中</option><option value="已失效" ' + (filters.packageStatus === '已失效' ? 'selected' : '') + '>已失效</option></select></div></div>' +
           getDateRangeFilterHtml('套餐生效日期', 'js-card-package-detail-filter-effective', filters.effectiveDateStart, filters.effectiveDateEnd) +
@@ -8660,6 +9050,7 @@
         var iccid = page.querySelector('.js-card-package-detail-filter-iccid');
         var groupInfo = page.querySelector('.js-card-package-detail-filter-group');
         var packageInfo = page.querySelector('.js-card-package-detail-filter-package');
+        var operationType = page.querySelector('.js-card-package-detail-filter-operation-type');
         var packageType = page.querySelector('.js-card-package-detail-filter-type');
         var packageStatus = page.querySelector('.js-card-package-detail-filter-status');
         var effectiveDate = page.querySelector('.js-card-package-detail-filter-effective');
@@ -8675,16 +9066,15 @@
           var endRange = getDateRangeFilterValue(endDate);
           var createdRange = getDateRangeFilterValue(createdAt);
           var updatedRange = getDateRangeFilterValue(updatedAt);
-          cardPackageDetailState.filters = { operationId: operationId.value.trim(), iccid: iccid.value.trim(), groupInfo: groupInfo.value.trim(), packageInfo: packageInfo.value.trim(), packageType: packageType.value, packageStatus: packageStatus.value, effectiveDateStart: effectiveRange.start, effectiveDateEnd: effectiveRange.end, endDateStart: endRange.start, endDateEnd: endRange.end, invalidReason: invalidReason.value.trim(), createdAtStart: createdRange.start, createdAtEnd: createdRange.end, updatedAtStart: updatedRange.start, updatedAtEnd: updatedRange.end };
+          cardPackageDetailState.filters = { operationId: operationId.value.trim(), iccid: iccid.value.trim(), groupInfo: groupInfo.value.trim(), packageInfo: packageInfo.value.trim(), operationType: operationType.value, packageType: packageType.value, packageStatus: packageStatus.value, effectiveDateStart: effectiveRange.start, effectiveDateEnd: effectiveRange.end, endDateStart: endRange.start, endDateEnd: endRange.end, invalidReason: invalidReason.value.trim(), createdAtStart: createdRange.start, createdAtEnd: createdRange.end, updatedAtStart: updatedRange.start, updatedAtEnd: updatedRange.end };
           cardPackageDetailState.page = 1;
           renderCardPackageDetailPage();
-          showToast('查询成功');
         }
         search.addEventListener('click', applyFilters);
         [operationId, iccid, groupInfo, packageInfo, invalidReason].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
-        [packageType, packageStatus].forEach(function (input) { input.addEventListener('change', applyFilters); });
+        [operationType, packageType, packageStatus].forEach(function (input) { input.addEventListener('change', applyFilters); });
         [effectiveDate, endDate, createdAt, updatedAt].forEach(function (input) { input.addEventListener('date-range-change', applyFilters); });
-        reset.addEventListener('click', function () { cardPackageDetailState.filters = { operationId: '', iccid: '', groupInfo: '', packageInfo: '', packageType: '', packageStatus: '', effectiveDateStart: '', effectiveDateEnd: '', endDateStart: '', endDateEnd: '', invalidReason: '', createdAtStart: '', createdAtEnd: '', updatedAtStart: '', updatedAtEnd: '' }; cardPackageDetailState.page = 1; renderCardPackageDetailPage(); showToast('重置成功'); });
+        reset.addEventListener('click', function () { cardPackageDetailState.filters = { operationId: '', iccid: '', groupInfo: '', packageInfo: '', operationType: '', packageType: '', packageStatus: '', effectiveDateStart: '', effectiveDateEnd: '', endDateStart: '', endDateEnd: '', invalidReason: '', createdAtStart: '', createdAtEnd: '', updatedAtStart: '', updatedAtEnd: '' }; cardPackageDetailState.page = 1; renderCardPackageDetailPage(); });
         if (columns) columns.addEventListener('click', function () { showToast('字段配置入口已打开'); });
         page.querySelectorAll('.js-card-package-detail-page-btn').forEach(function (button) { button.addEventListener('click', function () { cardPackageDetailState.page = Number(button.dataset.page) || 1; renderCardPackageDetailPage(); }); });
         var previous = page.querySelector('.js-card-package-detail-prev');
@@ -8821,7 +9211,6 @@
             baseState.filters.name = nameInput.value.trim();
             baseState.page = 1;
             renderTariffManagementPage();
-            showToast("查询成功");
           });
           nameInput.addEventListener("keydown", function (event) { if (event.key === "Enter") searchButton.click(); });
         }
@@ -8829,7 +9218,6 @@
           baseState.filters.name = "";
           baseState.page = 1;
           renderTariffManagementPage();
-          showToast("重置成功");
         });
         if (clearButton) clearButton.addEventListener("click", function () {
           if (nameInput) nameInput.value = "";
@@ -8966,10 +9354,10 @@
         var packageInput = page.querySelector('.js-tariff-order-filter-package');
         var search = page.querySelector('.js-tariff-order-search');
         var reset = page.querySelector('.js-tariff-order-reset');
-        function applyFilters() { config.state.filters.merchantName = merchant.value.trim(); config.state.filters.groupName = group.value.trim(); config.state.filters.packageName = packageInput.value.trim(); config.state.page = 1; renderTariffOrderPage(); showToast('查询成功'); }
+        function applyFilters() { config.state.filters.merchantName = merchant.value.trim(); config.state.filters.groupName = group.value.trim(); config.state.filters.packageName = packageInput.value.trim(); config.state.page = 1; renderTariffOrderPage(); }
         search.addEventListener('click', applyFilters);
         [merchant, group, packageInput].forEach(function (input) { input.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); }); });
-        reset.addEventListener('click', function () { config.state.filters = { merchantName: '', groupName: '', packageName: '' }; config.state.page = 1; renderTariffOrderPage(); showToast('重置成功'); });
+        reset.addEventListener('click', function () { config.state.filters = { merchantName: '', groupName: '', packageName: '' }; config.state.page = 1; renderTariffOrderPage(); });
         page.querySelectorAll('.js-tariff-order-create, .js-tariff-order-change').forEach(function (button) { button.addEventListener('click', function () { showToast(button.textContent.trim() + '入口已打开'); }); });
         page.querySelectorAll('.js-tariff-order-detail').forEach(function (link) { link.addEventListener('click', function (event) { event.preventDefault(); openCardPackageDetailPageFromOperation(link.dataset.operationId); }); });
         page.querySelectorAll('.js-tariff-order-unsubscribe').forEach(function (button) { button.addEventListener('click', function () { var target = config.catalog.find(function (item) { return item.id === button.dataset.id; }); if (target) { target.status = '已退订'; renderTariffOrderPage(); showToast('退订成功', { force: true }); } }); });
@@ -10122,6 +10510,7 @@
                     <select id="taskStatus">
                       <option value="" selected disabled hidden>任务状态</option>
                       <option>成功</option>
+                      <option>部分成功</option>
                       <option>失败</option>
                       <option>处理中</option>
                     </select>
@@ -10148,7 +10537,6 @@
                   <thead>
                     <tr>
                       <th style="width: 64px;">序号</th>
-                      <th style="width: 132px;">批次号</th>
                       <th style="width: 140px;">任务类型</th>
                       <th style="width: 100px;">任务状态</th>
                       <th style="width: 100px;">操作总数</th>
@@ -10162,12 +10550,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-batch="BT20260602001" data-type="批量开停卡" data-status="成功" data-operator="运营管理员">
+                    <tr data-type="批量开停卡" data-status="成功" data-operator="运营管理员">
                       <td>1</td>
-                      <td>BT20260602001</td>
                       <td>批量开停卡</td>
                       <td><span class="tag success">成功</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260602001">320</button></td>
+                      <td>320</td>
                       <td>320</td>
                       <td>0</td>
                       <td>车载终端组停复机批处理</td>
@@ -10176,12 +10563,11 @@
                       <td>2026-06-02 09:24</td>
                       <td><button class="merchant-action js-task-download" type="button">下载</button></td>
                     </tr>
-                    <tr data-batch="BT20260602002" data-type="批量备注" data-status="失败" data-operator="周明">
+                    <tr data-type="批量备注" data-status="失败" data-operator="周明">
                       <td>2</td>
-                      <td>BT20260602002</td>
                       <td>批量备注</td>
                       <td><span class="tag danger">失败</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260602002">85</button></td>
+                      <td>85</td>
                       <td>0</td>
                       <td>85</td>
                       <td>部分 ICCID 不存在，任务终止</td>
@@ -10190,12 +10576,11 @@
                       <td>2026-06-02 10:05</td>
                       <td><button class="merchant-action js-task-download" type="button">下载</button></td>
                     </tr>
-                    <tr data-batch="BT20260602003" data-type="批量导出" data-status="处理中" data-operator="李青">
+                    <tr data-type="批量导出" data-status="处理中" data-operator="李青">
                       <td>3</td>
-                      <td>BT20260602003</td>
                       <td>批量导出</td>
                       <td><span class="tag muted">处理中</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260602003">12486</button></td>
+                      <td>12486</td>
                       <td>8420</td>
                       <td>0</td>
                       <td>流量卡库存明细导出</td>
@@ -10204,12 +10589,11 @@
                       <td>-</td>
                       <td><button class="merchant-action js-task-download" type="button">下载</button></td>
                     </tr>
-                    <tr data-batch="BT20260601014" data-type="批量修改套餐" data-status="失败" data-operator="赵远">
+                    <tr data-type="批量修改套餐" data-status="部分成功" data-operator="赵远">
                       <td>4</td>
-                      <td>BT20260601014</td>
                       <td>批量修改套餐</td>
-                      <td><span class="tag danger">失败</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260601014">146</button></td>
+                      <td><span class="tag partial">部分成功</span></td>
+                      <td>146</td>
                       <td>142</td>
                       <td>4</td>
                       <td>自然月套餐剩余月份调整，4 张卡执行失败</td>
@@ -10218,12 +10602,11 @@
                       <td>2026-06-01 17:39</td>
                       <td><button class="merchant-action js-task-download" type="button">下载</button></td>
                     </tr>
-                    <tr data-batch="BT20260601009" data-type="商户批量导入" data-status="失败" data-operator="王珂">
+                    <tr data-type="商户批量导入" data-status="失败" data-operator="王珂">
                       <td>5</td>
-                      <td>BT20260601009</td>
                       <td>商户批量导入</td>
                       <td><span class="tag danger">失败</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260601009">28</button></td>
+                      <td>28</td>
                       <td>0</td>
                       <td>28</td>
                       <td>模板字段校验未通过</td>
@@ -10232,12 +10615,11 @@
                       <td>2026-06-01 15:21</td>
                       <td><button class="merchant-action js-task-download" type="button">下载</button></td>
                     </tr>
-                    <tr data-batch="BT20260601007" data-type="批量开停卡" data-status="处理中" data-operator="陈立">
+                    <tr data-type="批量开停卡" data-status="处理中" data-operator="陈立">
                       <td>6</td>
-                      <td>BT20260601007</td>
                       <td>批量开停卡</td>
                       <td><span class="tag muted">处理中</span></td>
-                      <td><button class="task-total-link js-task-total" type="button" data-batch="BT20260601007">620</button></td>
+                      <td>620</td>
                       <td>410</td>
                       <td>0</td>
                       <td>跨境通信卡停机处理</td>
@@ -10390,7 +10772,7 @@
                       <path d="M12 7.5h.01"></path>
                     </svg>
                   </span>
-                  <span class="approval-note-text">配置业务功能对应的审批流程。用户执行已绑定的功能时，系统将按照当前启用的审批流程进行审核。</span>
+                  <span class="approval-note-text">配置业务功能对应的审核流程。用户执行已绑定的功能时，系统将按照当前启用的审核流程进行审核。</span>
                 </div>
               </div>
             </div>
@@ -10441,19 +10823,19 @@
 
             <div class="table-toolbar">
               <div class="toolbar-left">
-                <button class="btn primary js-approval-add" type="button">审批流程新增</button>
+                <button class="btn primary js-approval-add" type="button">审核流程新增</button>
               </div>
             </div>
 
             <div class="table-area">
-              <div class="table-scroll" role="region" aria-label="审批流程管理列表" tabindex="0">
+              <div class="table-scroll" role="region" aria-label="审核流程管理列表" tabindex="0">
                 <table class="approval-table">
                   <thead>
                     <tr>
                       <th style="width: 220px;">流程名称</th>
                       <th style="width: 280px;">流程说明</th>
                       <th style="width: 300px;">绑定功能</th>
-                      <th style="width: 96px;">审批节点数</th>
+                      <th style="width: 96px;">审核节点数</th>
                       <th style="width: 100px;">流程状态</th>
                       <th style="width: 110px;">创建人</th>
                       <th style="width: 150px;">创建时间</th>
@@ -10466,7 +10848,7 @@
               </div>
               <div class="pagination">
                 <span class="js-approval-total">共 0 条</span>
-                <select class="page-size" aria-label="审批流程每页条数">
+                <select class="page-size" aria-label="审核流程每页条数">
                   <option>10 条/页</option>
                   <option selected>20 条/页</option>
                   <option>50 条/页</option>
@@ -10480,7 +10862,7 @@
             <div class="drawer-overlay js-approval-drawer-overlay" aria-hidden="true">
               <aside class="approval-drawer js-approval-drawer" role="dialog" aria-modal="true" aria-labelledby="approvalDrawerTitle">
                 <div class="approval-drawer-head">
-                  <div id="approvalDrawerTitle" class="approval-drawer-title">审批流程</div>
+                  <div id="approvalDrawerTitle" class="approval-drawer-title">审核流程</div>
                   <button class="modal-close js-close-approval-drawer" type="button" aria-label="关闭">×</button>
                 </div>
                 <div class="approval-drawer-body js-approval-drawer-body"></div>
@@ -10491,7 +10873,7 @@
             <div class="modal-overlay js-approval-people-modal" aria-hidden="true">
               <section class="approval-people-modal" role="dialog" aria-modal="true" aria-labelledby="approvalPeopleTitle">
                 <div class="modal-head">
-                  <div id="approvalPeopleTitle" class="modal-title">选择审批人</div>
+                  <div id="approvalPeopleTitle" class="modal-title">选择审核人</div>
                   <button class="modal-close js-close-approval-people" type="button" aria-label="关闭">×</button>
                 </div>
                 <div class="modal-body">
@@ -10503,7 +10885,7 @@
                     </div>
                   </div>
                   <div class="table-area">
-                    <div class="table-scroll" role="region" aria-label="审批人员列表" tabindex="0">
+                    <div class="table-scroll" role="region" aria-label="审核人员列表" tabindex="0">
                       <table class="approval-people-table">
                         <thead>
                           <tr>
@@ -10549,24 +10931,37 @@
       function getApprovalWorkOrderMainHtml() {
         return `
           <section class="content-card approval-work-order-page">
+            <div class="work-order-approval-tip" role="status">请在48小时内完成工单审核，超时将结束并作废工单申请。</div>
             <div class="filters">
               <div class="filter-grid work-order-filter-grid">
                 <div class="field">
-                  <label>申请人</label>
+                  <label for="workOrderOperationStatus">操作状态</label>
+                  <div class="select-wrap clearable-select">
+                    <select id="workOrderOperationStatus" class="js-work-order-operation-status">
+                      <option value="" ${approvalWorkOrderState.operationStatusFilter ? "" : "selected"} disabled hidden>操作状态</option>
+                      <option value="成功" ${approvalWorkOrderState.operationStatusFilter === "成功" ? "selected" : ""}>成功</option>
+                      <option value="失败" ${approvalWorkOrderState.operationStatusFilter === "失败" ? "selected" : ""}>失败</option>
+                      <option value="部分成功" ${approvalWorkOrderState.operationStatusFilter === "部分成功" ? "selected" : ""}>部分成功</option>
+                    </select>
+                    <button class="clear-control" type="button" aria-label="清除操作状态">×</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>创建人</label>
                   <div class="work-order-applicant-select js-work-order-applicant-select">
                     <div class="work-order-applicant-trigger js-work-order-applicant-trigger">
-                      <input class="work-order-applicant-input js-work-order-applicant-input" type="text" placeholder="请输入申请人" aria-label="申请人">
+                      <input class="work-order-applicant-input js-work-order-applicant-input" type="text" placeholder="请输入创建人" aria-label="创建人">
                     </div>
                     <div class="work-order-applicant-panel js-work-order-applicant-panel"></div>
                   </div>
                 </div>
                 <div class="field">
-                  <label>申请时间</label>
-                  <button class="date-range-control js-date-range js-work-order-date-range" type="button" data-range-key="work-order-applied" data-start-label="申请开始日期" data-end-label="申请结束日期" data-shortcuts="quick" aria-label="申请时间范围">
+                  <label>创建时间</label>
+                  <button class="date-range-control js-date-range js-work-order-date-range" type="button" data-range-key="work-order-applied" data-start-label="创建开始日期" data-end-label="创建结束日期" data-shortcuts="quick" aria-label="创建时间范围">
                     <span class="date-range-text">
-                      <span class="date-start">申请开始日期</span>
+                      <span class="date-start">创建开始日期</span>
                       <span class="date-range-separator">至</span>
-                      <span class="date-end">申请结束日期</span>
+                      <span class="date-end">创建结束日期</span>
                     </span>
                     <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 11h18"></path></svg>
                   </button>
@@ -10581,28 +10976,16 @@
               </div>
             </div>
 
-            <div class="work-order-status-tabs js-work-order-status-tabs" role="tablist" aria-label="审批工单状态">
-              <button class="work-order-status-tab current" type="button" data-status="待我处理" role="tab">待我处理<span class="work-order-status-count">0</span></button>
-              <button class="work-order-status-tab" type="button" data-status="审批中" role="tab">审批中<span class="work-order-status-count">0</span></button>
-              <button class="work-order-status-tab" type="button" data-status="已通过" role="tab">已通过<span class="work-order-status-count">0</span></button>
-              <button class="work-order-status-tab" type="button" data-status="已驳回" role="tab">已驳回<span class="work-order-status-count">0</span></button>
-              <button class="work-order-status-tab" type="button" data-status="超时未处理" role="tab">超时未处理<span class="work-order-status-count">0</span></button>
-              <button class="work-order-status-tab" type="button" data-status="全部" role="tab">全部<span class="work-order-status-count">0</span></button>
-            </div>
-
             <div class="table-area">
-              <div class="table-scroll" role="region" aria-label="审批工单管理列表" tabindex="0">
+              <div class="table-scroll" role="region" aria-label="卡片回收列表" tabindex="0">
                 <table class="work-order-table">
                   <thead>
                     <tr>
                       <th style="width: 170px;">工单号</th>
-                      <th style="width: 120px;">审核状态</th>
-                      <th style="width: 90px;">卡数量</th>
-                      <th style="width: 100px;">申请人</th>
-                      <th style="width: 150px;">申请时间</th>
-                      <th style="width: 100px;">审批人</th>
-                      <th style="width: 150px;">更新时间</th>
-                      <th style="width: 200px;">操作</th>
+                      <th style="width: 110px;">操作状态</th>
+                      <th style="width: 120px;">创建人</th>
+                      <th style="width: 170px;">创建时间</th>
+                      <th class="sticky-action" style="width: 180px;">操作</th>
                     </tr>
                   </thead>
                   <tbody class="js-approval-work-order-tbody"></tbody>
@@ -10610,7 +10993,7 @@
               </div>
               <div class="pagination">
                 <span class="js-approval-work-order-total">共 0 条</span>
-                <select class="page-size" aria-label="审批工单每页条数">
+                <select class="page-size" aria-label="工单每页条数">
                   <option>10 条/页</option>
                   <option selected>20 条/页</option>
                   <option>50 条/页</option>
@@ -10622,14 +11005,14 @@
             </div>
 
             <div class="drawer-overlay js-approval-work-order-drawer-overlay" aria-hidden="true">
-              <aside class="approval-work-order-drawer" role="dialog" aria-modal="true" aria-labelledby="approvalWorkOrderDrawerTitle">
+              <aside class="approval-work-order-drawer" role="main" aria-labelledby="approvalWorkOrderDrawerTitle">
                 <div class="approval-drawer-head">
-                  <div id="approvalWorkOrderDrawerTitle" class="approval-drawer-title js-approval-work-order-drawer-title">审批工单详情</div>
-                  <button class="modal-close js-close-approval-work-order-drawer" type="button" aria-label="关闭">×</button>
+                  <div id="approvalWorkOrderDrawerTitle" class="approval-drawer-title js-approval-work-order-drawer-title">回收详情</div>
+                  <button class="work-order-page-back js-close-approval-work-order-drawer" type="button" hidden>返回列表</button>
                 </div>
                 <div class="approval-drawer-body js-approval-work-order-drawer-body"></div>
                 <div class="approval-drawer-foot js-approval-work-order-drawer-foot">
-                  <button class="btn js-close-approval-work-order-drawer" type="button">关闭详情</button>
+                  <button class="btn js-close-approval-work-order-drawer" type="button">返回列表</button>
                 </div>
               </aside>
             </div>
@@ -10960,6 +11343,12 @@
 
         input.dataset.quickSearchBound = "true";
         button.addEventListener("click", submitQuickSearch);
+        input.addEventListener("input", function () {
+          var digitsOnly = input.value.replace(/\D/g, "");
+          if (input.value !== digitsOnly) {
+            input.value = digitsOnly;
+          }
+        });
         input.addEventListener("keydown", function (event) {
           if (event.key === "Enter") {
             submitQuickSearch();
@@ -11676,7 +12065,7 @@
 
       function markApprovalMenuSelected() {
         document.querySelectorAll(".sidebar .sub-item").forEach(function (item) {
-          item.classList.toggle("current", item.textContent.trim() === "审批流程管理");
+          item.classList.toggle("current", item.textContent.trim() === "审核流程管理");
         });
         document.querySelectorAll(".sidebar .nav-item").forEach(function (item) {
           item.classList.remove("active");
@@ -11685,7 +12074,7 @@
 
       function markApprovalWorkOrderMenuSelected() {
         document.querySelectorAll(".sidebar .sub-item").forEach(function (item) {
-          item.classList.toggle("current", item.textContent.trim() === "审批工单管理");
+          item.classList.toggle("current", item.textContent.trim() === "卡片回收");
         });
         document.querySelectorAll(".sidebar .nav-item").forEach(function (item) {
           item.classList.remove("active");
@@ -11712,6 +12101,23 @@
         });
         tab.classList.add("current");
 
+        if (tab.dataset.approvalWorkOrderSubpage) {
+          approvalWorkOrderSubpage = {
+            mode: tab.dataset.approvalWorkOrderSubpage,
+            orderId: tab.dataset.approvalWorkOrderId || ""
+          };
+          currentView = "approvalWorkOrder";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("approvalWorkOrder");
+          markApprovalWorkOrderMenuSelected();
+          document.querySelector(".breadcrumb").textContent = approvalWorkOrderSubpage.mode === "review"
+            ? "进销存管理 / 卡片回收 / 审核"
+            : "进销存管理 / 卡片回收 / 回收详情";
+          document.querySelector(".main").innerHTML = getApprovalWorkOrderMainHtml();
+          bindApprovalWorkOrderControls(document.querySelector(".main"));
+          return;
+        }
+
         if (tab.textContent.indexOf("数据看板") !== -1) {
           currentView = "dashboard";
           document.body.classList.remove("page-cleared");
@@ -11729,6 +12135,16 @@
           document.querySelector(".breadcrumb").textContent = "进销存管理 / 库存管理";
           document.querySelector(".main").innerHTML = getInventoryManagementMainHtml();
           bindInventoryManagementControls(document.querySelector(".main"));
+        }
+
+        if (tab.textContent.indexOf("卡片回收") !== -1) {
+          currentView = "cardRecycleRecord";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("cardRecycleRecord");
+          markApprovalWorkOrderMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "进销存管理 / 卡片回收";
+          document.querySelector(".main").innerHTML = getCardRecycleRecordMainHtml();
+          bindCardRecycleRecordControls(document.querySelector(".main"));
         }
 
         if (tab.textContent.indexOf("套餐订购") !== -1) {
@@ -11863,25 +12279,16 @@
           bindTaskBatchControls(document.querySelector(".main"));
         }
 
-        if (tab.textContent.indexOf("审批流程管理") !== -1) {
+        if (tab.textContent.indexOf("审核流程管理") !== -1) {
           currentView = "approval";
           document.body.classList.remove("page-cleared");
           renderSidebar("approval");
           markApprovalMenuSelected();
-          document.querySelector(".breadcrumb").textContent = "审批中心 / 审批流程管理";
+          document.querySelector(".breadcrumb").textContent = "审核中心 / 审核流程管理";
           document.querySelector(".main").innerHTML = getApprovalFlowMainHtml();
           bindApprovalFlowControls(document.querySelector(".main"));
         }
 
-        if (tab.textContent.indexOf("审批工单管理") !== -1) {
-          currentView = "approvalWorkOrder";
-          document.body.classList.remove("page-cleared");
-          renderSidebar("approvalWorkOrder");
-          markApprovalWorkOrderMenuSelected();
-          document.querySelector(".breadcrumb").textContent = "审批中心 / 审批工单管理";
-          document.querySelector(".main").innerHTML = getApprovalWorkOrderMainHtml();
-          bindApprovalWorkOrderControls(document.querySelector(".main"));
-        }
       }
 
       function bindTabClose(closeButton) {
@@ -12059,7 +12466,7 @@
 
       function ensureApprovalFlowTab() {
         var approvalTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) {
-          return tab.textContent.indexOf("审批流程管理") !== -1;
+          return tab.textContent.indexOf("审核流程管理") !== -1;
         });
 
         document.querySelectorAll(".tab").forEach(function (tab) {
@@ -12069,7 +12476,7 @@
         if (!approvalTab) {
           approvalTab = document.createElement("div");
           approvalTab.className = "tab current";
-          approvalTab.innerHTML = '审批流程管理 <button class="tab-close" type="button" aria-label="关闭审批流程管理页面">×</button>';
+          approvalTab.innerHTML = '审核流程管理 <button class="tab-close" type="button" aria-label="关闭审核流程管理页面">×</button>';
           document.querySelector(".tabs").appendChild(approvalTab);
         }
 
@@ -12079,7 +12486,7 @@
 
       function ensureApprovalWorkOrderTab() {
         var workOrderTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) {
-          return tab.textContent.indexOf("审批工单管理") !== -1;
+          return tab.textContent.indexOf("卡片回收") !== -1;
         });
 
         document.querySelectorAll(".tab").forEach(function (tab) {
@@ -12089,11 +12496,34 @@
         if (!workOrderTab) {
           workOrderTab = document.createElement("div");
           workOrderTab.className = "tab current";
-          workOrderTab.innerHTML = '审批工单管理 <button class="tab-close" type="button" aria-label="关闭审批工单管理页面">×</button>';
+          workOrderTab.innerHTML = '卡片回收 <button class="tab-close" type="button" aria-label="关闭卡片回收页面">×</button>';
           document.querySelector(".tabs").appendChild(workOrderTab);
         }
 
         workOrderTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureApprovalWorkOrderSubpageTab(mode, orderId) {
+        var title = mode === "review" ? "审核" : "回收详情";
+        var subpageTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) {
+          return tab.dataset.approvalWorkOrderSubpage === mode;
+        });
+
+        document.querySelectorAll(".tab").forEach(function (tab) {
+          tab.classList.remove("current");
+        });
+
+        if (!subpageTab) {
+          subpageTab = document.createElement("div");
+          subpageTab.className = "tab current";
+          document.querySelector(".tabs").appendChild(subpageTab);
+        }
+
+        subpageTab.dataset.approvalWorkOrderSubpage = mode;
+        subpageTab.dataset.approvalWorkOrderId = orderId || "";
+        subpageTab.innerHTML = title + ' <button class="tab-close" type="button" aria-label="关闭' + title + '页面">×</button>';
+        subpageTab.classList.add("current");
         bindCurrentTabInteractions();
       }
 
@@ -12407,7 +12837,6 @@
             trafficPoolManagementState.filters.merchantName = page.querySelector(".js-traffic-pool-filter-merchant").value.trim();
             trafficPoolManagementState.page = 1;
             renderTrafficPoolManagementPage();
-            showToast("查询成功", { force: true });
             return;
           }
 
@@ -12417,7 +12846,6 @@
             trafficPoolManagementState.page = 1;
             trafficPoolManagementState.selectedIds = [];
             renderTrafficPoolManagementPage();
-            showToast("重置成功", { force: true });
             return;
           }
 
@@ -12496,7 +12924,6 @@
             trafficPoolManagementState.filters.merchantName = page.querySelector(".js-traffic-pool-filter-merchant").value.trim();
             trafficPoolManagementState.page = 1;
             renderTrafficPoolManagementPage();
-            showToast("查询成功", { force: true });
           }
         });
 
@@ -12633,7 +13060,6 @@
             warningStrategyFilters.remark = page.querySelector(".js-warning-strategy-filter-remark").value.trim();
             warningStrategyPager.page = 1;
             renderWarningStrategyPage();
-            showToast("查询成功", { force: true });
             return;
           }
 
@@ -12644,7 +13070,6 @@
             warningStrategyFilters.remark = "";
             warningStrategyPager.page = 1;
             renderWarningStrategyPage();
-            showToast("重置成功", { force: true });
             return;
           }
 
@@ -13205,7 +13630,7 @@
           filters: {},
           peoplePicker: {
             visible: false,
-            title: "选择审批人",
+            title: "选择审核人",
             keyword: "",
             targetType: "",
             nodeId: "",
@@ -13412,15 +13837,15 @@
                       '<input class="js-node-name" type="text" data-node-id="' + node.id + '" value="' + (node.name || "") + '" placeholder="请输入节点名称">' +
                     '</div>' +
                     '<div class="modal-field">' +
-                      '<label><span class="required-mark">*</span>审批方式</label>' +
+                      '<label><span class="required-mark">*</span>审核方式</label>' +
                       '<select class="js-node-mode" data-node-id="' + node.id + '">' +
                         '<option ' + (node.approvalMode === "任一人通过" ? "selected" : "") + '>任一人通过</option>' +
                         '<option ' + (node.approvalMode === "全部人通过" ? "selected" : "") + '>全部人通过</option>' +
                       '</select>' +
                     '</div>' +
                     '<div class="modal-field full">' +
-                      '<label><span class="required-mark">*</span>审批人</label>' +
-                      buildPickerBox(node.approverIds, "未选择审批人", "approver", "js-open-node-approvers", node.id) +
+                      '<label><span class="required-mark">*</span>审核人</label>' +
+                      buildPickerBox(node.approverIds, "未选择审核人", "approver", "js-open-node-approvers", node.id) +
                     '</div>' +
                     '<div class="modal-field full">' +
                       '<label>节点说明</label>' +
@@ -13459,7 +13884,7 @@
             }
 
             drawer.classList.add("detail");
-            drawerTitle.textContent = "审批流程详情";
+            drawerTitle.textContent = "审核流程详情";
             drawerBody.innerHTML = '' +
               '<section class="approval-section">' +
                 '<h3 class="approval-section-title">基础信息</h3>' +
@@ -13474,16 +13899,16 @@
                 '</div>' +
               '</section>' +
               '<section class="approval-section">' +
-                '<h3 class="approval-section-title">审批节点时间线</h3>' +
+                '<h3 class="approval-section-title">审核节点时间线</h3>' +
                 '<div class="approval-timeline">' +
                   flow.nodes.map(function (node, index) {
-                    var transferRule = node.approvalMode === "任一人通过" ? "任意一名审批人审核通过后进入下一节点。" : "同一节点所有审批人审核通过后进入下一节点。";
+                    var transferRule = node.approvalMode === "任一人通过" ? "任意一名审核人审核通过后进入下一节点。" : "同一节点所有审核人审核通过后进入下一节点。";
                     return '' +
                       '<div class="approval-timeline-item">' +
                         '<span class="approval-timeline-dot"></span>' +
                         '<div class="approval-timeline-title">' + (index + 1) + ". " + node.name + '</div>' +
-                        '<div class="approval-timeline-meta">审批人：' + getApprovalPeopleNames(node.approverIds) + '</div>' +
-                        '<div class="approval-timeline-meta">审批方式：' + node.approvalMode + '</div>' +
+                        '<div class="approval-timeline-meta">审核人：' + getApprovalPeopleNames(node.approverIds) + '</div>' +
+                        '<div class="approval-timeline-meta">审核方式：' + node.approvalMode + '</div>' +
                         '<div class="approval-timeline-meta">流转规则：' + transferRule + '</div>' +
                         '<div class="approval-timeline-meta">节点说明：' + (node.description || "未填写") + '</div>' +
                       '</div>';
@@ -13497,7 +13922,7 @@
 
           ensureDrawerDraftReady(viewState.drawer.flowDraft);
           drawer.classList.remove("detail");
-          drawerTitle.textContent = viewState.drawer.mode === "create" ? "新增审批流程" : "编辑审批流程";
+          drawerTitle.textContent = viewState.drawer.mode === "create" ? "新增审核流程" : "编辑审核流程";
           drawerBody.innerHTML = '' +
             '<section class="approval-section">' +
               '<h3 class="approval-section-title">基础信息</h3>' +
@@ -13522,7 +13947,7 @@
               buildFunctionMultiSelect(viewState.drawer.flowDraft) +
             '</section>' +
             '<section class="approval-section">' +
-              '<div class="approval-section-title"><span>审批节点</span><button class="btn primary js-approval-add-node" type="button">新增审批节点</button></div>' +
+              '<div class="approval-section-title"><span>审核节点</span><button class="btn primary js-approval-add-node" type="button">新增审核节点</button></div>' +
               '<div class="approval-node-stack">' + buildNodeCards(viewState.drawer.flowDraft) + '</div>' +
             '</section>';
           drawerFoot.innerHTML = '' +
@@ -13612,13 +14037,13 @@
         function removeNode(nodeId) {
           var nodes = viewState.drawer.flowDraft.nodes;
           if (nodes.length <= 1) {
-            showToast("至少需要保留一个审批节点", { force: true });
+            showToast("至少需要保留一个审核节点", { force: true });
             return;
           }
 
           openConfirm({
             title: "确认删除节点",
-            message: "确认删除当前审批节点吗？",
+            message: "确认删除当前审核节点吗？",
             onConfirm: function () {
               viewState.drawer.flowDraft.nodes = nodes.filter(function (node) {
                 return node.id !== nodeId;
@@ -13643,7 +14068,7 @@
           }
 
           if (!flowDraft.nodes.length) {
-            return "至少需要保留一个审批节点";
+            return "至少需要保留一个审核节点";
           }
 
           for (var index = 0; index < flowDraft.nodes.length; index += 1) {
@@ -13652,7 +14077,7 @@
               return "请输入节点名称";
             }
             if (!node.approverIds || !node.approverIds.length) {
-              return "请选择审批人";
+              return "请选择审核人";
             }
           }
 
@@ -13661,7 +14086,7 @@
             return Boolean(ownerMap[functionKey]);
           });
           if (conflicted) {
-            return "该功能已绑定其他启用审批流程，请先解除原绑定";
+            return "该功能已绑定其他启用审核流程，请先解除原绑定";
           }
 
           return "";
@@ -13713,7 +14138,7 @@
           if (viewState.drawer.mode === "edit") {
             openConfirm({
               title: "确认保存修改",
-              message: "流程修改后仅对新发起的审批生效，已发起的审批仍按原流程执行。确认后再保存。",
+              message: "流程修改后仅对新发起的审核生效，已发起的审核仍按原流程执行。确认后再保存。",
               onConfirm: function () {
                 closeConfirm();
                 persistFlow(targetStatus);
@@ -13734,7 +14159,7 @@
           if (nextStatus === "启用") {
             openConfirm({
               title: "确认启用",
-              message: "启用后，绑定功能将按照当前审批流程执行审核。是否确认启用？",
+              message: "启用后，绑定功能将按照当前审核流程执行审核。是否确认启用？",
               onConfirm: function () {
                 var validation = validateFlow(flow, "启用", flow.id);
                 closeConfirm();
@@ -13753,7 +14178,7 @@
 
           openConfirm({
             title: "确认停用",
-            message: "停用后，绑定该流程的功能将无法继续使用该审批流程。是否确认停用？",
+            message: "停用后，绑定该流程的功能将无法继续使用该审核流程。是否确认停用？",
             onConfirm: function () {
               flow.status = "停用";
               flow.updatedAt = formatNowDateTime();
@@ -13777,7 +14202,7 @@
 
           openConfirm({
             title: "确认删除流程",
-            message: "确认删除该审批流程吗？",
+            message: "确认删除该审核流程吗？",
             onConfirm: function () {
               approvalState.flows = approvalState.flows.filter(function (item) {
                 return item.id !== flowId;
@@ -13872,7 +14297,6 @@
             status: statusSelect.value
           };
           renderTable();
-          showToast("查询成功");
         }
 
         function resetFilters() {
@@ -13882,7 +14306,6 @@
           viewState.filters = {};
           updateClearableState(page);
           renderTable();
-          showToast("重置成功");
         }
 
         queryButton.addEventListener("click", applyFilters);
@@ -14106,7 +14529,7 @@
           if (trigger) {
             event.preventDefault();
             openPeoplePicker({
-              title: "选择审批人",
+              title: "选择审核人",
               targetType: "approver",
               nodeId: trigger.dataset.nodeId || trigger.closest(".approval-node-card").dataset.nodeId,
               selectedIds: (viewState.drawer.flowDraft.nodes.find(function (node) { return node.id === (trigger.dataset.nodeId || trigger.closest(".approval-node-card").dataset.nodeId); }) || { approverIds: [] }).approverIds || []
@@ -14241,7 +14664,7 @@
         if (step.completed || step.status === "已通过" || step.status === "已抄送") {
           classes.push("completed");
         }
-        if (step.current || step.status === "审批中") {
+        if (step.current || step.status === "审核中") {
           classes.push("current");
         }
         if (step.rejected || step.status === "已驳回") {
@@ -14293,7 +14716,7 @@
           return '<div class="work-order-detail-step ' + getWorkOrderStepClass(step) + '">' +
             '<span class="work-order-detail-dot"></span>' +
             '<div class="work-order-detail-step-card">' +
-              '<div class="work-order-detail-step-title">节点 ' + (index + 1) + " · " + (step.name || "审批节点") + " · " + step.status + "</div>" +
+              '<div class="work-order-detail-step-title">节点 ' + (index + 1) + " · " + (step.name || "审核节点") + " · " + step.status + "</div>" +
               '<div class="work-order-detail-step-meta">' + (step.isCc ? "抄送人：" : "审核人：") + step.reviewer + "</div>" +
               (step.reviewedAt ? '<div class="work-order-detail-step-meta">审核时间：' + step.reviewedAt + "</div>" : "") +
               (step.rejectReason ? '<div class="work-order-detail-step-meta reject-text">驳回原因：' + step.rejectReason + "</div>" : "") +
@@ -14322,9 +14745,74 @@
         return "pending";
       }
 
+      function normalizeWorkOrderCard(card) {
+        var numberSuffix = String(card.iccid || "000000000").slice(-9).padStart(9, "0");
+        var merchantMap = {
+          MCH202606001: "四川坤宝",
+          MCH202606002: "鑫立德",
+          MCH202606003: "中云图",
+          MCH202608001: "四川坤宝"
+        };
+        var groupMap = {
+          MCH202606001: "通用大流量卡群组",
+          MCH202606002: "设备流量池群组",
+          MCH202606003: "沉默期测试群组",
+          MCH202608001: "卡片回收待处理群组"
+        };
+
+        card.msisdn = card.msisdn || ("17" + numberSuffix);
+        card.imsi = card.imsi || ("46000" + String(card.iccid || "").slice(-10).padStart(10, "0"));
+        card.merchantName = card.merchantName || merchantMap[card.merchantNo] || "四川坤宝";
+        card.groupName = card.groupName || groupMap[card.merchantNo] || "通用流量卡群组";
+        card.packageActivationMode = Number(numberSuffix.slice(-1)) % 2 === 0 ? "用量生效" : "卡激活后生效";
+        card.packageValidity = card.packageValidity || ((card.effectiveDate || "--") + " 至 " + (card.endDate || "--"));
+        card.packageExpiry = card.packageExpiry || card.endDate || "--";
+        card.carrier = card.carrier || (/^898606/.test(card.iccid || "") ? "中国联通" : "中国移动");
+        card.testEndDate = card.testEndDate || "2026-08-31";
+        card.testTrafficLimit = card.testTrafficLimit || "100 MB";
+        if (/^\d{4}-\d{2}-\d{2}$/.test(card.endDate || "")) {
+          var endDateParts = card.endDate.split("-").map(Number);
+          var silentPeriodEnd = new Date(endDateParts[0], endDateParts[1], 0);
+          card.silentPeriod = silentPeriodEnd.getFullYear() + "-" + padDate(silentPeriodEnd.getMonth() + 1) + "-" + padDate(silentPeriodEnd.getDate());
+        } else {
+          card.silentPeriod = "--";
+        }
+        card.cardStatus = card.cardStatus === "已停用" || card.cardStatus === "停机" || card.cardStatus === "已注销" ? "已停用" : "已激活";
+        return card;
+      }
+
+      function getWorkOrderCardCopyButtonHtml(value, label) {
+        return '<button class="copy-btn js-work-order-card-copy" type="button" data-copy="' + escapeHtml(value) + '" aria-label="复制' + label + '"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>';
+      }
+
+      function getWorkOrderCardIdentityHtml(card) {
+        return '<div class="cell-stack">' +
+          '<div class="cell-line"><span class="cell-key">ICCID</span><span>' + escapeHtml(card.iccid) + '</span>' + getWorkOrderCardCopyButtonHtml(card.iccid, "ICCID") + '</div>' +
+          '<div class="cell-line"><span class="cell-key">MSISDN</span><span>' + escapeHtml(card.msisdn) + '</span>' + getWorkOrderCardCopyButtonHtml(card.msisdn, "MSISDN") + '</div>' +
+          '<div class="cell-line"><span class="cell-key">IMSI</span><span>' + escapeHtml(card.imsi) + '</span>' + getWorkOrderCardCopyButtonHtml(card.imsi, "IMSI") + '</div>' +
+        '</div>';
+      }
+
+      function getWorkOrderPackageInfoHtml(card) {
+        return '<div class="cell-stack">' +
+          '<div><span class="cell-key">套餐名称</span>' + escapeHtml(card.packageName) + '</div>' +
+          '<div><span class="cell-key">套餐生效方式</span>' + escapeHtml(card.packageActivationMode) + '</div>' +
+          '<div><span class="cell-key">套餐有效期</span>' + escapeHtml(card.packageValidity) + '</div>' +
+          '<div><span class="cell-key">到期时间</span>' + escapeHtml(card.packageExpiry) + '</div>' +
+          '<div><span class="cell-key">套餐状态</span>' + escapeHtml(card.packageStatus) + '</div>' +
+        '</div>';
+      }
+
+      function getWorkOrderTestPeriodHtml(card) {
+        return '<div class="cell-stack">' +
+          '<div><span class="cell-key">截止日期</span>' + escapeHtml(card.testEndDate) + '</div>' +
+          '<div><span class="cell-key">流量上限</span>' + escapeHtml(card.testTrafficLimit) + '</div>' +
+        '</div>';
+      }
+
       function getWorkOrderStatusTagHtml(status) {
         var className = "processing";
-        if (status === "审批中") {
+        if (status === "审核中") {
           className = "processing";
         } else if (status === "已通过") {
           className = "passed";
@@ -14338,7 +14826,44 @@
         return '<span class="work-order-status-tag ' + className + '">' + status + "</span>";
       }
 
+      function getWorkOrderOperationStatus(order) {
+        if (order.status !== "已通过" || (order.operationType || "卡片回收") !== "卡片回收") {
+          return "--";
+        }
+        if (order.recycleStatus) {
+          return order.recycleStatus;
+        }
+        return "成功";
+      }
+
+      function getWorkOrderOperationStatusHtml(order) {
+        var status = getWorkOrderOperationStatus(order);
+        var className = "empty";
+        if (status === "成功") {
+          className = "success";
+        } else if (status === "失败") {
+          className = "failed";
+        } else if (status === "部分成功") {
+          className = "partial";
+        }
+        return '<span class="work-order-operation-status ' + className + '">' + status + "</span>";
+      }
+
       function getApprovalWorkOrderDetailHtml(order, mode) {
+        var recycleStopModeSection = (order.operationType || "卡片回收") === "卡片回收" ? `
+          <div class="work-order-detail-item">
+            <span class="work-order-detail-label">回收状态</span>
+            <div class="work-order-detail-value">${escapeHtml(getWorkOrderOperationStatus(order))}</div>
+          </div>
+          <div class="work-order-detail-item">
+            <span class="work-order-detail-label">是否将卡片停机</span>
+            <div class="work-order-detail-value">${escapeHtml(order.recycleStopMode || "--")}</div>
+          </div>
+          <div class="work-order-detail-item">
+            <span class="work-order-detail-label">备注</span>
+            <div class="work-order-detail-value">${escapeHtml(order.remark || "--")}</div>
+          </div>
+        ` : "";
         var reviewSection = mode === "review" ? `
           <section class="approval-section work-order-review-section">
             <h2 class="approval-section-title">审核操作</h2>
@@ -14367,6 +14892,21 @@
         return `
           ${reviewSection}
           <section class="approval-section">
+            <h2 class="approval-section-title">审核信息</h2>
+            <div class="work-order-detail-grid work-order-review-summary">
+              <div class="work-order-detail-item">
+                <span class="work-order-detail-label">审核状态</span>
+                <div class="work-order-detail-value">${getWorkOrderStatusTagHtml(order.status)}</div>
+              </div>
+              <div class="work-order-detail-item">
+                <span class="work-order-detail-label">审核截止日期</span>
+                <div class="work-order-detail-value work-order-deadline">${getApprovalDeadline(order.appliedAt)}</div>
+              </div>
+            </div>
+            ${getWorkOrderDetailTimelineHtml(order, mode === "review")}
+          </section>
+
+          <section class="approval-section">
             <h2 class="approval-section-title">基本信息</h2>
             <div class="work-order-detail-grid">
               <div class="work-order-detail-item">
@@ -14374,27 +14914,20 @@
                 <div class="work-order-detail-value work-order-number">${order.id}</div>
               </div>
               <div class="work-order-detail-item">
-                <span class="work-order-detail-label">审批状态</span>
-                <div class="work-order-detail-value">${getWorkOrderStatusTagHtml(order.status)}</div>
+                <span class="work-order-detail-label">操作类型</span>
+                <div class="work-order-detail-value">${escapeHtml(order.operationType || "卡片回收")}</div>
               </div>
+              ${recycleStopModeSection}
               <div class="work-order-detail-item">
-                <span class="work-order-detail-label">卡数量</span>
-                <div class="work-order-detail-value">${order.cardCount}</div>
-              </div>
-              <div class="work-order-detail-item">
-                <span class="work-order-detail-label">申请人</span>
+                <span class="work-order-detail-label">创建人</span>
                 <div class="work-order-detail-value">${order.applicant}</div>
               </div>
               <div class="work-order-detail-item">
-                <span class="work-order-detail-label">申请时间</span>
+                <span class="work-order-detail-label">创建时间</span>
                 <div class="work-order-detail-value">${order.appliedAt}</div>
               </div>
               <div class="work-order-detail-item">
-                <span class="work-order-detail-label">审批截止日期</span>
-                <div class="work-order-detail-value work-order-deadline">${getApprovalDeadline(order.appliedAt)}</div>
-              </div>
-              <div class="work-order-detail-item">
-                <span class="work-order-detail-label">审批人</span>
+                <span class="work-order-detail-label">当前节点审核人</span>
                 <div class="work-order-detail-value">${order.approver}</div>
               </div>
               <div class="work-order-detail-item">
@@ -14406,29 +14939,19 @@
           </section>
 
           <section class="approval-section">
-            <h2 class="approval-section-title">审批状态</h2>
-            ${getWorkOrderDetailTimelineHtml(order, mode === "review")}
-          </section>
-
-          <section class="approval-section">
             <h2 class="approval-section-title">卡信息</h2>
-            <div class="work-order-card-toolbar">
-              <button class="btn js-work-order-card-export" type="button">导出</button>
-            </div>
             <div class="work-order-card-filter">
               <div class="field">
-                <label for="workOrderCardKeyword">ICCID</label>
-                <input id="workOrderCardKeyword" class="control js-work-order-card-keyword" type="text" placeholder="请输入 ICCID">
+                <label for="workOrderCardKeyword">ICCID/MSISDN/IMSI</label>
+                <input id="workOrderCardKeyword" class="control js-work-order-card-keyword" type="text" placeholder="请输入ICCID/MSISDN/IMSI">
               </div>
               <div class="field">
                 <label for="workOrderCardStatus">卡状态</label>
                 <div class="select-wrap clearable-select">
                   <select id="workOrderCardStatus" class="js-work-order-card-status">
                     <option value="" selected>全部</option>
-                    <option value="正常">正常</option>
-                    <option value="停机">停机</option>
-                    <option value="沉默期">沉默期</option>
-                    <option value="已注销">已注销</option>
+                    <option value="已激活">已激活</option>
+                    <option value="已停用">已停用</option>
                   </select>
                   <button class="clear-control" type="button" aria-label="清除卡状态">×</button>
                 </div>
@@ -14441,20 +14964,21 @@
                 <button class="btn js-work-order-card-reset" type="button">重置</button>
               </div>
             </div>
-            <div class="table-scroll" role="region" aria-label="审批工单卡信息列表" tabindex="0">
+            <div class="work-order-card-toolbar">
+              <button class="btn primary js-work-order-card-export" type="button">导出</button>
+            </div>
+            <div class="table-scroll" role="region" aria-label="工单卡信息列表" tabindex="0">
               <table class="work-order-card-table">
                 <thead>
                   <tr>
-                    <th style="width: 210px;">ICCID</th>
-                    <th style="width: 150px;">商户号</th>
-                    <th style="width: 190px;">套餐名称</th>
-                    <th style="width: 130px;">套餐ID</th>
-                    <th style="width: 110px;">套餐状态</th>
-                    <th style="width: 130px;">套餐生效日期</th>
-                    <th style="width: 130px;">套餐结束日期</th>
-                    <th style="width: 160px;">套餐失效原因</th>
-                    <th style="width: 90px;">沉默期</th>
-                    <th style="width: 100px;">卡状态</th>
+                    <th style="width: 290px;">ICCID/MSISDN/IMSI</th>
+                    <th style="width: 150px;">商户名称</th>
+                    <th style="width: 170px;">群组名称</th>
+                    <th style="width: 320px;">套餐信息</th>
+                    <th style="width: 110px;">运营商</th>
+                    <th style="width: 210px;">测试期</th>
+                    <th style="width: 100px;">沉默期</th>
+                    <th style="width: 130px;">卡状态</th>
                   </tr>
                 </thead>
                 <tbody class="js-work-order-card-tbody"></tbody>
@@ -14462,7 +14986,7 @@
             </div>
             <div class="pagination work-order-card-pagination">
               <span class="js-work-order-card-total">共 0 条</span>
-              <select class="page-size js-work-order-card-page-size" aria-label="审批工单卡信息每页条数">
+              <select class="page-size js-work-order-card-page-size" aria-label="工单卡信息每页条数">
                 ${getPageSizeOptions(20)}
               </select>
               <button class="page-btn js-work-order-card-prev" type="button">上一页</button>
@@ -14471,6 +14995,269 @@
             </div>
           </section>
         `;
+      }
+
+      function bindCardRecycleActionControls(page, onCreated) {
+        var openButton = page.querySelector(".js-open-card-recycle");
+        if (!openButton || page.dataset.cardRecycleBound === "true") {
+          return;
+        }
+
+        page.dataset.cardRecycleBound = "true";
+        var modalSource = document.createElement("div");
+        modalSource.innerHTML = getInventoryManagementMainHtml();
+        [".js-inventory-recycle-modal", ".js-inventory-recycle-confirm-modal"].forEach(function (selector) {
+          var modal = modalSource.querySelector(selector);
+          if (modal) {
+            page.appendChild(modal);
+          }
+        });
+
+        var recycleModal = page.querySelector(".js-inventory-recycle-modal");
+        var recycleConfirmModal = page.querySelector(".js-inventory-recycle-confirm-modal");
+        var recycleStopInputs = Array.prototype.slice.call(page.querySelectorAll(".js-inventory-recycle-stop"));
+        var recycleStopTip = page.querySelector(".js-inventory-recycle-stop-tip");
+        var recycleModeInputs = Array.prototype.slice.call(page.querySelectorAll(".js-inventory-recycle-mode"));
+        var recycleFileSection = page.querySelector(".js-inventory-recycle-file-section");
+        var recycleManualSection = page.querySelector(".js-inventory-recycle-manual-section");
+        var recycleFileInput = page.querySelector(".js-inventory-recycle-file");
+        var recycleFileName = page.querySelector(".js-inventory-recycle-file-name");
+        var recycleManualInput = page.querySelector(".js-inventory-recycle-manual");
+        var recycleRemarkInput = page.querySelector(".js-inventory-recycle-remark");
+        var recycleError = page.querySelector(".js-inventory-recycle-error");
+        var recycleConfirmMessage = page.querySelector(".js-inventory-recycle-confirm-message");
+        var pendingRecycleData = null;
+
+        function getRecycleMode() {
+          var current = recycleModeInputs.find(function (input) { return input.checked; });
+          return current ? current.value : "";
+        }
+
+        function getRecycleStopMode() {
+          var current = recycleStopInputs.find(function (input) { return input.checked; });
+          return current ? current.value : "";
+        }
+
+        function clearRecycleError() {
+          recycleError.textContent = "";
+        }
+
+        function setRecycleSectionVisibility(section, visible) {
+          if (!section) {
+            return;
+          }
+          section.hidden = !visible;
+          section.style.display = visible ? "grid" : "none";
+        }
+
+        function syncRecycleMode() {
+          var mode = getRecycleMode();
+          setRecycleSectionVisibility(recycleFileSection, mode === "file");
+          setRecycleSectionVisibility(recycleManualSection, mode === "manual");
+          clearRecycleError();
+        }
+
+        function syncRecycleStopMode() {
+          recycleStopTip.hidden = getRecycleStopMode() !== "keep";
+          clearRecycleError();
+        }
+
+        function resetRecycleModal() {
+          recycleStopInputs.forEach(function (input) { input.checked = input.value === "stop"; });
+          recycleModeInputs.forEach(function (input) { input.checked = input.value === "file"; });
+          recycleFileInput.value = "";
+          recycleFileInput.dataset.mockCount = "";
+          recycleFileName.textContent = "";
+          recycleManualInput.value = "";
+          recycleRemarkInput.value = "";
+          syncRecycleStopMode();
+          syncRecycleMode();
+          clearRecycleError();
+        }
+
+        function closeRecycleModal() {
+          recycleModal.classList.remove("show");
+          recycleModal.setAttribute("aria-hidden", "true");
+        }
+
+        function closeRecycleConfirmModal() {
+          recycleConfirmModal.classList.remove("show");
+          recycleConfirmModal.setAttribute("aria-hidden", "true");
+        }
+
+        function getRecycleCount() {
+          if (getRecycleMode() === "manual") {
+            return recycleManualInput.value.split(/[，,]/).map(function (item) {
+              return item.trim();
+            }).filter(Boolean).length;
+          }
+          return Number(recycleFileInput.dataset.mockCount || 90);
+        }
+
+        function getManualIccids() {
+          if (getRecycleMode() !== "manual") {
+            return [];
+          }
+          return recycleManualInput.value.split(/[，,]/).map(function (item) {
+            return item.trim();
+          }).filter(Boolean);
+        }
+
+        function createRecycleCards(recycleData) {
+          var shouldStop = recycleData.stopMode === "stop";
+          return Array.from({ length: recycleData.count }, function (_, index) {
+            return {
+              iccid: recycleData.manualIccids[index] || ("89860423102810" + String(index + 1).padStart(6, "0")),
+              merchantNo: "MCH202608001",
+              packageName: "通用流量套餐",
+              packageId: "PKG10001",
+              packageStatus: "生效中",
+              effectiveDate: "2026-08-01",
+              endDate: "2026-08-31",
+              invalidReason: "-",
+              silentPeriod: "否",
+              cardStatus: shouldStop ? "停机" : "正常"
+            };
+          });
+        }
+
+        function createRecycleWorkOrder(recycleData) {
+          var now = new Date();
+          var appliedAt = formatNowDateTime();
+          var workOrderId = "AP" + now.getFullYear() + padDate(now.getMonth() + 1) + padDate(now.getDate()) +
+            padDate(now.getHours()) + padDate(now.getMinutes()) + padDate(now.getSeconds()) +
+            String(now.getMilliseconds()).padStart(3, "0");
+
+          approvalWorkOrderState.orders.unshift({
+            id: workOrderId,
+            status: "审核中",
+            operationType: "卡片回收",
+            cardCount: recycleData.count,
+            applicant: "运营管理员",
+            appliedAt: appliedAt,
+            approver: "李四",
+            updatedAt: appliedAt,
+            isCurrentApplicant: true,
+            recycleStopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            recycleEntryMode: recycleData.entryMode === "file" ? "文件导入" : "手动录入",
+            remark: recycleData.remark,
+            steps: [
+              { name: "运营负责人审核", status: "审核中", reviewer: "李四", current: true },
+              { name: "平台负责人复核", status: "未开始", reviewer: "王珂" }
+            ],
+            ccRecipients: ["林菲"],
+            cards: createRecycleCards(recycleData)
+          });
+          approvalWorkOrderState.activeTab = "审核中";
+        }
+
+        function validateRecycleModal() {
+          if (!getRecycleStopMode()) {
+            return "请选择是否将卡片停机";
+          }
+          if (getRecycleMode() === "file" && (!recycleFileInput.files || !recycleFileInput.files.length)) {
+            return "请导入回收文件";
+          }
+          if (getRecycleMode() === "manual") {
+            var entries = getManualIccids();
+            if (!entries.length) {
+              return "请录入ICCID";
+            }
+            if (entries.length > 100) {
+              return "最多录入100条ICCID";
+            }
+          }
+          return "";
+        }
+
+        openButton.addEventListener("click", function () {
+          resetRecycleModal();
+          recycleModal.classList.add("show");
+          recycleModal.setAttribute("aria-hidden", "false");
+        });
+
+        recycleModeInputs.forEach(function (input) {
+          input.addEventListener("change", syncRecycleMode);
+          input.addEventListener("click", syncRecycleMode);
+        });
+        recycleStopInputs.forEach(function (input) {
+          input.addEventListener("change", syncRecycleStopMode);
+          input.addEventListener("click", syncRecycleStopMode);
+        });
+
+        page.querySelector(".js-inventory-recycle-import").addEventListener("click", function () {
+          recycleFileInput.click();
+        });
+        page.querySelector(".js-inventory-recycle-download").addEventListener("click", function () {
+          showToast("回收模板下载中");
+        });
+        recycleFileInput.addEventListener("change", function () {
+          clearRecycleError();
+          if (!recycleFileInput.files || !recycleFileInput.files.length) {
+            recycleFileName.textContent = "";
+            return;
+          }
+          var file = recycleFileInput.files[0];
+          if (!/\.xlsx?$/i.test(file.name)) {
+            recycleFileInput.value = "";
+            recycleFileName.textContent = "";
+            recycleError.textContent = "仅支持 .XLS / .XLSX 文件";
+            return;
+          }
+          if (file.size > 10 * 1024 * 1024) {
+            recycleFileInput.value = "";
+            recycleFileName.textContent = "";
+            recycleError.textContent = "单次导入文件上限为10MB";
+            return;
+          }
+          recycleFileName.textContent = file.name;
+          recycleFileInput.dataset.mockCount = "90";
+        });
+        recycleManualInput.addEventListener("input", clearRecycleError);
+        recycleRemarkInput.addEventListener("input", clearRecycleError);
+
+        recycleModal.addEventListener("click", function (event) {
+          if (event.target === recycleModal || event.target.closest(".js-close-inventory-recycle") || event.target.closest(".js-cancel-inventory-recycle")) {
+            closeRecycleModal();
+          }
+        });
+        page.querySelector(".js-submit-inventory-recycle").addEventListener("click", function () {
+          var errorText = validateRecycleModal();
+          if (errorText) {
+            recycleError.textContent = errorText;
+            return;
+          }
+          pendingRecycleData = {
+            stopMode: getRecycleStopMode(),
+            entryMode: getRecycleMode(),
+            count: getRecycleCount(),
+            manualIccids: getManualIccids(),
+            remark: recycleRemarkInput.value.trim()
+          };
+          recycleConfirmMessage.innerHTML = "您当前正在操作卡片回收<strong>" + pendingRecycleData.count + "张</strong>，被回收的卡片关联的流量池流量总额会受影响，群组套餐将会被清除，请确认是否继续操作？";
+          recycleConfirmModal.classList.add("show");
+          recycleConfirmModal.setAttribute("aria-hidden", "false");
+        });
+        recycleConfirmModal.addEventListener("click", function (event) {
+          if (event.target === recycleConfirmModal || event.target.closest(".js-close-inventory-recycle-confirm") || event.target.closest(".js-cancel-inventory-recycle-confirm")) {
+            closeRecycleConfirmModal();
+            return;
+          }
+          if (event.target.closest(".js-confirm-inventory-recycle") && pendingRecycleData) {
+            var createdRecycleData = pendingRecycleData;
+            createRecycleWorkOrder(createdRecycleData);
+            pendingRecycleData = null;
+            closeRecycleConfirmModal();
+            closeRecycleModal();
+            if (typeof onCreated === "function") {
+              onCreated(createdRecycleData);
+            }
+            showToast("卡片回收审核已提交，工单已生成");
+          }
+        });
+
+        syncRecycleStopMode();
+        syncRecycleMode();
       }
 
       function bindApprovalWorkOrderControls(root) {
@@ -14491,6 +15278,7 @@
         var applicantTrigger = page.querySelector(".js-work-order-applicant-trigger");
         var applicantInput = page.querySelector(".js-work-order-applicant-input");
         var applicantPanel = page.querySelector(".js-work-order-applicant-panel");
+        var operationStatusSelect = page.querySelector(".js-work-order-operation-status");
         var dateRange = page.querySelector(".js-work-order-date-range");
         var confirmModal = page.querySelector(".js-work-order-confirm-modal");
         var confirmTitle = page.querySelector(".js-work-order-confirm-title");
@@ -14506,13 +15294,14 @@
         var filteredCards = [];
 
         bindDateRangeControls(page);
+        bindClearableControls(page);
 
         function matchesActiveTab(order, status) {
           if (status === "全部") {
             return true;
           }
           if (status === "待我处理") {
-            return Boolean(order.isMineToHandle) && order.status === "审批中";
+            return Boolean(order.isMineToHandle) && order.status === "审核中";
           }
           return order.status === status;
         }
@@ -14522,7 +15311,7 @@
           var endDate = dateRange.dataset.end || "";
           return approvalWorkOrderState.orders.filter(function (order) {
             var appliedDate = order.appliedAt.slice(0, 10);
-            return matchesActiveTab(order, approvalWorkOrderState.activeTab) &&
+            return (!approvalWorkOrderState.operationStatusFilter || getWorkOrderOperationStatus(order) === approvalWorkOrderState.operationStatusFilter) &&
               (!approvalWorkOrderState.applicantFilters.length || approvalWorkOrderState.applicantFilters.indexOf(order.applicant) !== -1) &&
               (!startDate || appliedDate >= startDate) &&
               (!endDate || appliedDate <= endDate);
@@ -14552,7 +15341,7 @@
               '<input type="checkbox" tabindex="-1" ' + (selected ? "checked" : "") + ">" +
               "<span>" + name + "</span>" +
             "</button>";
-          }).join("") : '<div class="approval-empty">暂无匹配申请人</div>';
+          }).join("") : '<div class="approval-empty">暂无匹配创建人</div>';
         }
 
         function renderApplicantControl() {
@@ -14565,7 +15354,7 @@
             chip.innerHTML = name + '<button class="work-order-applicant-remove js-work-order-applicant-remove" type="button" data-name="' + name + '" aria-label="移除' + name + '">×</button>';
             applicantTrigger.insertBefore(chip, applicantInput);
           });
-          applicantInput.placeholder = approvalWorkOrderState.applicantFilters.length ? "继续输入申请人" : "请输入申请人";
+          applicantInput.placeholder = approvalWorkOrderState.applicantFilters.length ? "继续输入创建人" : "请输入创建人";
           renderApplicantPanel();
         }
 
@@ -14573,11 +15362,8 @@
           var orders = getFilteredOrders();
           tbody.innerHTML = orders.length ? orders.map(function (order) {
             var actions = "";
-            if (order.isMineToHandle && order.status !== "已驳回" && order.status !== "已通过") {
-              actions += '<button class="approval-action js-work-order-review" type="button" data-id="' + order.id + '">审核</button>';
-            }
             actions += '<button class="approval-action js-work-order-detail" type="button" data-id="' + order.id + '">详情</button>';
-            if (order.isCurrentApplicant && order.status === "审批中") {
+            if (order.isCurrentApplicant && order.status === "审核中") {
               actions += '<button class="approval-action danger js-work-order-withdraw" type="button" data-id="' + order.id + '">撤销</button>';
             }
             if (order.status === "超时未处理") {
@@ -14585,16 +15371,13 @@
             }
 
             return '<tr>' +
-              '<td><span class="work-order-order-id">' + order.id + "</span></td>" +
-              "<td>" + getWorkOrderStatusTagHtml(order.status) + "</td>" +
-              "<td>" + order.cardCount + "</td>" +
+              '<td><button class="work-order-order-id js-work-order-detail" type="button" data-id="' + order.id + '" aria-label="查看回收详情：' + order.id + '">' + order.id + "</button></td>" +
+              "<td>" + getWorkOrderOperationStatusHtml(order) + "</td>" +
               "<td>" + order.applicant + "</td>" +
               "<td>" + order.appliedAt + "</td>" +
-              "<td>" + order.approver + "</td>" +
-              "<td>" + order.updatedAt + "</td>" +
-              '<td><div class="approval-actions">' + actions + "</div></td>" +
+              '<td class="sticky-action"><div class="approval-actions">' + actions + "</div></td>" +
             "</tr>";
-          }).join("") : getEmptyTableRowHtml(8);
+          }).join("") : getEmptyTableRowHtml(5);
           totalText.textContent = "共 " + orders.length + " 条";
           renderStatusTabs();
         }
@@ -14609,26 +15392,24 @@
             return;
           }
 
-          filteredCards = cards.slice();
+          filteredCards = cards.map(normalizeWorkOrderCard);
           var pageCount = Math.max(1, Math.ceil(filteredCards.length / cardPageSize));
           cardPage = Math.min(Math.max(cardPage, 1), pageCount);
           var visibleCards = filteredCards.slice((cardPage - 1) * cardPageSize, cardPage * cardPageSize);
 
           if (!visibleCards.length) {
-            cardTbody.innerHTML = getEmptyTableRowHtml(10);
+            cardTbody.innerHTML = getEmptyTableRowHtml(8);
           } else {
             cardTbody.innerHTML = visibleCards.map(function (card) {
               return "<tr>" +
-                '<td><span class="work-order-number">' + card.iccid + "</span></td>" +
-                "<td>" + card.merchantNo + "</td>" +
-                "<td>" + card.packageName + "</td>" +
-                "<td>" + card.packageId + "</td>" +
-                '<td><span class="work-order-package-status ' + getWorkOrderPackageStatusClass(card.packageStatus) + '">' + card.packageStatus + "</span></td>" +
-                "<td>" + card.effectiveDate + "</td>" +
-                "<td>" + card.endDate + "</td>" +
-                "<td>" + card.invalidReason + "</td>" +
-                "<td>" + card.silentPeriod + "</td>" +
-                '<td><span class="work-order-card-status ' + getWorkOrderCardStatusClass(card.cardStatus) + '">' + card.cardStatus + "</span></td>" +
+                "<td>" + getWorkOrderCardIdentityHtml(card) + "</td>" +
+                "<td>" + escapeHtml(card.merchantName) + "</td>" +
+                "<td>" + escapeHtml(card.groupName) + "</td>" +
+                "<td>" + getWorkOrderPackageInfoHtml(card) + "</td>" +
+                "<td>" + escapeHtml(card.carrier) + "</td>" +
+                "<td>" + getWorkOrderTestPeriodHtml(card) + "</td>" +
+                "<td>" + escapeHtml(card.silentPeriod) + "</td>" +
+                "<td>" + escapeHtml(card.cardStatus) + "</td>" +
               "</tr>";
             }).join("");
           }
@@ -14656,7 +15437,10 @@
           var keyword = keywordInput ? keywordInput.value.trim().toUpperCase() : "";
           var status = statusSelect ? statusSelect.value : "";
           var cards = activeOrder.cards.filter(function (card) {
-            return (!keyword || card.iccid.toUpperCase().indexOf(keyword) !== -1) &&
+            normalizeWorkOrderCard(card);
+            return (!keyword || [card.iccid, card.msisdn, card.imsi].some(function (value) {
+              return String(value || "").toUpperCase().indexOf(keyword) !== -1;
+            })) &&
               (!status || card.cardStatus === status);
           });
           cardPage = 1;
@@ -14683,10 +15467,22 @@
           }
 
           drawerMode = mode === "review" ? "review" : "detail";
-          drawerTitle.textContent = drawerMode === "review" ? "审核" : "审批工单详情";
+          approvalWorkOrderSubpage = {
+            mode: drawerMode,
+            orderId: activeOrder.id
+          };
+          ensureApprovalWorkOrderSubpageTab(drawerMode, activeOrder.id);
+          drawerTitle.textContent = drawerMode === "review" ? "审核" : "回收详情";
+          document.querySelector(".breadcrumb").textContent = drawerMode === "review"
+            ? "进销存管理 / 卡片回收 / 审核"
+            : "进销存管理 / 卡片回收 / 回收详情";
+          var pageBackButton = page.querySelector(".work-order-page-back");
+          if (pageBackButton) {
+            pageBackButton.hidden = drawerMode !== "review";
+          }
           drawerFoot.innerHTML = drawerMode === "review"
-            ? '<button class="btn js-close-approval-work-order-drawer" type="button">取消</button><button class="btn primary js-submit-work-order-review" type="button">提交审核</button>'
-            : '<button class="btn js-close-approval-work-order-drawer" type="button">关闭详情</button>';
+            ? '<button class="btn js-close-approval-work-order-drawer" type="button">返回列表</button><button class="btn primary js-submit-work-order-review" type="button">提交审核</button>'
+            : '';
           drawerBody.innerHTML = getApprovalWorkOrderDetailHtml(activeOrder, drawerMode);
           bindClearableControls(drawerBody);
           bindNumericIdentityInputs(drawerBody);
@@ -14699,6 +15495,14 @@
         function closeDrawer() {
           drawerOverlay.classList.remove("show");
           drawerOverlay.setAttribute("aria-hidden", "true");
+          document.querySelector(".breadcrumb").textContent = "进销存管理 / 卡片回收";
+          document.querySelectorAll('.tab[data-approval-work-order-subpage="' + drawerMode + '"]').forEach(function (tab) {
+            tab.remove();
+          });
+          document.querySelectorAll(".tab").forEach(function (tab) {
+            tab.classList.toggle("current", tab.textContent.indexOf("卡片回收") !== -1);
+          });
+          approvalWorkOrderSubpage = { mode: "", orderId: "" };
           activeOrder = null;
           drawerMode = "detail";
           filteredCards = [];
@@ -14754,7 +15558,7 @@
             var nextStep = activeOrder.steps[currentStepIndex + 1];
             if (nextStep) {
               nextStep.current = true;
-              activeOrder.status = "审批中";
+              activeOrder.status = "审核中";
               activeOrder.approver = nextStep.reviewer;
             } else {
               activeOrder.status = "已通过";
@@ -14786,15 +15590,15 @@
           var order = approvalWorkOrderState.orders.find(function (item) {
             return item.id === orderId;
           });
-          if (!order || !order.isCurrentApplicant || order.status !== "审批中") {
-            showToast("仅发起人可撤销审批中的工单");
+          if (!order || !order.isCurrentApplicant || order.status !== "审核中") {
+            showToast("仅发起人可撤销审核中的工单");
             return;
           }
           order.status = "已撤销";
           order.updatedAt = formatNowDateTime();
           order.isMineToHandle = false;
           renderOrders();
-          showToast("审批工单已撤销");
+          showToast("工单已撤销");
         }
 
         function resubmitOrder(orderId) {
@@ -14804,26 +15608,26 @@
           if (!order || order.status !== "超时未处理") {
             return;
           }
-          order.status = "审批中";
+          order.status = "审核中";
           order.appliedAt = formatNowDateTime();
           order.updatedAt = order.appliedAt;
           order.isMineToHandle = true;
           order.steps = [
-            { name: "运营负责人审核", status: "审批中", reviewer: order.approver, current: true },
+            { name: "运营负责人审核", status: "审核中", reviewer: order.approver, current: true },
             { name: "平台负责人复核", status: "未开始", reviewer: "王珂" }
           ];
           renderOrders();
-          showToast("审批工单已重新提交");
+          showToast("工单已重新提交");
         }
 
         page.addEventListener("click", function (event) {
           var detailButton = event.target.closest(".js-work-order-detail");
-          var reviewButton = event.target.closest(".js-work-order-review");
           var statusTab = event.target.closest(".work-order-status-tab");
           var applicantOption = event.target.closest(".js-work-order-applicant-option");
           var applicantRemove = event.target.closest(".js-work-order-applicant-remove");
           var withdrawButton = event.target.closest(".js-work-order-withdraw");
           var resubmitButton = event.target.closest(".js-work-order-resubmit");
+          var cardCopyButton = event.target.closest(".js-work-order-card-copy");
           var cardPageButton = event.target.closest(".js-work-order-card-page");
 
           if (detailButton) {
@@ -14831,8 +15635,8 @@
             return;
           }
 
-          if (reviewButton) {
-            openDrawer(reviewButton.dataset.id, "review");
+          if (cardCopyButton) {
+            copyToClipboard(cardCopyButton.dataset.copy || "");
             return;
           }
 
@@ -14875,37 +15679,39 @@
 
           if (event.target.closest(".js-work-order-query")) {
             applicantSelect.classList.remove("open");
+            approvalWorkOrderState.operationStatusFilter = operationStatusSelect.value || "";
             renderOrders();
-            showToast("查询成功");
             return;
           }
 
           if (event.target.closest(".js-work-order-reset")) {
             approvalWorkOrderState.applicantFilters = [];
+            approvalWorkOrderState.operationStatusFilter = "";
+            operationStatusSelect.value = "";
             applicantInput.value = "";
             resetDateRangeValue(dateRange);
             applicantSelect.classList.remove("open");
             renderApplicantControl();
+            updateClearableState(page);
             renderOrders();
-            showToast("重置成功");
             return;
           }
 
           if (withdrawButton) {
-            openConfirm("确认撤销", "撤销后当前审批工单将停止流转，是否确认撤销？", function () {
+            openConfirm("确认撤销", "撤销后当前工单将停止流转，是否确认撤销？", function () {
               withdrawOrder(withdrawButton.dataset.id);
             });
             return;
           }
 
           if (resubmitButton) {
-            openConfirm("确认重新提交", "重新提交后将重新计算审批截止日期，并重新进入审批流程，是否继续？", function () {
+            openConfirm("确认重新提交", "重新提交后将重新计算审核截止日期，并重新进入审核流程，是否继续？", function () {
               resubmitOrder(resubmitButton.dataset.id);
             });
             return;
           }
 
-          if (event.target.closest(".js-close-approval-work-order-drawer") || event.target === drawerOverlay) {
+          if (event.target.closest(".js-close-approval-work-order-drawer")) {
             closeDrawer();
             return;
           }
@@ -14997,8 +15803,225 @@
           }
         });
 
+        bindCardRecycleActionControls(page, renderOrders);
         renderApplicantControl();
         renderOrders();
+        if (approvalWorkOrderSubpage.mode && approvalWorkOrderSubpage.orderId) {
+          openDrawer(approvalWorkOrderSubpage.orderId, approvalWorkOrderSubpage.mode);
+        }
+      }
+
+      function getCardRecycleRecordStatusHtml(status) {
+        var className = "empty";
+        if (status === "成功") {
+          className = "success";
+        } else if (status === "失败") {
+          className = "failed";
+        } else if (status === "部分成功") {
+          className = "partial";
+        }
+        return '<span class="work-order-operation-status ' + className + '">' + escapeHtml(status || "--") + "</span>";
+      }
+
+      function bindCardRecycleRecordControls(root) {
+        var page = (root || document).querySelector(".card-recycle-record-page");
+        if (!page || page.dataset.cardRecycleRecordBound === "true") {
+          return;
+        }
+
+        page.dataset.cardRecycleRecordBound = "true";
+        bindClearableControls(page);
+        bindDateRangeControls(page);
+        bindNumericIdentityInputs(page);
+
+        var batchInput = page.querySelector(".js-card-recycle-batch");
+        var stopModeSelect = page.querySelector(".js-card-recycle-stop-mode");
+        var statusSelect = page.querySelector(".js-card-recycle-status");
+        var operatorInput = page.querySelector(".js-card-recycle-operator");
+        var dateRange = page.querySelector(".js-card-recycle-date-range");
+        var tbody = page.querySelector(".js-card-recycle-record-tbody");
+        var totalText = page.querySelector(".js-card-recycle-record-total");
+        var detectionModal = page.querySelector(".js-card-recycle-detection-modal");
+        var detectionKeyword = page.querySelector(".js-card-recycle-detection-keyword");
+        var detectionStatus = page.querySelector(".js-card-recycle-detection-status");
+        var detectionTbody = page.querySelector(".js-card-recycle-detection-tbody");
+        var detectionTotal = page.querySelector(".js-card-recycle-detection-total");
+        var activeRecord = null;
+
+        function getFilteredRecords() {
+          var batch = batchInput.value.trim().toLowerCase();
+          var operator = operatorInput.value.trim().toLowerCase();
+          var startDate = dateRange.dataset.start || "";
+          var endDate = dateRange.dataset.end || "";
+          return cardRecycleRecordState.records.filter(function (record) {
+            var operationDate = record.operationTime.slice(0, 10);
+            return (!batch || record.batchNo.toLowerCase().indexOf(batch) !== -1) &&
+              (!stopModeSelect.value || record.stopMode === stopModeSelect.value) &&
+              (!statusSelect.value || record.status === statusSelect.value) &&
+              (!operator || record.operator.toLowerCase().indexOf(operator) !== -1) &&
+              (!startDate || operationDate >= startDate) &&
+              (!endDate || operationDate <= endDate);
+          }).sort(function (a, b) {
+            return b.operationTime.localeCompare(a.operationTime);
+          });
+        }
+
+        function renderRecords() {
+          var records = getFilteredRecords();
+          tbody.innerHTML = records.length ? records.map(function (record) {
+            return '<tr>' +
+              '<td>' + escapeHtml(record.batchNo) + '</td>' +
+              '<td>' + escapeHtml(record.stopMode) + '</td>' +
+              '<td><button class="card-recycle-count-link js-card-recycle-detection" type="button" data-batch="' + escapeHtml(record.batchNo) + '">' + record.total + '</button></td>' +
+              '<td>' + record.success + '</td>' +
+              '<td>' + record.failed + '</td>' +
+              '<td>' + escapeHtml(record.remark || "--") + '</td>' +
+              '<td>' + getCardRecycleRecordStatusHtml(record.status) + '</td>' +
+              '<td>' + escapeHtml(record.operator) + '</td>' +
+              '<td>' + escapeHtml(record.operationTime) + '</td>' +
+              '<td class="sticky-action"><button class="approval-action js-card-recycle-export" type="button" data-batch="' + escapeHtml(record.batchNo) + '">导出</button></td>' +
+            '</tr>';
+          }).join("") : getEmptyTableRowHtml(10);
+          totalText.textContent = "共 " + records.length + " 条";
+        }
+
+        function getFilteredDetectionRows() {
+          if (!activeRecord) {
+            return [];
+          }
+          var keyword = detectionKeyword.value.trim();
+          return activeRecord.details.filter(function (item) {
+            return (!keyword || [item.iccid, item.msisdn, item.imsi].some(function (value) {
+              return String(value).indexOf(keyword) !== -1;
+            })) && (!detectionStatus.value || item.status === detectionStatus.value);
+          });
+        }
+
+        function renderDetectionRows() {
+          var rows = getFilteredDetectionRows();
+          detectionTbody.innerHTML = rows.length ? rows.map(function (item) {
+            return '<tr>' +
+              '<td>' + escapeHtml(item.iccid) + '</td>' +
+              '<td>' + escapeHtml(item.msisdn) + '</td>' +
+              '<td>' + escapeHtml(item.imsi) + '</td>' +
+              '<td>' + escapeHtml(item.cardType) + '</td>' +
+              '<td>' + escapeHtml(item.carrier) + '</td>' +
+              '<td>' + escapeHtml(item.merchant) + '</td>' +
+              '<td>' + escapeHtml(item.supplier) + '</td>' +
+              '<td>' + getCardRecycleRecordStatusHtml(item.status) + '</td>' +
+              '<td>' + escapeHtml(item.reason || "--") + '</td>' +
+            '</tr>';
+          }).join("") : getEmptyTableRowHtml(9);
+          detectionTotal.textContent = "共 " + rows.length + " 条";
+        }
+
+        function openDetectionModal(batchNo) {
+          activeRecord = cardRecycleRecordState.records.find(function (record) {
+            return record.batchNo === batchNo;
+          });
+          if (!activeRecord) {
+            return;
+          }
+          detectionKeyword.value = "";
+          detectionStatus.value = "";
+          updateClearableState(detectionModal);
+          renderDetectionRows();
+          detectionModal.classList.add("show");
+          detectionModal.setAttribute("aria-hidden", "false");
+        }
+
+        function closeDetectionModal() {
+          detectionModal.classList.remove("show");
+          detectionModal.setAttribute("aria-hidden", "true");
+          activeRecord = null;
+        }
+
+        function addPendingRecord(recycleData) {
+          var now = new Date();
+          var batchNo = "REC" + now.getFullYear() + padDate(now.getMonth() + 1) + padDate(now.getDate()) +
+            padDate(now.getHours()) + padDate(now.getMinutes()) + padDate(now.getSeconds());
+          var details = createCardRecycleDetectionRows(batchNo, recycleData.count, 0).map(function (item, index) {
+            if (recycleData.manualIccids[index]) {
+              item.iccid = recycleData.manualIccids[index];
+            }
+            item.status = "处理中";
+            item.reason = "--";
+            return item;
+          });
+          cardRecycleRecordState.records.unshift({
+            batchNo: batchNo,
+            stopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            total: recycleData.count,
+            success: 0,
+            failed: 0,
+            remark: recycleData.remark,
+            status: "处理中",
+            operator: "运营管理员",
+            operationTime: formatNowDateTime(),
+            details: details
+          });
+          renderRecords();
+        }
+
+        page.addEventListener("click", function (event) {
+          var detectionButton = event.target.closest(".js-card-recycle-detection");
+          if (detectionButton) {
+            openDetectionModal(detectionButton.dataset.batch);
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-query")) {
+            renderRecords();
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-reset")) {
+            batchInput.value = "";
+            stopModeSelect.value = "";
+            statusSelect.value = "";
+            operatorInput.value = "";
+            resetDateRangeValue(dateRange);
+            updateClearableState(page);
+            renderRecords();
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-export")) {
+            showToast("卡片回收记录导出中");
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-detection-query")) {
+            renderDetectionRows();
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-detection-reset")) {
+            detectionKeyword.value = "";
+            detectionStatus.value = "";
+            updateClearableState(detectionModal);
+            renderDetectionRows();
+            return;
+          }
+          if (event.target.closest(".js-card-recycle-detection-export")) {
+            showToast("检测记录导出中");
+            return;
+          }
+          if (event.target === detectionModal || event.target.closest(".js-close-card-recycle-detection")) {
+            closeDetectionModal();
+          }
+        });
+
+        [batchInput, operatorInput].forEach(function (input) {
+          input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              renderRecords();
+            }
+          });
+        });
+        detectionKeyword.addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            renderDetectionRows();
+          }
+        });
+
+        bindCardRecycleActionControls(page, addPendingRecord);
+        renderRecords();
       }
 
       function bindInventoryManagementControls(root) {
@@ -15024,6 +16047,8 @@
         var pageButtons = Array.prototype.slice.call(page.querySelectorAll(".js-inventory-page-btn"));
         var jumpInput = page.querySelector(".js-inventory-jump");
         var recycleModal = page.querySelector(".js-inventory-recycle-modal");
+        var recycleStopInputs = Array.prototype.slice.call(page.querySelectorAll(".js-inventory-recycle-stop"));
+        var recycleStopTip = page.querySelector(".js-inventory-recycle-stop-tip");
         var recycleModeInputs = Array.prototype.slice.call(page.querySelectorAll(".js-inventory-recycle-mode"));
         var recycleFileSection = page.querySelector(".js-inventory-recycle-file-section");
         var recycleManualSection = page.querySelector(".js-inventory-recycle-manual-section");
@@ -15035,6 +16060,7 @@
         var recycleConfirmModal = page.querySelector(".js-inventory-recycle-confirm-modal");
         var recycleConfirmMessage = page.querySelector(".js-inventory-recycle-confirm-message");
         var currentInventoryPage = 1;
+        var pendingRecycleData = null;
 
         function visibleRowCheckboxes() {
           return rowCheckboxes.filter(function (checkbox) {
@@ -15093,6 +16119,13 @@
           return current ? current.value : "";
         }
 
+        function getRecycleStopMode() {
+          var current = recycleStopInputs.find(function (input) {
+            return input.checked;
+          });
+          return current ? current.value : "";
+        }
+
         function clearRecycleError() {
           recycleError.textContent = "";
         }
@@ -15113,7 +16146,15 @@
           clearRecycleError();
         }
 
+        function syncRecycleStopMode() {
+          recycleStopTip.hidden = getRecycleStopMode() !== "keep";
+          clearRecycleError();
+        }
+
         function resetRecycleModal() {
+          recycleStopInputs.forEach(function (input) {
+            input.checked = input.value === "stop";
+          });
           recycleModeInputs.forEach(function (input) {
             input.checked = input.value === "file";
           });
@@ -15122,6 +16163,7 @@
           recycleFileName.textContent = "";
           recycleManualInput.value = "";
           recycleRemarkInput.value = "";
+          syncRecycleStopMode();
           syncRecycleMode();
           clearRecycleError();
         }
@@ -15147,6 +16189,65 @@
           return Number(recycleFileInput.dataset.mockCount || 90);
         }
 
+        function getRecycleManualIccids() {
+          if (getRecycleMode() !== "manual") {
+            return [];
+          }
+          return recycleManualInput.value.split(/[，,]/).map(function (item) {
+            return item.trim();
+          }).filter(Boolean);
+        }
+
+        function createRecycleApprovalCards(recycleData) {
+          var manualIccids = recycleData.manualIccids;
+          var shouldStop = recycleData.stopMode === "stop";
+          return Array.from({ length: recycleData.count }, function (_, index) {
+            var mockIccid = "89860423102810" + String(index + 1).padStart(6, "0");
+            return {
+              iccid: manualIccids[index] || mockIccid,
+              merchantNo: "MCH202608001",
+              packageName: "通用流量套餐",
+              packageId: "PKG10001",
+              packageStatus: "生效中",
+              effectiveDate: "2026-08-01",
+              endDate: "2026-08-31",
+              invalidReason: "-",
+              silentPeriod: "否",
+              cardStatus: shouldStop ? "停机" : "正常"
+            };
+          });
+        }
+
+        function createRecycleApprovalWorkOrder(recycleData) {
+          var now = new Date();
+          var appliedAt = formatNowDateTime();
+          var workOrderId = "AP" + now.getFullYear() + padDate(now.getMonth() + 1) + padDate(now.getDate()) +
+            padDate(now.getHours()) + padDate(now.getMinutes()) + padDate(now.getSeconds()) +
+            String(now.getMilliseconds()).padStart(3, "0");
+
+          approvalWorkOrderState.orders.unshift({
+            id: workOrderId,
+            status: "审核中",
+            operationType: "卡片回收",
+            cardCount: recycleData.count,
+            applicant: "运营管理员",
+            appliedAt: appliedAt,
+            approver: "李四",
+            updatedAt: appliedAt,
+            isCurrentApplicant: true,
+            recycleStopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            recycleEntryMode: recycleData.entryMode === "file" ? "文件导入" : "手动录入",
+            remark: recycleData.remark,
+            steps: [
+              { name: "运营负责人审核", status: "审核中", reviewer: "李四", current: true },
+              { name: "平台负责人复核", status: "未开始", reviewer: "王珂" }
+            ],
+            ccRecipients: ["林菲"],
+            cards: createRecycleApprovalCards(recycleData)
+          });
+          approvalWorkOrderState.activeTab = "审核中";
+        }
+
         function openRecycleConfirmModal() {
           var count = getRecycleCount();
           recycleConfirmMessage.innerHTML =
@@ -15161,6 +16262,10 @@
         }
 
         function validateRecycleModal() {
+          if (!getRecycleStopMode()) {
+            return "请选择是否将卡片停机";
+          }
+
           var mode = getRecycleMode();
 
           if (!mode) {
@@ -15276,6 +16381,11 @@
           input.addEventListener("click", syncRecycleMode);
         });
 
+        recycleStopInputs.forEach(function (input) {
+          input.addEventListener("change", syncRecycleStopMode);
+          input.addEventListener("click", syncRecycleStopMode);
+        });
+
         page.querySelector(".js-inventory-recycle-import").addEventListener("click", function () {
           recycleFileInput.click();
         });
@@ -15331,6 +16441,13 @@
             return;
           }
 
+          pendingRecycleData = {
+            stopMode: getRecycleStopMode(),
+            entryMode: getRecycleMode(),
+            count: getRecycleCount(),
+            manualIccids: getRecycleManualIccids(),
+            remark: recycleRemarkInput.value.trim()
+          };
           openRecycleConfirmModal();
         });
 
@@ -15345,12 +16462,19 @@
           }
 
           if (event.target.closest(".js-confirm-inventory-recycle")) {
+            if (!pendingRecycleData) {
+              closeRecycleConfirmModal();
+              return;
+            }
+            createRecycleApprovalWorkOrder(pendingRecycleData);
+            pendingRecycleData = null;
             closeRecycleConfirmModal();
             closeRecycleModal();
-            showToast("卡片回收审核已提交");
+            showToast("卡片回收审核已提交，工单已生成");
           }
         });
 
+        syncRecycleStopMode();
         syncRecycleMode();
         syncHeaderCheckbox();
       }
@@ -15480,12 +16604,6 @@
           if (event.key === "Enter") {
             applyTaskFilters();
           }
-        });
-
-        page.querySelectorAll(".js-task-total").forEach(function (button) {
-          button.addEventListener("click", function () {
-            openTaskDetailModal(button);
-          });
         });
 
         taskPageButtons.forEach(function (button) {
@@ -15924,8 +17042,21 @@
         showToast("已打开库存管理");
       }
 
+      function openCardRecycleRecordPageFromSidebar() {
+        currentView = "cardRecycleRecord";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("cardRecycleRecord");
+        markApprovalWorkOrderMenuSelected();
+        ensureApprovalWorkOrderTab();
+        document.querySelector(".breadcrumb").textContent = "进销存管理 / 卡片回收";
+        document.querySelector(".main").innerHTML = getCardRecycleRecordMainHtml();
+        bindCardRecycleRecordControls(document.querySelector(".main"));
+        showToast("已打开卡片回收");
+      }
+
       function openCardDetailPage(cardId) {
-        activeCardDetailId = /^89\d{8,}$/.test(cardId || "") ? cardId : "8986042310281000123";
+        var lookupValue = String(cardId || "").replace(/\D/g, "");
+        activeCardDetailId = /^89\d{8,}$/.test(lookupValue) ? lookupValue : "8986042310281000123";
         currentView = "cardDetail";
         document.body.classList.remove("page-cleared");
         renderSidebar("detail");
@@ -16098,22 +17229,10 @@
         renderSidebar("approval");
         markApprovalMenuSelected();
         ensureApprovalFlowTab();
-        document.querySelector(".breadcrumb").textContent = "审批中心 / 审批流程管理";
+        document.querySelector(".breadcrumb").textContent = "审核中心 / 审核流程管理";
         document.querySelector(".main").innerHTML = getApprovalFlowMainHtml();
         bindApprovalFlowControls(document.querySelector(".main"));
-        showToast("已打开审批流程管理");
-      }
-
-      function openApprovalWorkOrderPageFromSidebar() {
-        currentView = "approvalWorkOrder";
-        document.body.classList.remove("page-cleared");
-        renderSidebar("approvalWorkOrder");
-        markApprovalWorkOrderMenuSelected();
-        ensureApprovalWorkOrderTab();
-        document.querySelector(".breadcrumb").textContent = "审批中心 / 审批工单管理";
-        document.querySelector(".main").innerHTML = getApprovalWorkOrderMainHtml();
-        bindApprovalWorkOrderControls(document.querySelector(".main"));
-        showToast("已打开审批工单管理");
+        showToast("已打开审核流程管理");
       }
 
       function visibleRowCheckboxes() {
@@ -16169,6 +17288,7 @@
       document.addEventListener("click", function (event) {
         var dashboardMenu = event.target.closest(".js-dashboard-page");
         var inventoryMenu = event.target.closest(".js-inventory-page");
+        var cardRecycleMenu = event.target.closest(".js-card-recycle-page");
         var flowMenu = event.target.closest(".js-side-page");
         var trafficPoolMenu = event.target.closest(".js-traffic-pool-page");
         var groupMenu = event.target.closest(".js-group-page");
@@ -16180,7 +17300,6 @@
         var merchantMenu = event.target.closest(".js-merchant-page");
         var taskMenu = event.target.closest(".js-task-page");
         var approvalMenu = event.target.closest(".js-approval-page");
-        var approvalWorkOrderMenu = event.target.closest(".js-approval-work-order-page");
         var navToggle = event.target.closest(".js-nav-toggle");
 
         if (dashboardMenu) {
@@ -16192,6 +17311,12 @@
         if (inventoryMenu) {
           event.preventDefault();
           runWithTrafficPoolLeaveGuard(openInventoryManagementPageFromSidebar);
+          return;
+        }
+
+        if (cardRecycleMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openCardRecycleRecordPageFromSidebar);
           return;
         }
 
@@ -16258,12 +17383,6 @@
         if (approvalMenu) {
           event.preventDefault();
           runWithTrafficPoolLeaveGuard(openApprovalFlowPageFromSidebar);
-          return;
-        }
-
-        if (approvalWorkOrderMenu) {
-          event.preventDefault();
-          runWithTrafficPoolLeaveGuard(openApprovalWorkOrderPageFromSidebar);
           return;
         }
 
