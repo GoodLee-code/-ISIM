@@ -4269,6 +4269,10 @@
       grid-column: auto;
     }
 
+    .tariff-base-filter-grid.is-renewal {
+      grid-template-columns: repeat(3, minmax(0, calc((100% - 36px) / 4))) auto;
+    }
+
     .tariff-base-page .table-area {
       min-height: 0;
     }
@@ -4276,6 +4280,10 @@
     table.tariff-base-table {
       width: 100%;
       min-width: 1560px;
+    }
+
+    table.tariff-base-table.tariff-group-renewal-table {
+      min-width: 1950px;
     }
 
     .tariff-base-table tbody td {
@@ -6783,7 +6791,7 @@
           pageSize: 20
         },
         groupRenewal: {
-          filters: { name: "" },
+          filters: { name: "", groupName: "", merchantName: "" },
           page: 1,
           pageSize: 20
         }
@@ -6800,6 +6808,8 @@
           traffic: "",
           trafficUnit: "GB",
           price: "",
+          merchantName: "",
+          groupName: "",
           remark: ""
         }
       };
@@ -6811,7 +6821,8 @@
         { id: "base-005", name: "视频监控流量卡-50GB/月*12月", cardType: "实体卡", trafficType: "独享流量", billingType: "按月计费", billingCycle: "自然月", packageType: "基础套餐", traffic: "50GB", validity: "12个月", price: "360.00", remark: "视频监控专用" }
       ];
       var groupRenewalTariffCatalog = groupBaseTariffCatalog.map(function (item, index) {
-        return Object.assign({}, item, { id: "renewal-" + String(index + 1).padStart(3, "0"), name: "群组续费-" + item.name, packageType: "续费套餐" });
+        var linkedGroup = groupCatalog[index % groupCatalog.length];
+        return Object.assign({}, item, { id: "renewal-" + String(index + 1).padStart(3, "0"), name: "群组续费-" + item.name, packageType: "续费套餐", merchantName: linkedGroup.merchantName, groupName: linkedGroup.groupName });
       });
       var groupAddonTariffCatalog = [
         { id: "group-addon-001", name: "群组叠加包-500MB", traffic: "500MB", validity: "当月有效", price: "5.00", remark: "适用于临时扩容" },
@@ -8333,6 +8344,8 @@
           traffic: "",
           trafficUnit: "GB",
           price: "",
+          merchantName: "",
+          groupName: "",
           remark: ""
         };
       }
@@ -8361,6 +8374,14 @@
           '<div class="modal-field full"><label for="tariffRemark">备注</label><textarea id="tariffRemark" class="js-tariff-form-remark" placeholder="请输入备注">' + escapeHtml(form.remark || "") + '</textarea></div>';
       }
 
+      function getTariffCreateRenewalScopeFieldsHtml() {
+        var form = tariffCreateState.form;
+        var merchants = Array.from(new Set(groupCatalog.map(function (item) { return item.merchantName; })));
+        var groups = form.merchantName ? groupCatalog.filter(function (item) { return item.merchantName === form.merchantName; }) : [];
+        return '<div class="modal-field"><label for="tariffMerchantName"><span class="required-mark">*</span>所属商户</label><select id="tariffMerchantName" class="js-tariff-form-merchant"><option value="" selected disabled hidden>请选择所属商户</option>' + merchants.map(function (merchant) { return '<option value="' + escapeHtml(merchant) + '" ' + (form.merchantName === merchant ? 'selected' : '') + '>' + escapeHtml(merchant) + '</option>'; }).join('') + '</select></div>' +
+          '<div class="modal-field"><label for="tariffGroupName"><span class="required-mark">*</span>所属群组</label><select id="tariffGroupName" class="js-tariff-form-group" ' + (!form.merchantName ? 'disabled' : '') + '><option value="" selected disabled hidden>' + (form.merchantName ? '请选择所属群组' : '请先选择所属商户') + '</option>' + groups.map(function (group) { return '<option value="' + escapeHtml(group.groupName) + '" ' + (form.groupName === group.groupName ? 'selected' : '') + '>' + escapeHtml(group.groupName) + '</option>'; }).join('') + '</select></div>';
+      }
+
       function getTariffCreateAddonFieldsHtml(packageType) {
         var form = tariffCreateState.form;
         var trafficType = packageType === "poolAddon" ? '<div class="modal-field"><label for="tariffAddonTrafficType">流量类型</label><select id="tariffAddonTrafficType" class="js-tariff-form-traffic-type"><option value="" selected disabled hidden>请选择流量类型</option><option ' + (form.trafficType === "定向流量" ? "selected" : "") + '>定向流量</option><option ' + (form.trafficType === "通用流量" ? "selected" : "") + '>通用流量</option></select></div>' : '';
@@ -8377,7 +8398,8 @@
       function getTariffCreateModalHtml() {
         var packageType = tariffCreateState.packageType;
         var formFields = packageType === "groupBase" || packageType === "groupRenewal" ? getTariffCreateBaseFieldsHtml() : getTariffCreateAddonFieldsHtml(packageType);
-        return '<div class="modal-overlay tariff-create-modal-overlay ' + (tariffCreateState.open ? 'show' : '') + ' js-tariff-create-modal" aria-hidden="' + (tariffCreateState.open ? 'false' : 'true') + '"><section class="tariff-create-modal" role="dialog" aria-modal="true" aria-labelledby="tariffCreateTitle"><div class="modal-head"><div id="tariffCreateTitle" class="modal-title">套餐新增</div><button class="modal-close js-close-tariff-create" type="button" aria-label="关闭套餐新增">×</button></div><div class="modal-body"><div class="modal-grid"><div class="modal-field full"><label for="tariffPackageType"><span class="required-mark">*</span>套餐类型</label><select id="tariffPackageType" class="js-tariff-form-package-type"><option value="groupBase" ' + (packageType === "groupBase" ? "selected" : "") + '>群组基础套餐</option><option value="groupRenewal" ' + (packageType === "groupRenewal" ? "selected" : "") + '>群组续费套餐</option><option value="groupAddon" ' + (packageType === "groupAddon" ? "selected" : "") + '>群组叠加包套餐</option><option value="poolAddon" ' + (packageType === "poolAddon" ? "selected" : "") + '>流量池叠加包套餐</option></select></div>' + formFields + '</div></div><div class="modal-foot"><button class="btn js-cancel-tariff-create" type="button">取消</button><button class="btn primary js-confirm-tariff-create" type="button">确认</button></div></section></div>';
+        var renewalScopeFields = packageType === "groupRenewal" ? getTariffCreateRenewalScopeFieldsHtml() : '';
+        return '<div class="modal-overlay tariff-create-modal-overlay ' + (tariffCreateState.open ? 'show' : '') + ' js-tariff-create-modal" aria-hidden="' + (tariffCreateState.open ? 'false' : 'true') + '"><section class="tariff-create-modal" role="dialog" aria-modal="true" aria-labelledby="tariffCreateTitle"><div class="modal-head"><div id="tariffCreateTitle" class="modal-title">套餐新增</div><button class="modal-close js-close-tariff-create" type="button" aria-label="关闭套餐新增">×</button></div><div class="modal-body"><div class="modal-grid"><div class="modal-field full"><label for="tariffPackageType"><span class="required-mark">*</span>套餐类型</label><select id="tariffPackageType" class="js-tariff-form-package-type"><option value="groupBase" ' + (packageType === "groupBase" ? "selected" : "") + '>群组基础套餐</option><option value="groupRenewal" ' + (packageType === "groupRenewal" ? "selected" : "") + '>群组续费套餐</option><option value="groupAddon" ' + (packageType === "groupAddon" ? "selected" : "") + '>群组叠加包套餐</option><option value="poolAddon" ' + (packageType === "poolAddon" ? "selected" : "") + '>流量池叠加包套餐</option></select></div>' + renewalScopeFields + formFields + '</div></div><div class="modal-foot"><button class="btn js-cancel-tariff-create" type="button">取消</button><button class="btn primary js-confirm-tariff-create" type="button">确认</button></div></section></div>';
       }
 
       function collectTariffCreateForm(modal) {
@@ -8390,6 +8412,8 @@
         form.validity = getValue('.js-tariff-form-validity');
         form.traffic = getValue('.js-tariff-form-traffic');
         form.price = getValue('.js-tariff-form-price');
+        form.merchantName = getValue('.js-tariff-form-merchant');
+        form.groupName = getValue('.js-tariff-form-group');
         form.remark = getValue('.js-tariff-form-remark');
         var unit = modal.querySelector('.js-tariff-form-traffic-unit');
         if (unit) form.trafficUnit = unit.value;
@@ -8399,6 +8423,7 @@
         collectTariffCreateForm(modal);
         var form = tariffCreateState.form;
         var required = tariffCreateState.packageType === "groupBase" || tariffCreateState.packageType === "groupRenewal" ? [form.billingType, form.billingCycle, form.cardType, form.trafficType, form.validity, form.traffic, form.price] : [];
+        if (tariffCreateState.packageType === "groupRenewal") required.push(form.merchantName, form.groupName);
         if (required.some(function (value) { return !value; })) {
           showToast("请完善必填项", { force: true });
           return;
@@ -8407,7 +8432,7 @@
         if (tariffCreateState.packageType === "groupBase" || tariffCreateState.packageType === "groupRenewal") {
           var targetCatalog = tariffCreateState.packageType === "groupRenewal" ? groupRenewalTariffCatalog : groupBaseTariffCatalog;
           var label = tariffCreateState.packageType === "groupRenewal" ? "群组续费套餐-" : "群组基础套餐-";
-          targetCatalog.push({ id: (tariffCreateState.packageType === "groupRenewal" ? "renewal-" : "base-") + Date.now(), name: label + suffix, cardType: form.cardType, trafficType: form.trafficType, billingType: form.billingType, billingCycle: form.billingCycle, packageType: tariffCreateState.packageType === "groupRenewal" ? "续费套餐" : "基础套餐", traffic: suffix, validity: form.validity + getTariffCreateCycleUnit(), price: form.price, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
+          targetCatalog.push({ id: (tariffCreateState.packageType === "groupRenewal" ? "renewal-" : "base-") + Date.now(), name: label + suffix, cardType: form.cardType, trafficType: form.trafficType, billingType: form.billingType, billingCycle: form.billingCycle, packageType: tariffCreateState.packageType === "groupRenewal" ? "续费套餐" : "基础套餐", traffic: suffix, validity: form.validity + getTariffCreateCycleUnit(), price: form.price, merchantName: form.merchantName, groupName: form.groupName, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
         } else if (tariffCreateState.packageType === "groupAddon") {
           groupAddonTariffCatalog.push({ id: "group-addon-" + Date.now(), name: "群组叠加包-" + suffix, traffic: suffix, validity: form.validity ? form.validity + "月" : "当月有效", price: form.price, remark: form.remark, updatedAt: formatNowDateTime(), operator: "运营管理员" });
         } else {
@@ -8444,7 +8469,20 @@
           if (event.target.matches('.js-tariff-form-package-type')) {
             collectTariffCreateForm(modal);
             tariffCreateState.packageType = event.target.value;
+            tariffCreateState.form.merchantName = '';
+            tariffCreateState.form.groupName = '';
             renderTariffManagementPage();
+            return;
+          }
+          if (event.target.matches('.js-tariff-form-merchant')) {
+            var previousMerchant = tariffCreateState.form.merchantName;
+            collectTariffCreateForm(modal);
+            if (tariffCreateState.form.merchantName !== previousMerchant) tariffCreateState.form.groupName = '';
+            renderTariffManagementPage();
+            return;
+          }
+          if (event.target.matches('.js-tariff-form-group')) {
+            collectTariffCreateForm(modal);
             return;
           }
           if (event.target.matches('.js-tariff-form-billing-cycle')) {
@@ -8462,8 +8500,13 @@
       function getFilteredGroupBaseTariffs(tabId) {
         var config = getGroupBaseTariffConfig(tabId);
         var keyword = (config.state.filters.name || "").trim().toLowerCase();
-        var rows = !keyword ? config.catalog.slice() : config.catalog.filter(function (item) {
-          return matchesTariffPackageLookup(keyword, item);
+        var groupKeyword = (config.state.filters.groupName || "").trim().toLowerCase();
+        var merchantKeyword = (config.state.filters.merchantName || "").trim().toLowerCase();
+        var rows = config.catalog.filter(function (item) {
+          if (keyword && !matchesTariffPackageLookup(keyword, item)) return false;
+          if (tabId === "groupRenewal" && groupKeyword && String(item.groupName || "").toLowerCase().indexOf(groupKeyword) === -1) return false;
+          if (tabId === "groupRenewal" && merchantKeyword && String(item.merchantName || "").toLowerCase().indexOf(merchantKeyword) === -1) return false;
+          return true;
         });
         return sortTariffsByUpdatedAt(rows);
       }
@@ -9095,11 +9138,12 @@
         var start = (state.page - 1) * state.pageSize;
         var pageRows = rows.slice(start, start + state.pageSize);
         if (!pageRows.length) {
-          return '<tr><td class="empty-cell" colspan="10"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
+          return '<tr><td class="empty-cell" colspan="' + (tabId === "groupRenewal" ? 12 : 10) + '"><div class="empty-state"><div class="empty-state-title">暂无数据</div><div class="empty-state-desc">暂无符合条件的套餐</div></div></td></tr>';
         }
         return pageRows.map(function (item) {
           return '<tr>' +
             '<td>' + escapeHtml(item.id) + '</td>' +
+            (tabId === "groupRenewal" ? '<td>' + escapeHtml(item.merchantName || "--") + '</td><td>' + escapeHtml(item.groupName || "--") + '</td>' : '') +
             '<td>' + escapeHtml(item.name) + '</td>' +
             '<td>' + escapeHtml(item.cardType) + '</td>' +
             '<td>' + escapeHtml(item.trafficType) + '</td>' +
@@ -9134,13 +9178,20 @@
       function getGroupBaseTariffContentHtml(tabId) {
         var id = tabId || "groupBase";
         var state = getGroupBaseTariffConfig(id).state;
+        var isRenewal = id === "groupRenewal";
+        var renewalFilters = isRenewal ?
+          '<div class="field"><label for="tariffMerchantFilter">所属商户</label><input id="tariffMerchantFilter" class="control js-tariff-merchant-filter" type="text" list="tariff-renewal-merchant-options" autocomplete="off" value="' + escapeHtml(state.filters.merchantName || "") + '" placeholder="请输入所属商户"><datalist id="tariff-renewal-merchant-options">' + Array.from(new Set(groupRenewalTariffCatalog.map(function (item) { return item.merchantName; }))).map(function (name) { return '<option value="' + escapeHtml(name) + '"></option>'; }).join('') + '</datalist></div>' +
+          '<div class="field"><label for="tariffGroupFilter">所属群组</label><input id="tariffGroupFilter" class="control js-tariff-group-filter" type="text" list="tariff-renewal-group-options" autocomplete="off" value="' + escapeHtml(state.filters.groupName || "") + '" placeholder="请输入所属群组"><datalist id="tariff-renewal-group-options">' + Array.from(new Set(groupRenewalTariffCatalog.map(function (item) { return item.groupName; }))).map(function (name) { return '<option value="' + escapeHtml(name) + '"></option>'; }).join('') + '</datalist></div>' : '';
+        var packageFilter = '<div class="field"><label for="tariffNameFilter">套餐信息</label><input id="tariffNameFilter" class="control js-tariff-name-filter" type="text" list="tariff-base-package-options" autocomplete="off" value="' + escapeHtml(state.filters.name) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="tariff-base-package-options">' + getTariffPackageLookupOptions(getGroupBaseTariffConfig(id).catalog) + '</datalist></div>';
+        var leadingHeaders = isRenewal ? '<th style="width: 130px;">所属商户</th><th style="width: 260px;">所属群组</th><th style="width: 220px;">套餐名称</th>' : '<th style="width: 220px;">套餐名称</th>';
         return '<div class="tariff-base-page">' +
-          '<div class="filters"><div class="filter-grid tariff-base-filter-grid">' +
-            '<div class="field"><label for="tariffNameFilter">套餐信息</label><input id="tariffNameFilter" class="control js-tariff-name-filter" type="text" list="tariff-base-package-options" autocomplete="off" value="' + escapeHtml(state.filters.name) + '" placeholder="请输入套餐ID或套餐名称"><datalist id="tariff-base-package-options">' + getTariffPackageLookupOptions(getGroupBaseTariffConfig(id).catalog) + '</datalist></div>' +
+          '<div class="filters"><div class="filter-grid tariff-base-filter-grid ' + (isRenewal ? 'is-renewal' : '') + '">' +
+            renewalFilters +
+            packageFilter +
             '<div class="filter-actions"><button class="btn primary js-tariff-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-tariff-reset" type="button">重置</button></div>' +
           '</div></div>' +
           '<div class="table-toolbar"><div class="toolbar-left"><button class="btn primary js-tariff-create" type="button">套餐新增</button></div></div>' +
-          '<div class="table-area"><div class="table-scroll" role="region" aria-label="' + (id === "groupRenewal" ? "群组续费套餐列表" : "群组基础套餐列表") + '" tabindex="0"><table class="tariff-base-table"><thead><tr><th style="width: 150px;">套餐ID</th><th style="width: 220px;">套餐名称</th><th style="width: 120px;">卡板类型</th><th style="width: 120px;">流量类型</th><th style="width: 360px;">套餐计费规则</th><th style="width: 110px;">套餐时效</th><th style="width: 180px;">备注</th><th style="width: 86px;">操作</th></tr></thead><tbody>' + getGroupBaseTariffRowsHtml(id) + '</tbody></table></div>' + getGroupBaseTariffPaginationHtml(id) + '</div>' +
+          '<div class="table-area"><div class="table-scroll" role="region" aria-label="' + (id === "groupRenewal" ? "群组续费套餐列表" : "群组基础套餐列表") + '" tabindex="0"><table class="tariff-base-table ' + (isRenewal ? 'tariff-group-renewal-table' : '') + '"><thead><tr><th style="width: 150px;">套餐ID</th>' + leadingHeaders + '<th style="width: 120px;">卡板类型</th><th style="width: 120px;">流量类型</th><th style="width: 360px;">套餐计费规则</th><th style="width: 110px;">套餐时效</th><th style="width: 180px;">备注</th><th style="width: 86px;">操作</th></tr></thead><tbody>' + getGroupBaseTariffRowsHtml(id) + '</tbody></table></div>' + getGroupBaseTariffPaginationHtml(id) + '</div>' +
         '</div>';
       }
 
@@ -9202,19 +9253,31 @@
           baseHeaderRow.insertBefore(operatorHeader, baseActionHeader);
         }
         var nameInput = page.querySelector(".js-tariff-name-filter");
+        var groupInput = page.querySelector(".js-tariff-group-filter");
+        var merchantInput = page.querySelector(".js-tariff-merchant-filter");
         var searchButton = page.querySelector(".js-tariff-search");
         var resetButton = page.querySelector(".js-tariff-reset");
         var clearButton = page.querySelector(".clear-control");
         if (nameInput && searchButton) {
           searchButton.addEventListener("click", function () {
             baseState.filters.name = nameInput.value.trim();
+            if (baseTabId === "groupRenewal") {
+              baseState.filters.groupName = groupInput ? groupInput.value.trim() : "";
+              baseState.filters.merchantName = merchantInput ? merchantInput.value.trim() : "";
+            }
             baseState.page = 1;
             renderTariffManagementPage();
           });
-          nameInput.addEventListener("keydown", function (event) { if (event.key === "Enter") searchButton.click(); });
+          [nameInput, groupInput, merchantInput].filter(Boolean).forEach(function (input) {
+            input.addEventListener("keydown", function (event) { if (event.key === "Enter") searchButton.click(); });
+          });
         }
         if (resetButton) resetButton.addEventListener("click", function () {
           baseState.filters.name = "";
+          if (baseTabId === "groupRenewal") {
+            baseState.filters.groupName = "";
+            baseState.filters.merchantName = "";
+          }
           baseState.page = 1;
           renderTariffManagementPage();
         });
@@ -11532,6 +11595,30 @@
         });
       }
 
+      function prepareClearableFilterInputs(root) {
+        (root || document).querySelectorAll('.filters input.control').forEach(function (input) {
+          var type = (input.getAttribute('type') || 'text').toLowerCase();
+          var supportedTypes = ['text', 'search', 'tel', 'email', 'number'];
+          if (supportedTypes.indexOf(type) === -1 || input.disabled || input.readOnly || input.closest('.clearable-wrap')) {
+            return;
+          }
+
+          var wrapper = document.createElement('div');
+          wrapper.className = 'clearable-wrap auto-clearable-wrap';
+          input.parentNode.insertBefore(wrapper, input);
+          wrapper.appendChild(input);
+
+          var clearButton = document.createElement('button');
+          var field = wrapper.closest('.field');
+          var label = field ? field.querySelector('label') : null;
+          clearButton.className = 'clear-control';
+          clearButton.type = 'button';
+          clearButton.setAttribute('aria-label', '清除' + (label ? label.textContent.trim() : '输入内容'));
+          clearButton.textContent = '×';
+          wrapper.appendChild(clearButton);
+        });
+      }
+
       function updateClearableState(root) {
         enhanceSelectControls(root || document);
         (root || document).querySelectorAll(".clearable-wrap, .clearable-select").forEach(function (wrapper) {
@@ -11544,6 +11631,7 @@
       }
 
       function bindClearableControls(root) {
+        prepareClearableFilterInputs(root || document);
         enhanceSelectControls(root || document);
         (root || document).querySelectorAll(".clearable-wrap, .clearable-select").forEach(function (wrapper) {
           if (wrapper.dataset.clearBound === "true") {
@@ -11575,6 +11663,27 @@
         });
 
         updateClearableState(root || document);
+      }
+
+      var clearableFilterObserver = null;
+
+      function observeClearableFilterInputs() {
+        var main = document.querySelector('.main');
+        if (!main || clearableFilterObserver) {
+          return;
+        }
+
+        clearableFilterObserver = new MutationObserver(function (mutations) {
+          var hasFilterInput = mutations.some(function (mutation) {
+            return Array.prototype.slice.call(mutation.addedNodes).some(function (node) {
+              return node.nodeType === 1 && (node.matches('.filters input.control') || node.querySelector('.filters input.control'));
+            });
+          });
+          if (hasFilterInput) {
+            bindClearableControls(main);
+          }
+        });
+        clearableFilterObserver.observe(main, { childList: true, subtree: true });
       }
 
       var today = new Date(2026, 5, 1);
@@ -17280,6 +17389,7 @@
       });
 
       bindClearableControls(document);
+      observeClearableFilterInputs();
       bindDateRangeControls(document);
       bindNumericIdentityInputs(document);
       observeNumericIdentityInputs();
