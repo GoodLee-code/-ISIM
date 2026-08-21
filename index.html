@@ -2197,19 +2197,12 @@
       min-width: 1260px;
     }
 
-    .card-recycle-detection-modal {
-      width: min(1440px, calc(100vw - 40px));
-      max-height: calc(100vh - 48px);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-recycle-detection-modal .modal-body {
-      overflow: auto;
+    .card-recycle-view[hidden] {
+      display: none;
     }
 
     .card-recycle-detection-table {
-      min-width: 1320px;
+      min-width: 1480px;
     }
 
     .work-order-number {
@@ -7320,7 +7313,9 @@
 
       var cardRecycleRecordState = {
         records: getInitialCardRecycleRecords(),
-        pageSize: 20
+        pageSize: 20,
+        activeTab: "records",
+        activeBatchNo: ""
       };
 
       function getApprovalDeadline(appliedAt) {
@@ -7794,7 +7789,13 @@
       function getCardRecycleRecordMainHtml() {
         return `
           <section class="content-card card-recycle-record-page">
-            <div class="filters">
+            <div class="tariff-tabs card-recycle-tabs" role="tablist" aria-label="卡片回收页面切换">
+              <button class="tariff-tab current js-card-recycle-tab" type="button" role="tab" aria-selected="true" data-tab="records">回收记录</button>
+              <button class="tariff-tab js-card-recycle-tab" type="button" role="tab" aria-selected="false" data-tab="detection">回收明细</button>
+            </div>
+
+            <div class="card-recycle-view js-card-recycle-record-view">
+              <div class="filters">
               <div class="filter-grid">
                 <div class="field">
                   <label for="cardRecycleBatchNo">批次号</label>
@@ -7847,16 +7848,16 @@
                   <button class="btn js-card-recycle-reset" type="button">重置</button>
                 </div>
               </div>
-            </div>
+              </div>
 
-            <div class="table-toolbar">
+              <div class="table-toolbar">
               <div class="toolbar-left">
                 <button class="btn primary js-open-card-recycle" type="button">卡片回收</button>
               </div>
-            </div>
+              </div>
 
-            <div class="table-area">
-              <div class="table-scroll" role="region" aria-label="卡片回收记录列表" tabindex="0">
+              <div class="table-area">
+              <div class="table-scroll" role="region" aria-label="回收记录列表" tabindex="0">
                 <table class="work-order-table card-recycle-record-table">
                   <thead>
                     <tr>
@@ -7886,17 +7887,16 @@
                 </select>
                 <button class="page-btn current" type="button">1</button>
               </div>
+              </div>
             </div>
 
-            <div class="modal-overlay js-card-recycle-detection-modal" aria-hidden="true">
-              <section class="merchant-modal card-recycle-detection-modal" role="dialog" aria-modal="true" aria-labelledby="cardRecycleDetectionTitle">
-                <div class="modal-head">
-                  <div id="cardRecycleDetectionTitle" class="modal-title">检测记录</div>
-                  <button class="modal-close js-close-card-recycle-detection" type="button" aria-label="关闭">×</button>
-                </div>
-                <div class="modal-body">
+            <div class="card-recycle-view js-card-recycle-detection-view" hidden>
                   <div class="filters">
                     <div class="filter-grid">
+                      <div class="field">
+                        <label for="cardRecycleDetectionBatchNo">批次号</label>
+                        <input id="cardRecycleDetectionBatchNo" class="control js-card-recycle-detection-batch" type="text" placeholder="请输入批次号">
+                      </div>
                       <div class="field">
                         <label for="cardRecycleDetectionKeyword">ICCID/MSISDN/IMSI</label>
                         <input id="cardRecycleDetectionKeyword" class="control js-card-recycle-detection-keyword" type="text" inputmode="numeric" placeholder="ICCID / MSISDN / IMSI">
@@ -7928,10 +7928,11 @@
                     </div>
                   </div>
                   <div class="table-area">
-                    <div class="table-scroll" role="region" aria-label="卡片回收检测记录列表" tabindex="0">
+                    <div class="table-scroll" role="region" aria-label="回收明细列表" tabindex="0">
                       <table class="card-recycle-detection-table">
                         <thead>
                           <tr>
+                            <th style="width: 180px;">批次号</th>
                             <th style="width: 190px;">ICCID</th>
                             <th style="width: 140px;">MSISDN</th>
                             <th style="width: 170px;">IMSI</th>
@@ -7948,7 +7949,7 @@
                     </div>
                     <div class="pagination">
                       <span class="js-card-recycle-detection-total">共 0 条</span>
-                      <select class="page-size" aria-label="检测记录每页条数">
+                      <select class="page-size" aria-label="回收明细每页条数">
                         <option>10 条/页</option>
                         <option selected>20 条/页</option>
                         <option>50 条/页</option>
@@ -7958,8 +7959,6 @@
                       <button class="page-btn current" type="button">1</button>
                     </div>
                   </div>
-                </div>
-              </section>
             </div>
           </section>
         `;
@@ -15841,12 +15840,14 @@
         var dateRange = page.querySelector(".js-card-recycle-date-range");
         var tbody = page.querySelector(".js-card-recycle-record-tbody");
         var totalText = page.querySelector(".js-card-recycle-record-total");
-        var detectionModal = page.querySelector(".js-card-recycle-detection-modal");
+        var tabButtons = Array.prototype.slice.call(page.querySelectorAll(".js-card-recycle-tab"));
+        var recordView = page.querySelector(".js-card-recycle-record-view");
+        var detectionView = page.querySelector(".js-card-recycle-detection-view");
+        var detectionBatch = page.querySelector(".js-card-recycle-detection-batch");
         var detectionKeyword = page.querySelector(".js-card-recycle-detection-keyword");
         var detectionStatus = page.querySelector(".js-card-recycle-detection-status");
         var detectionTbody = page.querySelector(".js-card-recycle-detection-tbody");
         var detectionTotal = page.querySelector(".js-card-recycle-detection-total");
-        var activeRecord = null;
 
         function getFilteredRecords() {
           var batch = batchInput.value.trim().toLowerCase();
@@ -15886,12 +15887,14 @@
         }
 
         function getFilteredDetectionRows() {
-          if (!activeRecord) {
-            return [];
-          }
+          var batch = detectionBatch.value.trim().toLowerCase();
           var keyword = detectionKeyword.value.trim();
-          return activeRecord.details.filter(function (item) {
-            return (!keyword || [item.iccid, item.msisdn, item.imsi].some(function (value) {
+          var sourceRows = cardRecycleRecordState.records.reduce(function (items, record) {
+            return items.concat(record.details || []);
+          }, []);
+          return sourceRows.filter(function (item) {
+            return (!batch || item.batchNo.toLowerCase().indexOf(batch) !== -1) &&
+              (!keyword || [item.iccid, item.msisdn, item.imsi].some(function (value) {
               return String(value).indexOf(keyword) !== -1;
             })) && (!detectionStatus.value || item.status === detectionStatus.value);
           });
@@ -15901,6 +15904,7 @@
           var rows = getFilteredDetectionRows();
           detectionTbody.innerHTML = rows.length ? rows.map(function (item) {
             return '<tr>' +
+              '<td>' + escapeHtml(item.batchNo) + '</td>' +
               '<td>' + escapeHtml(item.iccid) + '</td>' +
               '<td>' + escapeHtml(item.msisdn) + '</td>' +
               '<td>' + escapeHtml(item.imsi) + '</td>' +
@@ -15911,29 +15915,31 @@
               '<td>' + getCardRecycleRecordStatusHtml(item.status) + '</td>' +
               '<td>' + escapeHtml(item.reason || "--") + '</td>' +
             '</tr>';
-          }).join("") : getEmptyTableRowHtml(9);
+          }).join("") : getEmptyTableRowHtml(10);
           detectionTotal.textContent = "共 " + rows.length + " 条";
         }
 
-        function openDetectionModal(batchNo) {
-          activeRecord = cardRecycleRecordState.records.find(function (record) {
-            return record.batchNo === batchNo;
-          });
-          if (!activeRecord) {
-            return;
+        function setCardRecycleTab(tabId, batchNo) {
+          var showDetection = tabId === "detection";
+          cardRecycleRecordState.activeTab = showDetection ? "detection" : "records";
+          if (showDetection) {
+            cardRecycleRecordState.activeBatchNo = batchNo || "";
+            detectionBatch.value = cardRecycleRecordState.activeBatchNo;
+            detectionKeyword.value = "";
+            detectionStatus.value = "";
+            updateClearableState(detectionView);
+            renderDetectionRows();
+          } else {
+            cardRecycleRecordState.activeBatchNo = "";
           }
-          detectionKeyword.value = "";
-          detectionStatus.value = "";
-          updateClearableState(detectionModal);
-          renderDetectionRows();
-          detectionModal.classList.add("show");
-          detectionModal.setAttribute("aria-hidden", "false");
-        }
 
-        function closeDetectionModal() {
-          detectionModal.classList.remove("show");
-          detectionModal.setAttribute("aria-hidden", "true");
-          activeRecord = null;
+          recordView.hidden = showDetection;
+          detectionView.hidden = !showDetection;
+          tabButtons.forEach(function (button) {
+            var current = button.dataset.tab === cardRecycleRecordState.activeTab;
+            button.classList.toggle("current", current);
+            button.setAttribute("aria-selected", String(current));
+          });
         }
 
         function addPendingRecord(recycleData) {
@@ -15964,9 +15970,14 @@
         }
 
         page.addEventListener("click", function (event) {
+          var tabButton = event.target.closest(".js-card-recycle-tab");
+          if (tabButton) {
+            setCardRecycleTab(tabButton.dataset.tab, "");
+            return;
+          }
           var detectionButton = event.target.closest(".js-card-recycle-detection");
           if (detectionButton) {
-            openDetectionModal(detectionButton.dataset.batch);
+            setCardRecycleTab("detection", detectionButton.dataset.batch);
             return;
           }
           if (event.target.closest(".js-card-recycle-query")) {
@@ -15984,7 +15995,7 @@
             return;
           }
           if (event.target.closest(".js-card-recycle-export")) {
-            showToast("卡片回收记录导出中");
+            showToast("回收记录导出中");
             return;
           }
           if (event.target.closest(".js-card-recycle-detection-query")) {
@@ -15992,18 +16003,17 @@
             return;
           }
           if (event.target.closest(".js-card-recycle-detection-reset")) {
+            cardRecycleRecordState.activeBatchNo = "";
+            detectionBatch.value = "";
             detectionKeyword.value = "";
             detectionStatus.value = "";
-            updateClearableState(detectionModal);
+            updateClearableState(detectionView);
             renderDetectionRows();
             return;
           }
           if (event.target.closest(".js-card-recycle-detection-export")) {
-            showToast("检测记录导出中");
+            showToast("回收明细导出中");
             return;
-          }
-          if (event.target === detectionModal || event.target.closest(".js-close-card-recycle-detection")) {
-            closeDetectionModal();
           }
         });
 
@@ -16014,14 +16024,17 @@
             }
           });
         });
-        detectionKeyword.addEventListener("keydown", function (event) {
-          if (event.key === "Enter") {
-            renderDetectionRows();
-          }
+        [detectionBatch, detectionKeyword].forEach(function (input) {
+          input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              renderDetectionRows();
+            }
+          });
         });
 
         bindCardRecycleActionControls(page, addPendingRecord);
         renderRecords();
+        setCardRecycleTab(cardRecycleRecordState.activeTab, cardRecycleRecordState.activeBatchNo);
       }
 
       function bindInventoryManagementControls(root) {
