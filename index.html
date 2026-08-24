@@ -9091,12 +9091,14 @@
           rows.push(['套餐计费周期', getPackageRuleValue(item.packageRule, ['套餐计费周期', '套餐流量结算周期'])]);
           rows.push(['流量', getPackageRuleValue(item.packageRule, ['流量'])]);
           rows.push([validityLabel, item.packageValidity || '--']);
+          rows.push(['套餐金额', getPackageRuleValue(item.packageRule, ['套餐金额'])]);
         } else if (item.packageType === '群组叠加包套餐') {
           rows.push(['套餐流量', getPackageRuleValue(item.packageRule, ['流量'])]);
           rows.push(['套餐时效', item.packageValidity || '--']);
           rows.push(['套餐金额', getPackageRuleValue(item.packageRule, ['套餐金额'])]);
         } else {
           rows.push(['流量', getPackageRuleValue(item.packageRule, ['流量'])]);
+          rows.push(['套餐金额', getPackageRuleValue(item.packageRule, ['套餐金额'])]);
         }
         return '<div class="cell-stack">' + rows.map(function (row) { return '<div class="cell-line"><span class="cell-key">' + row[0] + '</span> ' + escapeHtml(row[1]) + '</div>'; }).join('') + '</div>';
       }
@@ -9104,6 +9106,19 @@
       function getOperationId(dateTime, seconds) {
         var datePart = String(dateTime || '').replace(/\D/g, '').slice(0, 12);
         return (datePart + String(seconds || 0).padStart(2, '0')).padEnd(14, '0').slice(0, 14);
+      }
+
+      function getCardPackageOrderRule(order, tabId) {
+        if (order.rule && order.rule.length) {
+          return order.rule;
+        }
+        if (tabId === 'poolAddon') {
+          var packageItem = poolAddonTariffCatalog.find(function (item) { return item.name === order.packageName; });
+          if (packageItem) {
+            return ['流量：' + (packageItem.traffic || '--'), '套餐金额：' + (packageItem.price ? packageItem.price + '元' : '--')];
+          }
+        }
+        return [];
       }
 
       function getCardPackageDetailRecords() {
@@ -9126,7 +9141,7 @@
                 packageId: order.packageId,
                 packageType: packageTypes[tabId],
                 packageStatus: packageStatus,
-                packageRule: order.rule || [],
+                packageRule: getCardPackageOrderRule(order, tabId),
                 packageValidity: order.validity || order.cycle || '30天',
                 packageDays: getPackageDaysFromValidity(order.validity || order.cycle || '30天'),
                 effectiveDate: (order.orderTime || '').slice(0, 10),
