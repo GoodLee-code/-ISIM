@@ -886,6 +886,31 @@
       height: 54px;
     }
 
+    .download-management-table {
+      min-width: 1500px;
+    }
+
+    .download-management-table .sticky-action {
+      position: sticky;
+      right: 0;
+      z-index: 3;
+      background: #fff;
+      box-shadow: -1px 0 0 var(--border-soft);
+    }
+
+    .download-management-table thead .sticky-action {
+      z-index: 5;
+      background: #f3f4f6;
+    }
+
+    .download-management-table tbody tr:nth-child(even) .sticky-action {
+      background: #fcfdff;
+    }
+
+    .download-management-table tbody tr:hover .sticky-action {
+      background: #f4f9ff;
+    }
+
     .task-total-link {
       border: 0;
       background: transparent;
@@ -1721,6 +1746,10 @@
 
     .js-approval-confirm-modal {
       z-index: 9999 !important;
+    }
+
+    .js-export-task-confirm-modal {
+      z-index: 10050 !important;
     }
 
     .approval-people-search {
@@ -6767,6 +6796,21 @@
     </section>
   </div>
   <div class="toast" role="status" aria-live="polite"></div>
+  <div class="modal-overlay js-export-task-confirm-modal" aria-hidden="true">
+    <section class="approval-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="exportTaskConfirmTitle">
+      <div class="modal-head">
+        <div id="exportTaskConfirmTitle" class="modal-title">导出任务已生成</div>
+        <button class="modal-close js-close-export-task-confirm" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="approval-confirm-message">已生成导出任务，是否移步到下载任务页面查看任务状态？</div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn js-cancel-export-task-confirm" type="button">取消</button>
+        <button class="btn primary js-confirm-export-task" type="button">确定</button>
+      </div>
+    </section>
+  </div>
   <script>
     (function () {
       var currentView = "";
@@ -7518,6 +7562,7 @@
             </button>
             <div class="sub-menu">
               <a class="sub-item ${activePage === "task" ? "current" : ""} js-task-page" href="#">批量任务查看</a>
+              <a class="sub-item ${activePage === "downloadManagement" ? "current" : ""} js-download-management-page" href="#">下载管理</a>
             </div>
           </div>
           <div class="nav-group">
@@ -11074,6 +11119,97 @@
         `;
       }
 
+      var downloadManagementState = {
+        filters: { taskType: '', operator: '' },
+        page: 1,
+        pageSize: 20,
+        records: [
+          { id: 'DL001', taskType: '入库卡记录', fileName: '入库卡记录_20260824.xlsx', status: '已完成', downloadCount: 16, lastDownloadedAt: '2026-08-24 10:36', remark: '入库卡明细导出', operator: '运营管理员', operationTime: '2026-08-24 10:32' },
+          { id: 'DL002', taskType: '出库卡详情记录', fileName: '出库卡详情记录_20260823.xlsx', status: '已完成', downloadCount: 8, lastDownloadedAt: '2026-08-23 17:20', remark: '出库卡详情核对', operator: '梁金', operationTime: '2026-08-23 16:58' },
+          { id: 'DL003', taskType: '流量池SIM卡详情', fileName: '流量池SIM卡详情_20260821.xlsx', status: '已完成', downloadCount: 5, lastDownloadedAt: '2026-08-21 15:08', remark: '流量池卡片明细导出', operator: '周明', operationTime: '2026-08-21 14:52' },
+          { id: 'DL004', taskType: '套餐续期检测记录', fileName: '套餐续期检测记录_20260820.xlsx', status: '已完成', downloadCount: 3, lastDownloadedAt: '2026-08-20 14:15', remark: '套餐续期检测结果', operator: '李青', operationTime: '2026-08-20 13:48' },
+          { id: 'DL005', taskType: '流量卡管理', fileName: '流量卡管理列表_20260819.xlsx', status: '失败', downloadCount: 0, lastDownloadedAt: '--', remark: '数据生成失败，待重新导出', operator: '王珂', operationTime: '2026-08-19 11:06' },
+          { id: 'DL006', taskType: '卡片回收明细', fileName: '卡片回收明细_REC20260818093001.xlsx', status: '生成中', downloadCount: 0, lastDownloadedAt: '--', remark: '回收批次检测明细', operator: '陈晨', operationTime: '2026-08-18 09:42' }
+        ]
+      };
+
+      function getDownloadTaskStatusHtml(status) {
+        var className = status === '已完成' ? 'success' : status === '失败' ? 'danger' : 'muted';
+        return '<span class="tag ' + className + '">' + escapeHtml(status) + '</span>';
+      }
+
+      function getFilteredDownloadManagementRecords() {
+        var filters = downloadManagementState.filters;
+        return downloadManagementState.records.filter(function (record) {
+          return (!filters.taskType || record.taskType === filters.taskType) &&
+            (!filters.operator || record.operator.toLowerCase().indexOf(filters.operator.toLowerCase()) !== -1);
+        });
+      }
+
+      function getDownloadManagementRowsHtml() {
+        var records = getFilteredDownloadManagementRecords();
+        var pageRows = records.slice((downloadManagementState.page - 1) * downloadManagementState.pageSize, downloadManagementState.page * downloadManagementState.pageSize);
+        if (!pageRows.length) {
+          return getEmptyTableRowHtml(10);
+        }
+        return pageRows.map(function (record, index) {
+          var serial = (downloadManagementState.page - 1) * downloadManagementState.pageSize + index + 1;
+          return '<tr><td>' + serial + '</td><td>' + escapeHtml(record.taskType) + '</td><td>' + escapeHtml(record.fileName) + '</td><td>' + getDownloadTaskStatusHtml(record.status) + '</td><td>' + record.downloadCount + '</td><td>' + escapeHtml(record.lastDownloadedAt) + '</td><td>' + escapeHtml(record.remark || '--') + '</td><td>' + escapeHtml(record.operator) + '</td><td>' + escapeHtml(record.operationTime) + '</td><td class="sticky-action"><div class="merchant-actions"><button class="merchant-action js-download-management-edit" type="button" data-id="' + escapeHtml(record.id) + '">编辑</button><button class="merchant-action js-download-management-download" type="button" data-id="' + escapeHtml(record.id) + '">下载</button></div></td></tr>';
+        }).join('');
+      }
+
+      function getDownloadManagementPaginationHtml() {
+        var total = getFilteredDownloadManagementRecords().length;
+        var pageCount = getPageCount(total, downloadManagementState.pageSize);
+        var page = Math.min(downloadManagementState.page, pageCount);
+        return '<div class="pagination"><span>共 ' + total + ' 条</span><select class="page-size js-download-management-page-size" aria-label="下载管理每页条数">' + [10, 20, 50, 100, 500].map(function (size) { return '<option value="' + size + '" ' + (downloadManagementState.pageSize === size ? 'selected' : '') + '>' + size + ' 条/页</option>'; }).join('') + '</select><button class="page-btn js-download-management-prev" type="button" ' + (page <= 1 ? 'disabled' : '') + '>上一页</button>' + getCompactPaginationButtons(page, pageCount, 'js-download-management-page') + '<button class="page-btn js-download-management-next" type="button" ' + (page >= pageCount ? 'disabled' : '') + '>下一页</button><span>跳至</span><input class="jump js-download-management-jump" type="number" min="1" max="' + pageCount + '" aria-label="下载管理跳转页码"><span>页</span></div>';
+      }
+
+      function getDownloadManagementMainHtml() {
+        var filters = downloadManagementState.filters;
+        var taskTypes = Array.from(new Set(downloadManagementState.records.map(function (record) { return record.taskType; })));
+        return '<section class="content-card download-management-page"><div class="filters"><div class="filter-grid task-filter-grid"><div class="field"><label>任务类型</label><div class="select-wrap clearable-select"><select class="js-download-management-type"><option value="" selected disabled hidden>任务类型</option>' + taskTypes.map(function (type) { return '<option value="' + escapeHtml(type) + '" ' + (filters.taskType === type ? 'selected' : '') + '>' + escapeHtml(type) + '</option>'; }).join('') + '</select><button class="clear-control" type="button" aria-label="清除任务类型">×</button></div></div><div class="field"><label>操作人</label><input class="control js-download-management-operator" type="text" value="' + escapeHtml(filters.operator) + '" placeholder="请输入操作人"></div><div class="filter-actions"><button class="btn primary js-download-management-search" type="button"><svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>搜索</button><button class="btn js-download-management-reset" type="button">重置</button></div></div></div><div class="table-area"><div class="table-scroll" role="region" aria-label="下载管理列表" tabindex="0"><table class="task-table download-management-table"><thead><tr><th style="width:68px">序号</th><th style="width:170px">任务类型</th><th style="width:290px">文件名称</th><th style="width:110px">任务状态</th><th style="width:120px">下载总次数</th><th style="width:160px">最后下载时间</th><th style="width:220px">任务备注</th><th style="width:120px">操作人</th><th style="width:160px">操作时间</th><th class="sticky-action" style="width:120px">操作</th></tr></thead><tbody>' + getDownloadManagementRowsHtml() + '</tbody></table></div>' + getDownloadManagementPaginationHtml() + '</div></section>';
+      }
+
+      function renderDownloadManagementPage() {
+        document.querySelector('.main').innerHTML = getDownloadManagementMainHtml();
+        bindDownloadManagementControls(document.querySelector('.main'));
+      }
+
+      function bindDownloadManagementControls(root) {
+        var page = (root || document).querySelector('.download-management-page');
+        if (!page || page.dataset.downloadManagementBound === 'true') return;
+        page.dataset.downloadManagementBound = 'true';
+        bindClearableControls(page);
+        enhanceSelectControls(page);
+        var taskType = page.querySelector('.js-download-management-type');
+        var operator = page.querySelector('.js-download-management-operator');
+        function applyFilters() {
+          downloadManagementState.filters = { taskType: taskType.value, operator: operator.value.trim() };
+          downloadManagementState.page = 1;
+          renderDownloadManagementPage();
+        }
+        page.querySelector('.js-download-management-search').addEventListener('click', applyFilters);
+        page.querySelector('.js-download-management-reset').addEventListener('click', function () {
+          downloadManagementState.filters = { taskType: '', operator: '' };
+          downloadManagementState.page = 1;
+          renderDownloadManagementPage();
+        });
+        operator.addEventListener('keydown', function (event) { if (event.key === 'Enter') applyFilters(); });
+        taskType.addEventListener('change', applyFilters);
+        page.querySelectorAll('.js-download-management-edit').forEach(function (button) { button.addEventListener('click', function () { showToast('下载任务编辑入口已打开'); }); });
+        page.querySelectorAll('.js-download-management-download').forEach(function (button) { button.addEventListener('click', function () { showToast('文件下载已开始'); }); });
+        page.querySelectorAll('.js-download-management-page').forEach(function (button) { button.addEventListener('click', function () { downloadManagementState.page = Number(button.dataset.page) || 1; renderDownloadManagementPage(); }); });
+        var previous = page.querySelector('.js-download-management-prev');
+        var next = page.querySelector('.js-download-management-next');
+        if (previous) previous.addEventListener('click', function () { downloadManagementState.page = Math.max(1, downloadManagementState.page - 1); renderDownloadManagementPage(); });
+        if (next) next.addEventListener('click', function () { downloadManagementState.page = Math.min(getPageCount(getFilteredDownloadManagementRecords().length, downloadManagementState.pageSize), downloadManagementState.page + 1); renderDownloadManagementPage(); });
+        var pageSize = page.querySelector('.js-download-management-page-size');
+        if (pageSize) pageSize.addEventListener('change', function (event) { downloadManagementState.pageSize = Number(event.target.value) || 20; downloadManagementState.page = 1; renderDownloadManagementPage(); });
+        var jump = page.querySelector('.js-download-management-jump');
+        if (jump) jump.addEventListener('keydown', function (event) { if (event.key === 'Enter') { downloadManagementState.page = clampPage(event.target.value, getFilteredDownloadManagementRecords().length, downloadManagementState.pageSize); renderDownloadManagementPage(); } });
+      }
+
       function getApprovalFlowMainHtml() {
         return `
           <section class="content-card approval-page">
@@ -11635,6 +11771,39 @@
           toast.classList.remove("show");
         }, 1800);
       }
+
+      var exportTaskConfirmModal = document.querySelector('.js-export-task-confirm-modal');
+
+      function closeExportTaskConfirm() {
+        exportTaskConfirmModal.classList.remove('show');
+        exportTaskConfirmModal.setAttribute('aria-hidden', 'true');
+      }
+
+      function openExportTaskConfirm() {
+        exportTaskConfirmModal.classList.add('show');
+        exportTaskConfirmModal.setAttribute('aria-hidden', 'false');
+      }
+
+      exportTaskConfirmModal.addEventListener('click', function (event) {
+        if (event.target === exportTaskConfirmModal || event.target.closest('.js-close-export-task-confirm') || event.target.closest('.js-cancel-export-task-confirm')) {
+          closeExportTaskConfirm();
+          return;
+        }
+        if (event.target.closest('.js-confirm-export-task')) {
+          closeExportTaskConfirm();
+          openDownloadManagementPageFromSidebar();
+        }
+      });
+
+      document.addEventListener('click', function (event) {
+        var exportButton = event.target.closest('button');
+        if (!exportButton || !exportButton.textContent.trim().includes('导出')) {
+          return;
+        }
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        openExportTaskConfirm();
+      }, true);
 
       function bindQuickCardSearch() {
         var input = document.querySelector(".js-quick-card-search");
@@ -12424,6 +12593,15 @@
         });
       }
 
+      function markDownloadManagementMenuSelected() {
+        document.querySelectorAll(".sidebar .sub-item").forEach(function (item) {
+          item.classList.toggle("current", item.textContent.trim() === "下载管理");
+        });
+        document.querySelectorAll(".sidebar .nav-item").forEach(function (item) {
+          item.classList.remove("active");
+        });
+      }
+
       function markApprovalMenuSelected() {
         document.querySelectorAll(".sidebar .sub-item").forEach(function (item) {
           item.classList.toggle("current", item.textContent.trim() === "审核流程管理");
@@ -12640,6 +12818,15 @@
           bindTaskBatchControls(document.querySelector(".main"));
         }
 
+        if (tab.textContent.indexOf("下载管理") !== -1) {
+          currentView = "downloadManagement";
+          document.body.classList.remove("page-cleared");
+          renderSidebar("downloadManagement");
+          markDownloadManagementMenuSelected();
+          document.querySelector(".breadcrumb").textContent = "任务中心 / 下载管理";
+          renderDownloadManagementPage();
+        }
+
         if (tab.textContent.indexOf("审核流程管理") !== -1) {
           currentView = "approval";
           document.body.classList.remove("page-cleared");
@@ -12822,6 +13009,21 @@
         }
 
         taskTab.classList.add("current");
+        bindCurrentTabInteractions();
+      }
+
+      function ensureDownloadManagementTab() {
+        var downloadTab = Array.prototype.slice.call(document.querySelectorAll(".tab")).find(function (tab) {
+          return tab.textContent.indexOf("下载管理") !== -1;
+        });
+        document.querySelectorAll(".tab").forEach(function (tab) { tab.classList.remove("current"); });
+        if (!downloadTab) {
+          downloadTab = document.createElement("div");
+          downloadTab.className = "tab current";
+          downloadTab.innerHTML = '下载管理 <button class="tab-close" type="button" aria-label="关闭下载管理页面">×</button>';
+          document.querySelector(".tabs").appendChild(downloadTab);
+        }
+        downloadTab.classList.add("current");
         bindCurrentTabInteractions();
       }
 
@@ -17618,6 +17820,17 @@
         showToast("已打开批量任务查看");
       }
 
+      function openDownloadManagementPageFromSidebar() {
+        currentView = "downloadManagement";
+        document.body.classList.remove("page-cleared");
+        renderSidebar("downloadManagement");
+        markDownloadManagementMenuSelected();
+        ensureDownloadManagementTab();
+        document.querySelector(".breadcrumb").textContent = "任务中心 / 下载管理";
+        renderDownloadManagementPage();
+        showToast("已打开下载管理");
+      }
+
       function openApprovalFlowPageFromSidebar() {
         currentView = "approval";
         document.body.classList.remove("page-cleared");
@@ -17695,6 +17908,7 @@
         var warningStrategyMenu = event.target.closest(".js-warning-strategy-page");
         var merchantMenu = event.target.closest(".js-merchant-page");
         var taskMenu = event.target.closest(".js-task-page");
+        var downloadManagementMenu = event.target.closest(".js-download-management-page");
         var approvalMenu = event.target.closest(".js-approval-page");
         var navToggle = event.target.closest(".js-nav-toggle");
 
@@ -17773,6 +17987,12 @@
         if (taskMenu) {
           event.preventDefault();
           runWithTrafficPoolLeaveGuard(openTaskBatchPageFromSidebar);
+          return;
+        }
+
+        if (downloadManagementMenu) {
+          event.preventDefault();
+          runWithTrafficPoolLeaveGuard(openDownloadManagementPageFromSidebar);
           return;
         }
 
