@@ -2202,7 +2202,7 @@
     }
 
     .card-recycle-detection-table {
-      min-width: 1480px;
+      min-width: 1770px;
     }
 
     .work-order-number {
@@ -8000,6 +8000,21 @@
                           <button class="clear-control" type="button" aria-label="清除操作状态">×</button>
                         </div>
                       </div>
+                      <div class="field">
+                        <label for="cardRecycleDetectionOperator">操作人</label>
+                        <input id="cardRecycleDetectionOperator" class="control js-card-recycle-detection-operator" type="text" placeholder="请输入操作人">
+                      </div>
+                      <div class="field">
+                        <label>操作时间</label>
+                        <button class="date-range-control js-date-range js-card-recycle-detection-date-range" type="button" data-range-key="card-recycle-detection-operation" data-start-label="操作开始日期" data-end-label="操作结束日期" data-shortcuts="quick" aria-label="操作时间范围">
+                          <span class="date-range-text">
+                            <span class="date-start">操作开始日期</span>
+                            <span class="date-range-separator">至</span>
+                            <span class="date-end">操作结束日期</span>
+                          </span>
+                          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M3 11h18"></path></svg>
+                        </button>
+                      </div>
                       <div class="filter-actions">
                         <button class="btn primary js-card-recycle-detection-query" type="button">
                           <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
@@ -8029,6 +8044,8 @@
                             <th style="width: 130px;">供应商</th>
                             <th style="width: 100px;">操作状态</th>
                             <th style="width: 220px;">失败原因</th>
+                            <th style="width: 120px;">操作人</th>
+                            <th style="width: 170px;">操作时间</th>
                           </tr>
                         </thead>
                         <tbody class="js-card-recycle-detection-tbody"></tbody>
@@ -16176,6 +16193,8 @@
         var detectionBatch = page.querySelector(".js-card-recycle-detection-batch");
         var detectionKeyword = page.querySelector(".js-card-recycle-detection-keyword");
         var detectionStatus = page.querySelector(".js-card-recycle-detection-status");
+        var detectionOperator = page.querySelector(".js-card-recycle-detection-operator");
+        var detectionDateRange = page.querySelector(".js-card-recycle-detection-date-range");
         var detectionTbody = page.querySelector(".js-card-recycle-detection-tbody");
         var detectionTotal = page.querySelector(".js-card-recycle-detection-total");
 
@@ -16219,14 +16238,26 @@
         function getFilteredDetectionRows() {
           var batch = detectionBatch.value.trim().toLowerCase();
           var keyword = detectionKeyword.value.trim();
+          var operator = detectionOperator.value.trim().toLowerCase();
+          var startDate = detectionDateRange.dataset.start || "";
+          var endDate = detectionDateRange.dataset.end || "";
           var sourceRows = cardRecycleRecordState.records.reduce(function (items, record) {
-            return items.concat(record.details || []);
+            return items.concat((record.details || []).map(function (item) {
+              return Object.assign({}, item, {
+                operator: record.operator,
+                operationTime: record.operationTime
+              });
+            }));
           }, []);
           return sourceRows.filter(function (item) {
+            var operationDate = item.operationTime.slice(0, 10);
             return (!batch || item.batchNo.toLowerCase().indexOf(batch) !== -1) &&
               (!keyword || [item.iccid, item.msisdn, item.imsi].some(function (value) {
               return String(value).indexOf(keyword) !== -1;
-            })) && (!detectionStatus.value || item.status === detectionStatus.value);
+            })) && (!detectionStatus.value || item.status === detectionStatus.value) &&
+              (!operator || item.operator.toLowerCase().indexOf(operator) !== -1) &&
+              (!startDate || operationDate >= startDate) &&
+              (!endDate || operationDate <= endDate);
           });
         }
 
@@ -16244,8 +16275,10 @@
               '<td>' + escapeHtml(item.supplier) + '</td>' +
               '<td>' + getCardRecycleRecordStatusHtml(item.status) + '</td>' +
               '<td>' + escapeHtml(item.reason || "--") + '</td>' +
+              '<td>' + escapeHtml(item.operator || "--") + '</td>' +
+              '<td>' + escapeHtml(item.operationTime || "--") + '</td>' +
             '</tr>';
-          }).join("") : getEmptyTableRowHtml(10);
+          }).join("") : getEmptyTableRowHtml(12);
           detectionTotal.textContent = "共 " + rows.length + " 条";
         }
 
@@ -16257,6 +16290,8 @@
             detectionBatch.value = cardRecycleRecordState.activeBatchNo;
             detectionKeyword.value = "";
             detectionStatus.value = "";
+            detectionOperator.value = "";
+            resetDateRangeValue(detectionDateRange);
             updateClearableState(detectionView);
             renderDetectionRows();
           } else {
@@ -16337,6 +16372,8 @@
             detectionBatch.value = "";
             detectionKeyword.value = "";
             detectionStatus.value = "";
+            detectionOperator.value = "";
+            resetDateRangeValue(detectionDateRange);
             updateClearableState(detectionView);
             renderDetectionRows();
             return;
@@ -16354,7 +16391,7 @@
             }
           });
         });
-        [detectionBatch, detectionKeyword].forEach(function (input) {
+        [detectionBatch, detectionKeyword, detectionOperator].forEach(function (input) {
           input.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
               renderDetectionRows();
