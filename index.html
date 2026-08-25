@@ -7461,10 +7461,10 @@
 
       function getInitialCardRecycleRecords() {
         var seeds = [
-          { batchNo: "REC20260821093001", stopMode: "停机", total: 8, failed: 0, remark: "华东区域到期卡统一回收", status: "成功", operator: "运营管理员", operationTime: "2026-08-21 09:30" },
-          { batchNo: "REC20260820164518", stopMode: "不停机", total: 6, failed: 2, remark: "保留在线状态等待业务迁移", status: "部分成功", operator: "梁金", operationTime: "2026-08-20 16:45" },
-          { batchNo: "REC20260819111836", stopMode: "停机", total: 5, failed: 5, remark: "异常卡批次重新处理", status: "失败", operator: "周明", operationTime: "2026-08-19 11:18" },
-          { batchNo: "REC20260818140209", stopMode: "停机", total: 12, failed: 0, remark: "测试卡集中回收", status: "成功", operator: "陈凌枫", operationTime: "2026-08-18 14:02" }
+          { batchNo: "REC20260821093001", stopMode: "立即停机", total: 8, failed: 0, remark: "华东区域到期卡统一回收", status: "成功", operator: "运营管理员", operationTime: "2026-08-21 09:30" },
+          { batchNo: "REC20260820164518", stopMode: "不立即停机", total: 6, failed: 2, remark: "保留在线状态等待业务迁移", status: "部分成功", operator: "梁金", operationTime: "2026-08-20 16:45" },
+          { batchNo: "REC20260819111836", stopMode: "立即停机", total: 5, failed: 5, remark: "异常卡批次重新处理", status: "失败", operator: "周明", operationTime: "2026-08-19 11:18" },
+          { batchNo: "REC20260818140209", stopMode: "立即停机", total: 12, failed: 0, remark: "测试卡集中回收", status: "成功", operator: "陈凌枫", operationTime: "2026-08-18 14:02" }
         ];
         return seeds.map(function (record) {
           record.success = record.total - record.failed;
@@ -7874,15 +7874,15 @@
                 </div>
 	                <div class="modal-body">
 	                  <div class="inventory-recycle-form">
-	                    <div class="inventory-recycle-stop-tip inventory-recycle-form-tip">卡片回收时，自动退订卡片订购的套餐，并清除卡片关联的套餐数据及流量池信息。</div>
+	                    <div class="inventory-recycle-stop-tip inventory-recycle-form-tip">卡片回收时，自动退订卡片订购的套餐，并清除卡片关联的套餐信息、群组信息及流量池信息等。</div>
 	                    <div class="inventory-recycle-row">
 	                      <div class="inventory-recycle-label"><span class="required-mark">*</span>是否将卡片停机</div>
                       <div class="inventory-recycle-body">
                         <div class="inventory-recycle-mode">
-                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="keep" checked> 不停机</label>
-                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="stop"> 停机</label>
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="keep" checked> 不立即停机</label>
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="stop"> 立即停机</label>
                         </div>
-	                        <div class="inventory-recycle-stop-tip js-inventory-recycle-stop-tip">每日0:00，系统自动将不存在有效套餐的卡片停机。</div>
+	                        <div class="inventory-recycle-stop-tip js-inventory-recycle-stop-tip">卡片回收成功后，不会立即停机，系统将在每日0:00将回收成功且不存在有效套餐的卡片进行停机处理。</div>
                       </div>
                     </div>
                     <div class="inventory-recycle-row">
@@ -7923,7 +7923,7 @@
                 </div>
                 <div class="modal-foot">
                   <button class="btn js-cancel-inventory-recycle" type="button">取消</button>
-                  <button class="btn primary js-submit-inventory-recycle" type="button">提交审核</button>
+                  <button class="btn primary js-submit-inventory-recycle" type="button">确认</button>
                 </div>
               </section>
             </div>
@@ -7970,8 +7970,8 @@
                   <div class="select-wrap clearable-select">
                     <select id="cardRecycleStopMode" class="js-card-recycle-stop-mode">
                       <option value="" selected disabled hidden>是否将卡片停机</option>
-                      <option value="停机">停机</option>
-                      <option value="不停机">不停机</option>
+                      <option value="立即停机">立即停机</option>
+                      <option value="不立即停机">不立即停机</option>
                     </select>
                     <button class="clear-control" type="button" aria-label="清除是否将卡片停机">×</button>
                   </div>
@@ -15733,7 +15733,7 @@
             approver: "李四",
             updatedAt: appliedAt,
             isCurrentApplicant: true,
-            recycleStopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            recycleStopMode: recycleData.stopMode === "stop" ? "立即停机" : "不立即停机",
             recycleEntryMode: recycleData.entryMode === "file" ? "文件导入" : "手动录入",
             remark: recycleData.remark,
             steps: [
@@ -15829,7 +15829,7 @@
             manualIccids: getManualIccids(),
             remark: recycleRemarkInput.value.trim()
           };
-          recycleConfirmMessage.textContent = "您当前正在操作卡片回收，回收后卡片将于流量池解绑，卡片套餐信息将会清除，请确认是否继续操作？";
+          recycleConfirmMessage.textContent = "您当前正在操作卡片回收，回收时将自动退订卡片订购的套餐，并清除卡片关联的套餐信息、群组信息及流量池信息等。请确认是否继续操作？";
           recycleConfirmModal.classList.add("show");
           recycleConfirmModal.setAttribute("aria-hidden", "false");
         });
@@ -16570,7 +16570,7 @@
           });
           cardRecycleRecordState.records.unshift({
             batchNo: batchNo,
-            stopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            stopMode: recycleData.stopMode === "stop" ? "立即停机" : "不立即停机",
             total: recycleData.count,
             success: 0,
             failed: 0,
@@ -16864,7 +16864,7 @@
             approver: "李四",
             updatedAt: appliedAt,
             isCurrentApplicant: true,
-            recycleStopMode: recycleData.stopMode === "stop" ? "停机" : "不停机",
+            recycleStopMode: recycleData.stopMode === "stop" ? "立即停机" : "不立即停机",
             recycleEntryMode: recycleData.entryMode === "file" ? "文件导入" : "手动录入",
             remark: recycleData.remark,
             steps: [
@@ -16880,7 +16880,7 @@
         function openRecycleConfirmModal() {
           var count = getRecycleCount();
           recycleConfirmMessage.innerHTML =
-          "您当前正在操作卡片回收，回收后卡片将于流量池解绑，卡片套餐信息将会清除，请确认是否继续操作？";
+          "您当前正在操作卡片回收，回收时将自动退订卡片订购的套餐，并清除卡片关联的套餐信息、群组信息及流量池信息等。请确认是否继续操作？";
           recycleConfirmModal.classList.add("show");
           recycleConfirmModal.setAttribute("aria-hidden", "false");
         }
