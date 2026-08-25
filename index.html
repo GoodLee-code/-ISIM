@@ -817,8 +817,10 @@
     .metric-column {
       display: grid;
       grid-template-rows: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-      min-height: 580px;
+      gap: 18px;
+      height: 580px;
+      max-height: 580px;
+      align-self: start;
     }
 
     .metric-card {
@@ -826,7 +828,8 @@
       grid-template-columns: 1fr auto;
       align-items: center;
       gap: 20px;
-      padding: 34px 36px;
+      min-height: 0;
+      padding: 24px 32px;
     }
 
     .metric-label {
@@ -836,7 +839,7 @@
     }
 
     .metric-value {
-      margin-top: 22px;
+      margin-top: 16px;
       color: #203047;
       font-size: 34px;
       font-weight: 800;
@@ -844,7 +847,7 @@
     }
 
     .metric-note {
-      margin-top: 28px;
+      margin-top: 14px;
       color: #9aa2ad;
       font-size: 14px;
       line-height: 1.5;
@@ -3015,6 +3018,10 @@
       color: #5f6b7a;
       font-size: 12px;
       line-height: 1.5;
+    }
+
+    .inventory-recycle-form-tip {
+      margin-bottom: 12px;
     }
 
     .inventory-recycle-stop-tip[hidden] {
@@ -7865,16 +7872,17 @@
                   <div id="inventoryRecycleTitle" class="modal-title">卡片回收</div>
                   <button class="modal-close js-close-inventory-recycle" type="button" aria-label="关闭">×</button>
                 </div>
-                <div class="modal-body">
-                  <div class="inventory-recycle-form">
-                    <div class="inventory-recycle-row">
-                      <div class="inventory-recycle-label"><span class="required-mark">*</span>是否将卡片停机</div>
+	                <div class="modal-body">
+	                  <div class="inventory-recycle-form">
+	                    <div class="inventory-recycle-stop-tip inventory-recycle-form-tip">卡片回收时，自动退订卡片订购的套餐，并清除卡片关联的套餐数据及流量池信息。</div>
+	                    <div class="inventory-recycle-row">
+	                      <div class="inventory-recycle-label"><span class="required-mark">*</span>是否将卡片停机</div>
                       <div class="inventory-recycle-body">
                         <div class="inventory-recycle-mode">
-                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="stop" checked> 停机</label>
-                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="keep"> 不停机</label>
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="keep" checked> 不停机</label>
+                          <label><input class="js-inventory-recycle-stop" type="radio" name="inventoryRecycleStop" value="stop"> 停机</label>
                         </div>
-                        <div class="inventory-recycle-stop-tip js-inventory-recycle-stop-tip" hidden>无有效套餐的卡每日00:00系统自动停机。</div>
+	                        <div class="inventory-recycle-stop-tip js-inventory-recycle-stop-tip">每日0:00，系统自动将不存在有效套餐的卡片停机。</div>
                       </div>
                     </div>
                     <div class="inventory-recycle-row">
@@ -15650,7 +15658,7 @@
         }
 
         function resetRecycleModal() {
-          recycleStopInputs.forEach(function (input) { input.checked = input.value === "stop"; });
+          recycleStopInputs.forEach(function (input) { input.checked = input.value === "keep"; });
           recycleModeInputs.forEach(function (input) { input.checked = input.value === "file"; });
           recycleFileInput.value = "";
           recycleFileInput.dataset.mockCount = "";
@@ -15821,7 +15829,7 @@
             manualIccids: getManualIccids(),
             remark: recycleRemarkInput.value.trim()
           };
-          recycleConfirmMessage.innerHTML = "您当前正在操作卡片回收<strong>" + pendingRecycleData.count + "张</strong>，被回收的卡片关联的流量池流量总额会受影响，群组套餐将会被清除，请确认是否继续操作？";
+          recycleConfirmMessage.textContent = "您当前正在操作卡片回收，回收后卡片将于流量池解绑，卡片套餐信息将会清除，请确认是否继续操作？";
           recycleConfirmModal.classList.add("show");
           recycleConfirmModal.setAttribute("aria-hidden", "false");
         });
@@ -16774,7 +16782,7 @@
 
         function resetRecycleModal() {
           recycleStopInputs.forEach(function (input) {
-            input.checked = input.value === "stop";
+            input.checked = input.value === "keep";
           });
           recycleModeInputs.forEach(function (input) {
             input.checked = input.value === "file";
@@ -16872,7 +16880,7 @@
         function openRecycleConfirmModal() {
           var count = getRecycleCount();
           recycleConfirmMessage.innerHTML =
-            "您当前正在操作卡片回收<strong>" + count + "张</strong>，被回收的卡片关联的流量池流量总额会受影响，群组套餐将会被清除，请确认是否继续操作？";
+          "您当前正在操作卡片回收，回收后卡片将于流量池解绑，卡片套餐信息将会清除，请确认是否继续操作？";
           recycleConfirmModal.classList.add("show");
           recycleConfirmModal.setAttribute("aria-hidden", "false");
         }
